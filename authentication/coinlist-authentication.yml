@@ -1,0 +1,30 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/coinlist-passage-openapi-original.json
+summary:
+  types:
+  - http
+  - oauth2
+  oauth2_flows:
+  - authorizationCode
+  - clientCredentials
+schemes:
+- name: OAuth2
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: /oauth/authorize
+    tokenUrl: /oauth/token
+    scopes: 0
+  - flow: clientCredentials
+    tokenUrl: /oauth/token
+    scopes: 0
+  description: OAuth 2.0 authorization and token endpoints
+  sources:
+  - openapi/coinlist-passage-openapi-original.json
+- name: TokenAuth
+  type: http
+  scheme: bearer
+  description: Session token for user authentication during OAuth authorization
+  sources:
+  - openapi/coinlist-passage-openapi-original.json
