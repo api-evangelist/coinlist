@@ -1,0 +1,218 @@
+openapi: 3.0.0
+info:
+  title: Frontline DocumentSubmissions Pii API
+  version: 0.1.0
+servers:
+- url: https://api.coinlist.co
+  variables: {}
+security: []
+tags:
+- name: Pii
+paths:
+  /v1/pii:
+    get:
+      callbacks: {}
+      description: Returns the user's PII (full legal name, country of citizenship, tax ID, permanent address) to pre-fill tax forms such as the W-8BEN. Fields that are unavailable are null.
+      operationId: getPii
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pii'
+          description: Successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error response.
+      security:
+      - OAuth2: []
+      summary: Get PII for the authenticated partner and user
+      tags:
+      - Pii
+components:
+  schemas:
+    Pii:
+      description: The user's PII used to pre-fill tax forms. Fields that are unavailable are null.
+      properties:
+        date_of_birth:
+          description: Date of birth as an ISO 8601 date (YYYY-MM-DD). Null for companies and when unavailable.
+          example: '1990-01-15'
+          format: date
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        full_legal_name:
+          description: 'Full legal name. For persons: first, middle and last name joined. For companies: the company name.'
+          example: Aleksander Nowak
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+        jurisdiction:
+          description: Jurisdiction of the entity, sourced from the entity's address country
+          nullable: true
+          properties:
+            iso_2:
+              description: ISO 3166-1 alpha-2 country code
+              example: PL
+              type: string
+              x-struct: null
+              x-validate: null
+            name:
+              description: Country display name
+              example: Poland
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - iso_2
+          - name
+          type: object
+          x-struct: null
+          x-validate: null
+        kind:
+          description: Kind of the entity the PII belongs to
+          enum:
+          - person
+          - company
+          example: person
+          type: string
+          x-struct: null
+          x-validate: null
+        object:
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - user_pii
+          type: string
+          x-struct: null
+          x-validate: null
+        permanent_address:
+          description: Permanent address of the entity
+          properties:
+            city:
+              example: Warsaw
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+            country:
+              description: ISO 3166-1 alpha-2 country code
+              example: PL
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+            postal_code:
+              example: 00-001
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+            state:
+              description: State or region code
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+            street:
+              example: ul. Nowy Świat 12
+              nullable: true
+              type: string
+              x-struct: null
+              x-validate: null
+          required:
+          - street
+          - city
+          - state
+          - postal_code
+          - country
+          type: object
+          x-struct: null
+          x-validate: null
+        tax_id:
+          description: 'Tax identification number. For persons: SSN or foreign TIN. For companies: EIN.'
+          nullable: true
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - object
+      - kind
+      - full_legal_name
+      - date_of_birth
+      - jurisdiction
+      - tax_id
+      - permanent_address
+      title: Pii
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.Pii
+      x-validate: null
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: A human-readable message providing more details about the error.
+          type: string
+          x-struct: null
+          x-validate: null
+        errors:
+          additionalProperties:
+            items:
+              type: string
+              x-struct: null
+              x-validate: null
+            type: array
+            x-struct: null
+            x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        event_id:
+          description: The unique identifier for the error event. This is useful for tracking and debugging.
+          type: string
+          x-struct: null
+          x-validate: null
+        message:
+          description: For some errors that could be handled programmatically, a short string indicating the error code reported.
+          type: string
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of error returned. One of `api_error`, `invalid_request_error`
+          enum:
+          - api_error
+          - invalid_request_error
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - message
+      title: Error
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.ApiError
+      x-validate: null
+  securitySchemes:
+    OAuth2:
+      description: OAuth 2.0 authorization and token endpoints
+      flows:
+        authorizationCode:
+          authorizationUrl: /oauth/authorize
+          refreshUrl: /oauth/token
+          scopes: {}
+          tokenUrl: /oauth/token
+        clientCredentials:
+          refreshUrl: /oauth/token
+          scopes: {}
+          tokenUrl: /oauth/token
+      type: oauth2
+    TokenAuth:
+      description: Session token for user authentication during OAuth authorization
+      scheme: bearer
+      type: http

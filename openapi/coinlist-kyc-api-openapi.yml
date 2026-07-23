@@ -1,0 +1,156 @@
+openapi: 3.0.0
+info:
+  title: Frontline DocumentSubmissions KYC API
+  version: 0.1.0
+servers:
+- url: https://api.coinlist.co
+  variables: {}
+security: []
+tags:
+- name: KYC
+paths:
+  /v1/kyc-token:
+    post:
+      callbacks: {}
+      description: Generates a short-lived Sumsub WebSDK access token for the current user so an identity verification flow can be started. Requires a user-scoped access token (authorization code grant); partner-only tokens (client credentials grant) are rejected.
+      operationId: createKycToken
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateKycTokenRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateKycTokenRequest'
+        description: KYC token params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KycToken'
+          description: Successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error response.
+      security:
+      - OAuth2: []
+      summary: Generate a Sumsub KYC access token
+      tags:
+      - KYC
+components:
+  schemas:
+    CreateKycTokenRequest:
+      additionalProperties: false
+      properties:
+        level_name:
+          default: Sorting_KYC_Level
+          description: The Sumsub verification level to start. Determines which screens the Sumsub WebSDK shows.
+          enum:
+          - Sorting_KYC_Level
+          - BasicKYCLevel
+          - AccreditationIndividual_FullVerification
+          example: Sorting_KYC_Level
+          type: string
+          x-struct: null
+          x-validate: null
+        reset:
+          default: false
+          description: Reset the Sumsub applicant before issuing the token, so an already-approved level can be executed again (e.g. to update stale PII). Send the kyc_reset value from the requirement status. Must not be sent when refreshing an expired token mid-flow, or the user's in-progress submission is wiped.
+          type: boolean
+          x-struct: null
+          x-validate: null
+      title: CreateKycTokenRequest
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.CreateKycTokenRequest
+      x-validate: null
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: A human-readable message providing more details about the error.
+          type: string
+          x-struct: null
+          x-validate: null
+        errors:
+          additionalProperties:
+            items:
+              type: string
+              x-struct: null
+              x-validate: null
+            type: array
+            x-struct: null
+            x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        event_id:
+          description: The unique identifier for the error event. This is useful for tracking and debugging.
+          type: string
+          x-struct: null
+          x-validate: null
+        message:
+          description: For some errors that could be handled programmatically, a short string indicating the error code reported.
+          type: string
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of error returned. One of `api_error`, `invalid_request_error`
+          enum:
+          - api_error
+          - invalid_request_error
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - message
+      title: Error
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.ApiError
+      x-validate: null
+    KycToken:
+      additionalProperties: false
+      properties:
+        object:
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - kyc_token
+          type: string
+          x-struct: null
+          x-validate: null
+        token:
+          description: Short-lived Sumsub WebSDK access token scoped to the current user
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - object
+      - token
+      title: KycToken
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.KycToken
+      x-validate: null
+  securitySchemes:
+    OAuth2:
+      description: OAuth 2.0 authorization and token endpoints
+      flows:
+        authorizationCode:
+          authorizationUrl: /oauth/authorize
+          refreshUrl: /oauth/token
+          scopes: {}
+          tokenUrl: /oauth/token
+        clientCredentials:
+          refreshUrl: /oauth/token
+          scopes: {}
+          tokenUrl: /oauth/token
+      type: oauth2
+    TokenAuth:
+      description: Session token for user authentication during OAuth authorization
+      scheme: bearer
+      type: http

@@ -1,0 +1,189 @@
+openapi: 3.0.0
+info:
+  title: Frontline DocumentSubmissions API
+  version: 0.1.0
+servers:
+- url: https://api.coinlist.co
+  variables: {}
+security: []
+tags:
+- name: DocumentSubmissions
+paths:
+  /v1/documents/{document_type}/submission:
+    post:
+      callbacks: {}
+      description: Creates a signing submission for the given document type (e.g. a W-8BEN tax certification) for the current entity. The signing link is emailed to the user. Re-posting acts as a resend/re-sign where the document state allows it. The submitted PII pre-fills the form and is forwarded to Passport, never persisted by Frontline.
+      operationId: createDocumentSubmission
+      parameters:
+      - description: 'The type of document to submit for signing. Valid values: tax_certification'
+        in: path
+        name: document_type
+        required: true
+        schema:
+          type: string
+          x-struct: null
+          x-validate: null
+      requestBody:
+        content:
+          application/json:
+            schema:
+              additionalProperties:
+                type: string
+                x-struct: null
+                x-validate: null
+              example:
+                City: Warsaw
+                Country: PL
+                Country Of Citizenship: Poland
+                DOB: 01/15/1985
+                Date: 06/16/2026
+                Foreign Tax Number: 123-45-6789
+                Full Name: Aleksander Nowak
+                Permanent Address: ul. Nowy Świat 12
+                Signature: Aleksander Nowak
+              type: object
+              x-struct: null
+              x-validate: null
+          application/x-www-form-urlencoded:
+            schema:
+              additionalProperties:
+                type: string
+                x-struct: null
+                x-validate: null
+              example:
+                City: Warsaw
+                Country: PL
+                Country Of Citizenship: Poland
+                DOB: 01/15/1985
+                Date: 06/16/2026
+                Foreign Tax Number: 123-45-6789
+                Full Name: Aleksander Nowak
+                Permanent Address: ul. Nowy Świat 12
+                Signature: Aleksander Nowak
+              type: object
+              x-struct: null
+              x-validate: null
+        description: Signing-form fields keyed by the document's DocuSeal field names. Forwarded verbatim to Passport to pre-fill the document, never persisted by Frontline.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentSubmission'
+          description: Successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error response.
+      security:
+      - OAuth2: []
+      summary: Create a document signing submission for the authenticated partner and user
+      tags:
+      - DocumentSubmissions
+components:
+  schemas:
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: A human-readable message providing more details about the error.
+          type: string
+          x-struct: null
+          x-validate: null
+        errors:
+          additionalProperties:
+            items:
+              type: string
+              x-struct: null
+              x-validate: null
+            type: array
+            x-struct: null
+            x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        event_id:
+          description: The unique identifier for the error event. This is useful for tracking and debugging.
+          type: string
+          x-struct: null
+          x-validate: null
+        message:
+          description: For some errors that could be handled programmatically, a short string indicating the error code reported.
+          type: string
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of error returned. One of `api_error`, `invalid_request_error`
+          enum:
+          - api_error
+          - invalid_request_error
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - message
+      title: Error
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.ApiError
+      x-validate: null
+    DocumentSubmission:
+      properties:
+        form_type:
+          description: The tax form derived from the entity kind
+          enum:
+          - w8_ben
+          - w8_ben_e
+          example: w8_ben
+          type: string
+          x-struct: null
+          x-validate: null
+        object:
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - document_submission
+          type: string
+          x-struct: null
+          x-validate: null
+        status:
+          description: The status of the document signing submission
+          enum:
+          - INITIALIZED
+          - SENT
+          - VIEWED
+          - COMPLETED
+          - DECLINED
+          - EXPIRED
+          example: SENT
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - object
+      - status
+      - form_type
+      title: DocumentSubmission
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.DocumentSubmission
+      x-validate: null
+  securitySchemes:
+    OAuth2:
+      description: OAuth 2.0 authorization and token endpoints
+      flows:
+        authorizationCode:
+          authorizationUrl: /oauth/authorize
+          refreshUrl: /oauth/token
+          scopes: {}
+          tokenUrl: /oauth/token
+        clientCredentials:
+          refreshUrl: /oauth/token
+          scopes: {}
+          tokenUrl: /oauth/token
+      type: oauth2
+    TokenAuth:
+      description: Session token for user authentication during OAuth authorization
+      scheme: bearer
+      type: http

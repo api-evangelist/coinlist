@@ -1,0 +1,196 @@
+openapi: 3.0.0
+info:
+  title: Frontline DocumentSubmissions Wallet Ownership API
+  version: 0.1.0
+servers:
+- url: https://api.coinlist.co
+  variables: {}
+security: []
+tags:
+- name: Wallet Ownership
+paths:
+  /v1/wallet-ownership:
+    post:
+      callbacks: {}
+      operationId: createWalletOwnershipChallenge
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWalletOwnershipChallengeRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateWalletOwnershipChallengeRequest'
+        description: Wallet ownership challenge params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletOwnershipChallenge'
+          description: Successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error response.
+      security:
+      - OAuth2: []
+      summary: Request a wallet ownership challenge
+      tags:
+      - Wallet Ownership
+components:
+  schemas:
+    CreateWalletOwnershipChallengeRequest:
+      additionalProperties: false
+      description: 'Creates a wallet ownership challenge. Two modes are supported:
+
+        - **plain** (default): produces a random nonce. Only `wallet_address` and `chain` are required. `domain`, `uri`, and `statement` must not be provided.
+
+        - **siwe**: produces an EIP-4361 Sign-In with Ethereum message. Requires `domain`, `uri`, and `statement` in addition to `wallet_address` and `chain`. Only supported for EVM chains.
+
+        '
+      properties:
+        chain:
+          description: The blockchain network the wallet belongs to. EVM chains (e.g. `ethereum_sepolia`) support both plain and SIWE challenges. Non-EVM chains (e.g. `solana_devnet`) support plain challenges only.
+          enum:
+          - ethereum_sepolia
+          - base_sepolia
+          - solana_devnet
+          - ethereum_mainnet
+          - base_mainnet
+          - solana_mainnet
+          example: ethereum_sepolia
+          type: string
+          x-struct: null
+          x-validate: null
+        challenge_type:
+          default: plain
+          description: The type of challenge to generate. `plain` (default) produces a random nonce. `siwe` produces an EIP-4361 message and requires `domain`, `uri`, and `statement`.
+          enum:
+          - plain
+          - siwe
+          example: plain
+          type: string
+          x-struct: null
+          x-validate: null
+        domain:
+          description: Required when `challenge_type` is `siwe`; must not be provided for plain challenges. The hostname of the requesting service. Must be a valid hostname (e.g. `example.com` or `app.example.com:3000`).
+          example: example.com
+          type: string
+          x-struct: null
+          x-validate: null
+        statement:
+          description: Required when `challenge_type` is `siwe`; must not be provided for plain challenges. A human-readable message the user is agreeing to. Must not contain newlines. Maximum 256 characters.
+          example: Sign in with Ethereum
+          maxLength: 256
+          type: string
+          x-struct: null
+          x-validate: null
+        uri:
+          description: Required when `challenge_type` is `siwe`; must not be provided for plain challenges. The URI of the resource being accessed. Must be a valid URI with scheme and host.
+          example: https://example.com/login
+          type: string
+          x-struct: null
+          x-validate: null
+        wallet_address:
+          description: The wallet address to prove ownership of. For EVM chains, must be a valid 40-hex-digit Ethereum address (normalized to lowercase). For non-EVM chains, must not contain whitespace and is limited to 128 characters.
+          example: '0x742d35cc6634c0532925a3b844bc9e7595f0beb1'
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - wallet_address
+      - chain
+      title: CreateWalletOwnershipChallengeRequest
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.CreateWalletOwnershipChallengeRequest
+      x-validate: null
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: A human-readable message providing more details about the error.
+          type: string
+          x-struct: null
+          x-validate: null
+        errors:
+          additionalProperties:
+            items:
+              type: string
+              x-struct: null
+              x-validate: null
+            type: array
+            x-struct: null
+            x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        event_id:
+          description: The unique identifier for the error event. This is useful for tracking and debugging.
+          type: string
+          x-struct: null
+          x-validate: null
+        message:
+          description: For some errors that could be handled programmatically, a short string indicating the error code reported.
+          type: string
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of error returned. One of `api_error`, `invalid_request_error`
+          enum:
+          - api_error
+          - invalid_request_error
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - message
+      title: Error
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.ApiError
+      x-validate: null
+    WalletOwnershipChallenge:
+      additionalProperties: false
+      properties:
+        expires_at:
+          description: When the challenge expires
+          example: '2025-01-01T00:00:00.000000Z'
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        message:
+          description: The challenge message to sign
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - message
+      - expires_at
+      title: WalletOwnershipChallenge
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.WalletOwnershipChallenge
+      x-validate: null
+  securitySchemes:
+    OAuth2:
+      description: OAuth 2.0 authorization and token endpoints
+      flows:
+        authorizationCode:
+          authorizationUrl: /oauth/authorize
+          refreshUrl: /oauth/token
+          scopes: {}
+          tokenUrl: /oauth/token
+        clientCredentials:
+          refreshUrl: /oauth/token
+          scopes: {}
+          tokenUrl: /oauth/token
+      type: oauth2
+    TokenAuth:
+      description: Session token for user authentication during OAuth authorization
+      scheme: bearer
+      type: http

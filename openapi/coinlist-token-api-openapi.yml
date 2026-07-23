@@ -1,0 +1,235 @@
+openapi: 3.0.0
+info:
+  title: Frontline DocumentSubmissions Token API
+  version: 0.1.0
+servers:
+- url: https://api.coinlist.co
+  variables: {}
+security: []
+tags:
+- name: Token
+paths:
+  /v1/token/allowance:
+    get:
+      callbacks: {}
+      description: Reads allowance(owner, spender) on the ERC-20 token contract. Can be used to determine whether an approval transaction is needed before a swap or token sale.
+      operationId: getTokenAllowance
+      parameters:
+      - description: The ERC-20 token contract address
+        in: query
+        name: token_address
+        required: true
+        schema:
+          example: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The address owning the tokens
+        in: query
+        name: owner
+        required: true
+        schema:
+          example: '0x8ba1f109551bd432803012645ac136ddd64dba72'
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The address allowed to spend the tokens
+        in: query
+        name: spender
+        required: true
+        schema:
+          example: '0x742d35cc6634c0532925a3b844bc9e7595f0beb1'
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The EVM chain to read from, e.g. ethereum_mainnet, ethereum_sepolia, base_mainnet or base_sepolia
+        in: query
+        name: chain
+        required: true
+        schema:
+          example: ethereum_sepolia
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenAllowance'
+          description: Successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error response.
+      security:
+      - OAuth2: []
+      summary: Get the on-chain ERC-20 allowance for a token, owner and spender
+      tags:
+      - Token
+  /v1/token/balance:
+    get:
+      callbacks: {}
+      description: Reads balanceOf(owner) on the ERC-20 token contract. Used to display the balance of the connected wallet the user will pay with.
+      operationId: getTokenBalance
+      parameters:
+      - description: The ERC-20 token contract address
+        in: query
+        name: token_address
+        required: true
+        schema:
+          example: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The address owning the tokens
+        in: query
+        name: owner
+        required: true
+        schema:
+          example: '0x8ba1f109551bd432803012645ac136ddd64dba72'
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The EVM chain to read from, e.g. ethereum_mainnet, ethereum_sepolia, base_mainnet or base_sepolia
+        in: query
+        name: chain
+        required: true
+        schema:
+          example: ethereum_sepolia
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenBalance'
+          description: Successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error response.
+      security:
+      - OAuth2: []
+      summary: Get the on-chain ERC-20 balance of an address
+      tags:
+      - Token
+components:
+  schemas:
+    TokenBalance:
+      additionalProperties: false
+      description: Current on-chain ERC-20 balance of an owner address.
+      properties:
+        balance:
+          description: The balance as a uint256 decimal string in the token's smallest unit
+          example: '1000000'
+          type: string
+          x-struct: null
+          x-validate: null
+        object:
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - token_balance
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - object
+      - balance
+      title: TokenBalance
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.TokenBalance
+      x-validate: null
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: A human-readable message providing more details about the error.
+          type: string
+          x-struct: null
+          x-validate: null
+        errors:
+          additionalProperties:
+            items:
+              type: string
+              x-struct: null
+              x-validate: null
+            type: array
+            x-struct: null
+            x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        event_id:
+          description: The unique identifier for the error event. This is useful for tracking and debugging.
+          type: string
+          x-struct: null
+          x-validate: null
+        message:
+          description: For some errors that could be handled programmatically, a short string indicating the error code reported.
+          type: string
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of error returned. One of `api_error`, `invalid_request_error`
+          enum:
+          - api_error
+          - invalid_request_error
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - message
+      title: Error
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.ApiError
+      x-validate: null
+    TokenAllowance:
+      additionalProperties: false
+      description: Current on-chain ERC-20 allowance for a token, owner and spender.
+      properties:
+        allowance:
+          description: The allowance as a uint256 decimal string in the token's smallest unit
+          example: '1000000'
+          type: string
+          x-struct: null
+          x-validate: null
+        object:
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - token_allowance
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - object
+      - allowance
+      title: TokenAllowance
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.TokenAllowance
+      x-validate: null
+  securitySchemes:
+    OAuth2:
+      description: OAuth 2.0 authorization and token endpoints
+      flows:
+        authorizationCode:
+          authorizationUrl: /oauth/authorize
+          refreshUrl: /oauth/token
+          scopes: {}
+          tokenUrl: /oauth/token
+        clientCredentials:
+          refreshUrl: /oauth/token
+          scopes: {}
+          tokenUrl: /oauth/token
+      type: oauth2
+    TokenAuth:
+      description: Session token for user authentication during OAuth authorization
+      scheme: bearer
+      type: http

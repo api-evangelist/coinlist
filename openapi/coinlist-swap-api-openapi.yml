@@ -1,0 +1,327 @@
+openapi: 3.0.0
+info:
+  title: Frontline DocumentSubmissions Swap API
+  version: 0.1.0
+servers:
+- url: https://api.coinlist.co
+  variables: {}
+security: []
+tags:
+- name: Swap
+paths:
+  /v1/swap/output-token:
+    get:
+      callbacks: {}
+      description: Resolves outputToken() on the Superstate swap contract and returns the ERC-20 name, symbol and decimals of that token.
+      operationId: getSwapOutputToken
+      parameters:
+      - description: The swap contract address
+        in: query
+        name: contract_address
+        required: true
+        schema:
+          example: '0x742d35cc6634c0532925a3b844bc9e7595f0beb1'
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The EVM chain to read from, e.g. ethereum_mainnet, ethereum_sepolia, base_mainnet or base_sepolia
+        in: query
+        name: chain
+        required: true
+        schema:
+          example: ethereum_sepolia
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SwapOutputToken'
+          description: Successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error response.
+      security:
+      - OAuth2: []
+      summary: Get the swap contract's output token metadata
+      tags:
+      - Swap
+  /v1/swap/preview:
+    get:
+      callbacks: {}
+      description: 'Reads preview(inputToken, amount) on the Superstate swap contract and returns the quote: the input amount to pay, the fee charged on it and the output amount to receive.'
+      operationId: getSwapPreview
+      parameters:
+      - description: The swap contract address
+        in: query
+        name: contract_address
+        required: true
+        schema:
+          example: '0x742d35cc6634c0532925a3b844bc9e7595f0beb1'
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The EVM chain to read from, e.g. ethereum_mainnet, ethereum_sepolia, base_mainnet or base_sepolia
+        in: query
+        name: chain
+        required: true
+        schema:
+          example: ethereum_sepolia
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The input token contract address
+        in: query
+        name: input_token
+        required: true
+        schema:
+          example: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: Amount of the input token to swap, as a uint256 decimal string in the input token's smallest unit
+        in: query
+        name: amount
+        required: true
+        schema:
+          example: '1000000'
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SwapPreview'
+          description: Successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error response.
+      security:
+      - OAuth2: []
+      summary: Preview a swap
+      tags:
+      - Swap
+  /v1/swap/status:
+    get:
+      callbacks: {}
+      description: Reads stopped() and SWAP_LEVEL() on the Superstate swap contract so clients can determine whether swaps are currently allowed.
+      operationId: getSwapStatus
+      parameters:
+      - description: The swap contract address
+        in: query
+        name: contract_address
+        required: true
+        schema:
+          example: '0x742d35cc6634c0532925a3b844bc9e7595f0beb1'
+          type: string
+          x-struct: null
+          x-validate: null
+      - description: The EVM chain to read from, e.g. ethereum_mainnet, ethereum_sepolia, base_mainnet or base_sepolia
+        in: query
+        name: chain
+        required: true
+        schema:
+          example: ethereum_sepolia
+          type: string
+          x-struct: null
+          x-validate: null
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SwapStatus'
+          description: Successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error response.
+      security:
+      - OAuth2: []
+      summary: Get the swap contract's status
+      tags:
+      - Swap
+components:
+  schemas:
+    SwapPreview:
+      additionalProperties: false
+      description: Quote for swapping an amount of an input token on a swap contract.
+      properties:
+        fee:
+          description: Fee charged on the swap, as a uint256 decimal string in the input token's smallest unit
+          example: '1000'
+          type: string
+          x-struct: null
+          x-validate: null
+        object:
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - swap_preview
+          type: string
+          x-struct: null
+          x-validate: null
+        pay_input_amount:
+          description: Amount of the input token to pay, as a uint256 decimal string in the input token's smallest unit
+          example: '1000000'
+          type: string
+          x-struct: null
+          x-validate: null
+        receive_output_amount:
+          description: Amount of the output token to receive, as a uint256 decimal string in the output token's smallest unit
+          example: '999000'
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - object
+      - pay_input_amount
+      - fee
+      - receive_output_amount
+      title: SwapPreview
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.SwapPreview
+      x-validate: null
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: A human-readable message providing more details about the error.
+          type: string
+          x-struct: null
+          x-validate: null
+        errors:
+          additionalProperties:
+            items:
+              type: string
+              x-struct: null
+              x-validate: null
+            type: array
+            x-struct: null
+            x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        event_id:
+          description: The unique identifier for the error event. This is useful for tracking and debugging.
+          type: string
+          x-struct: null
+          x-validate: null
+        message:
+          description: For some errors that could be handled programmatically, a short string indicating the error code reported.
+          type: string
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of error returned. One of `api_error`, `invalid_request_error`
+          enum:
+          - api_error
+          - invalid_request_error
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - type
+      - message
+      title: Error
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.ApiError
+      x-validate: null
+    SwapStatus:
+      additionalProperties: false
+      description: Current status flags of a Superstate swap contract.
+      properties:
+        object:
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - swap_status
+          type: string
+          x-struct: null
+          x-validate: null
+        stopped:
+          description: The contract's stopped() bitmask as a uint256 decimal string. Zero means no functionality is stopped.
+          example: '0'
+          type: string
+          x-struct: null
+          x-validate: null
+        swap_level:
+          description: The contract's SWAP_LEVEL() flag as a uint256 decimal string
+          example: '4'
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - object
+      - stopped
+      - swap_level
+      title: SwapStatus
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.SwapStatus
+      x-validate: null
+    SwapOutputToken:
+      additionalProperties: false
+      description: ERC-20 metadata of a swap contract's output token.
+      properties:
+        decimals:
+          description: ERC-20 token decimals
+          example: 6
+          type: integer
+          x-struct: null
+          x-validate: null
+        name:
+          description: ERC-20 token name
+          example: USD Coin
+          type: string
+          x-struct: null
+          x-validate: null
+        object:
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - swap_output_token
+          type: string
+          x-struct: null
+          x-validate: null
+        symbol:
+          description: ERC-20 token symbol
+          example: USDC
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - object
+      - name
+      - symbol
+      - decimals
+      title: SwapOutputToken
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.SwapOutputToken
+      x-validate: null
+  securitySchemes:
+    OAuth2:
+      description: OAuth 2.0 authorization and token endpoints
+      flows:
+        authorizationCode:
+          authorizationUrl: /oauth/authorize
+          refreshUrl: /oauth/token
+          scopes: {}
+          tokenUrl: /oauth/token
+        clientCredentials:
+          refreshUrl: /oauth/token
+          scopes: {}
+          tokenUrl: /oauth/token
+      type: oauth2
+    TokenAuth:
+      description: Session token for user authentication during OAuth authorization
+      scheme: bearer
+      type: http

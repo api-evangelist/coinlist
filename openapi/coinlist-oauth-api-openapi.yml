@@ -1,0 +1,347 @@
+openapi: 3.0.0
+info:
+  title: Frontline DocumentSubmissions OAuth API
+  version: 0.1.0
+servers:
+- url: https://api.coinlist.co
+  variables: {}
+security: []
+tags:
+- name: OAuth
+paths:
+  /oauth/introspect:
+    post:
+      callbacks: {}
+      description: Returns metadata about an access token, including whether it is active.
+      operationId: FrontlineAPIWeb.Oauth.IntrospectController.OpenApiSpec.introspect
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                client_id:
+                  description: The client identifier.
+                  example: 550e8400-e29b-41d4-a716-446655440000
+                  type: string
+                  x-struct: null
+                  x-validate: null
+                client_secret:
+                  description: The client secret.
+                  example: my-client-secret
+                  type: string
+                  x-struct: null
+                  x-validate: null
+                token:
+                  description: The token to introspect.
+                  example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+                  type: string
+                  x-struct: null
+                  x-validate: null
+              required:
+              - token
+              type: object
+              x-struct: null
+              x-validate: null
+        description: Introspect request params
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OauthIntrospect'
+          description: Token introspection result.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OauthError'
+          description: OAuth error response
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OauthError'
+          description: OAuth error response
+      security: []
+      summary: Introspect token
+      tags:
+      - OAuth
+  /oauth/revoke:
+    post:
+      callbacks: {}
+      description: Revokes an access or refresh token.
+      operationId: FrontlineAPIWeb.Oauth.RevokeController.OpenApiSpec.revoke
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                client_id:
+                  description: The client identifier.
+                  example: 550e8400-e29b-41d4-a716-446655440000
+                  type: string
+                  x-struct: null
+                  x-validate: null
+                client_secret:
+                  description: The client secret.
+                  example: my-client-secret
+                  type: string
+                  x-struct: null
+                  x-validate: null
+                token:
+                  description: The token to revoke.
+                  example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+                  type: string
+                  x-struct: null
+                  x-validate: null
+              required:
+              - token
+              type: object
+              x-struct: null
+              x-validate: null
+        description: Revoke request params
+        required: false
+      responses:
+        '200':
+          content:
+            application/json: {}
+          description: Token revoked successfully.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OauthError'
+          description: OAuth error response
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OauthError'
+          description: OAuth error response
+      security: []
+      summary: Revoke token
+      tags:
+      - OAuth
+  /oauth/token:
+    post:
+      callbacks: {}
+      description: Issues access tokens for `authorization_code`, `client_credentials`, and `refresh_token` grants using an `application/x-www-form-urlencoded` request body. For the `authorization_code` grant, the partner exchanges the code obtained from `GET /oauth/authorize` along with a PKCE `code_verifier`.
+      operationId: FrontlineAPIWeb.Oauth.TokenController.OpenApiSpec.token
+      parameters: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                client_id:
+                  description: OAuth client identifier. Required for all grant types when client authentication is sent in the request body.
+                  type: string
+                  x-struct: null
+                  x-validate: null
+                client_secret:
+                  description: OAuth client secret. Required for all grant types when client authentication is sent in the request body.
+                  type: string
+                  x-struct: null
+                  x-validate: null
+                code:
+                  description: Authorization code received from the `/oauth/authorize` endpoint. Required when `grant_type` is `authorization_code`.
+                  type: string
+                  x-struct: null
+                  x-validate: null
+                code_verifier:
+                  description: PKCE code verifier corresponding to the `code_challenge` sent to `/oauth/authorize`. Required when `grant_type` is `authorization_code`.
+                  type: string
+                  x-struct: null
+                  x-validate: null
+                grant_type:
+                  description: OAuth grant type. Supported values are `authorization_code`, `client_credentials`, and `refresh_token`.
+                  enum:
+                  - authorization_code
+                  - client_credentials
+                  - refresh_token
+                  type: string
+                  x-struct: null
+                  x-validate: null
+                redirect_uri:
+                  description: Must match the `redirect_uri` used in the original `/oauth/authorize` request. Required when `grant_type` is `authorization_code`.
+                  format: uri
+                  type: string
+                  x-struct: null
+                  x-validate: null
+                refresh_token:
+                  description: Required when `grant_type` is `refresh_token`.
+                  type: string
+                  x-struct: null
+                  x-validate: null
+              required:
+              - grant_type
+              type: object
+              x-struct: null
+              x-validate: null
+        description: Token request params
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OauthToken'
+          description: Successful token response
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OauthError'
+          description: OAuth error response
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OauthError'
+          description: OAuth error response
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OauthError'
+          description: OAuth error response
+      security: []
+      summary: Issue OAuth access token
+      tags:
+      - OAuth
+components:
+  schemas:
+    OauthError:
+      additionalProperties: false
+      properties:
+        error:
+          description: OAuth error code
+          type: string
+          x-struct: null
+          x-validate: null
+        error_description:
+          description: Human-readable error description
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - error
+      - error_description
+      title: OauthError
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Oauth.Schemas.OauthError
+      x-validate: null
+    OauthIntrospect:
+      description: Token introspection response. When active is false, only that field is returned.
+      properties:
+        active:
+          description: Whether the token is active.
+          example: true
+          type: boolean
+          x-struct: null
+          x-validate: null
+        client_id:
+          description: The client identifier for the OAuth 2.0 client that requested this token.
+          example: 550e8400-e29b-41d4-a716-446655440000
+          type: string
+          x-struct: null
+          x-validate: null
+        exp:
+          description: The Unix timestamp when the token expires.
+          example: 1704067200
+          type: integer
+          x-struct: null
+          x-validate: null
+        iat:
+          description: The Unix timestamp when the token was issued.
+          example: 1704063600
+          type: integer
+          x-struct: null
+          x-validate: null
+        iss:
+          description: The issuer of the token.
+          example: https://api.example.com
+          type: string
+          x-struct: null
+          x-validate: null
+        scope:
+          description: A space-separated list of scopes associated with the token.
+          example: read write
+          type: string
+          x-struct: null
+          x-validate: null
+        sub:
+          description: The subject of the token (user ID).
+          example: 550e8400-e29b-41d4-a716-446655440000
+          type: string
+          x-struct: null
+          x-validate: null
+        username:
+          description: The username of the resource owner.
+          example: user@example.com
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - active
+      title: OauthIntrospect
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Oauth.Schemas.OauthIntrospect
+      x-validate: null
+    OauthToken:
+      additionalProperties: false
+      properties:
+        access_token:
+          description: The access token
+          type: string
+          x-struct: null
+          x-validate: null
+        expires_in:
+          description: Token lifetime in seconds
+          type: integer
+          x-struct: null
+          x-validate: null
+        id_token:
+          description: OpenID Connect ID token
+          type: string
+          x-struct: null
+          x-validate: null
+        refresh_token:
+          description: The refresh token
+          type: string
+          x-struct: null
+          x-validate: null
+        token_type:
+          description: Token type, e.g. Bearer
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - token_type
+      - access_token
+      - expires_in
+      title: OauthToken
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Oauth.Schemas.OauthToken
+      x-validate: null
+  securitySchemes:
+    OAuth2:
+      description: OAuth 2.0 authorization and token endpoints
+      flows:
+        authorizationCode:
+          authorizationUrl: /oauth/authorize
+          refreshUrl: /oauth/token
+          scopes: {}
+          tokenUrl: /oauth/token
+        clientCredentials:
+          refreshUrl: /oauth/token
+          scopes: {}
+          tokenUrl: /oauth/token
+      type: oauth2
+    TokenAuth:
+      description: Session token for user authentication during OAuth authorization
+      scheme: bearer
+      type: http
