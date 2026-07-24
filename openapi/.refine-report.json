@@ -1,0 +1,34 @@
+{
+  "provider": "coinlist",
+  "sources": [
+    "coinlist-documentsubmissions-api-openapi.yml",
+    "coinlist-kyc-api-openapi.yml",
+    "coinlist-oauth-api-openapi.yml",
+    "coinlist-offers-api-openapi.yml",
+    "coinlist-participations-api-openapi.yml",
+    "coinlist-pii-api-openapi.yml",
+    "coinlist-requirements-api-openapi.yml",
+    "coinlist-swap-api-openapi.yml",
+    "coinlist-token-api-openapi.yml",
+    "coinlist-wallet-api-openapi.yml",
+    "coinlist-wallet-ownership-api-openapi.yml"
+  ],
+  "outputs": [
+    "coinlist-documentsubmissions-api-openapi.yml",
+    "coinlist-kyc-api-openapi.yml",
+    "coinlist-oauth-api-openapi.yml",
+    "coinlist-offers-api-openapi.yml",
+    "coinlist-participations-api-openapi.yml",
+    "coinlist-pii-api-openapi.yml",
+    "coinlist-requirements-api-openapi.yml",
+    "coinlist-swap-api-openapi.yml",
+    "coinlist-token-api-openapi.yml",
+    "coinlist-wallet-api-openapi.yml",
+    "coinlist-wallet-ownership-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

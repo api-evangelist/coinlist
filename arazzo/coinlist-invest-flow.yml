@@ -1,0 +1,108 @@
+arazzo: 1.0.1
+info:
+  title: CoinList Passage - Invest flow
+  version: 1.0.0
+  description: Load an offer, check on-chain balance/allowance, prove and allow-list the wallet, then create and track a participation.
+sourceDescriptions:
+- name: passage
+  url: ../openapi/coinlist-passage-openapi-original.json
+  type: openapi
+workflows:
+- workflowId: invest-in-offer
+  summary: Take a signed-in user from an offer to a tracked participation.
+  description: The full Passage invest path. Requires a user-scoped (authorization_code + PKCE) access token.
+  inputs:
+    type: object
+    properties:
+      offer_id: { type: string }
+      token_address: { type: string }
+      owner: { type: string }
+      spender: { type: string }
+      wallet_address: { type: string }
+      chain: { type: string }
+  steps:
+  - stepId: load-offer
+    operationId: getPartnerOffer
+    parameters:
+    - name: id
+      in: path
+      value: $inputs.offer_id
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      offer: $response.body
+  - stepId: check-balance
+    operationId: getTokenBalance
+    parameters:
+    - name: token_address
+      in: query
+      value: $inputs.token_address
+    - name: owner
+      in: query
+      value: $inputs.owner
+    - name: chain
+      in: query
+      value: $inputs.chain
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: check-allowance
+    operationId: getTokenAllowance
+    parameters:
+    - name: token_address
+      in: query
+      value: $inputs.token_address
+    - name: owner
+      in: query
+      value: $inputs.owner
+    - name: spender
+      in: query
+      value: $inputs.spender
+    - name: chain
+      in: query
+      value: $inputs.chain
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: prove-wallet
+    operationId: createWalletOwnershipChallenge
+    requestBody:
+      contentType: application/json
+      payload:
+        wallet_address: $inputs.wallet_address
+        chain: $inputs.chain
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      challenge: $response.body
+  - stepId: allow-wallet
+    operationId: allowWallet
+    parameters:
+    - name: offer_id
+      in: path
+      value: $inputs.offer_id
+    requestBody:
+      contentType: application/json
+      payload:
+        wallet_address: $inputs.wallet_address
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: create-participation
+    operationId: createPartnerParticipation
+    requestBody:
+      contentType: application/json
+      payload:
+        offer_id: $inputs.offer_id
+        wallet_address: $inputs.wallet_address
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      participation_id: $response.body.id
+  - stepId: track-participation
+    operationId: getPartnerParticipation
+    parameters:
+    - name: id
+      in: path
+      value: $steps.create-participation.outputs.participation_id
+    successCriteria:
+    - condition: $statusCode == 200
+  outputs:
+    participation_id: $steps.create-participation.outputs.participation_id

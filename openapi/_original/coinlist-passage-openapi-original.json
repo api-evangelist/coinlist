@@ -1,0 +1,3838 @@
+{
+  "components": {
+    "responses": {},
+    "schemas": {
+      "RequirementStatuses": {
+        "properties": {
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "requirement_statuses"
+            ],
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "offer_id": {
+            "description": "The offer ID",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "statuses": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "not_started",
+                    "in_progress",
+                    "action_needed",
+                    "completed",
+                    "rejected"
+                  ],
+                  "type": "string",
+                  "x-struct": null,
+                  "x-validate": null
+                },
+                {
+                  "description": "Object form, used when the status carries extra data: the action-needed reason and/or the Sumsub flow that resolves the requirement (kyc_level + kyc_reset, to be sent to the kyc-token endpoint as-is).",
+                  "properties": {
+                    "action": {
+                      "enum": [
+                        "kyc_not_verified",
+                        "update_pii_data"
+                      ],
+                      "type": "string",
+                      "x-struct": null,
+                      "x-validate": null
+                    },
+                    "kyc_level": {
+                      "description": "The Sumsub verification level that resolves this requirement",
+                      "enum": [
+                        "Sorting_KYC_Level",
+                        "BasicKYCLevel",
+                        "AccreditationIndividual_FullVerification"
+                      ],
+                      "type": "string",
+                      "x-struct": null,
+                      "x-validate": null
+                    },
+                    "kyc_reset": {
+                      "description": "Whether the Sumsub applicant must be reset before starting the flow (redoing an already-approved level, e.g. to update stale PII)",
+                      "type": "boolean",
+                      "x-struct": null,
+                      "x-validate": null
+                    },
+                    "status": {
+                      "enum": [
+                        "not_started",
+                        "in_progress",
+                        "action_needed",
+                        "completed",
+                        "rejected"
+                      ],
+                      "type": "string",
+                      "x-struct": null,
+                      "x-validate": null
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ],
+                  "type": "object",
+                  "x-struct": null,
+                  "x-validate": null
+                }
+              ],
+              "x-struct": null,
+              "x-validate": null
+            },
+            "description": "Map of requirement ID to status",
+            "type": "object",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "object",
+          "offer_id",
+          "statuses"
+        ],
+        "title": "RequirementStatuses",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.RequirementStatuses",
+        "x-validate": null
+      },
+      "Participation": {
+        "additionalProperties": false,
+        "description": "An offer participation",
+        "properties": {
+          "amount": {
+            "description": "The participation amount",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "amount_string": {
+            "description": "The participation amount formatted as a human-readable string",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "asset": {
+            "description": "The asset details for the participation",
+            "properties": {
+              "code": {
+                "description": "The asset code (symbol)",
+                "type": "string",
+                "x-struct": null,
+                "x-validate": null
+              },
+              "fractional_digits": {
+                "description": "The number of fractional digits for the asset",
+                "type": "integer",
+                "x-struct": null,
+                "x-validate": null
+              },
+              "id": {
+                "description": "The asset ID",
+                "type": "string",
+                "x-struct": null,
+                "x-validate": null
+              },
+              "name": {
+                "description": "The asset name",
+                "type": "string",
+                "x-struct": null,
+                "x-validate": null
+              }
+            },
+            "required": [
+              "id",
+              "code",
+              "name",
+              "fractional_digits"
+            ],
+            "type": "object",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "chain": {
+            "description": "The chain for the participation contract",
+            "enum": [
+              "ethereum_sepolia",
+              "base_sepolia",
+              "solana_devnet",
+              "ethereum_mainnet",
+              "base_mainnet",
+              "solana_mainnet"
+            ],
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "id": {
+            "description": "Unique identifier for the object.",
+            "example": "05edea81-98a7-4582-aa7c-040d57cb1858",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "inserted_at": {
+            "description": "When the participation was created",
+            "example": "2025-01-01T00:00:00.000000Z",
+            "format": "date-time",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "participation"
+            ],
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "offer_id": {
+            "description": "The ID of the offer",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "offer_option_id": {
+            "description": "The ID of the offer option",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "status": {
+            "description": "The participation status",
+            "enum": [
+              "prepared",
+              "pending",
+              "submitted",
+              "completed",
+              "failed",
+              "remit_submitted",
+              "remitted",
+              "remit_failed"
+            ],
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "updated_at": {
+            "description": "When the participation was last updated",
+            "example": "2025-01-01T00:00:00.000000Z",
+            "format": "date-time",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "wallet_address": {
+            "description": "The wallet address for the participation",
+            "nullable": true,
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "object",
+          "id",
+          "offer_id",
+          "offer_option_id",
+          "status",
+          "amount",
+          "amount_string",
+          "asset",
+          "chain"
+        ],
+        "title": "Participation",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.Participation",
+        "x-validate": null
+      },
+      "OauthIntrospect": {
+        "description": "Token introspection response. When active is false, only that field is returned.",
+        "properties": {
+          "active": {
+            "description": "Whether the token is active.",
+            "example": true,
+            "type": "boolean",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "client_id": {
+            "description": "The client identifier for the OAuth 2.0 client that requested this token.",
+            "example": "550e8400-e29b-41d4-a716-446655440000",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "exp": {
+            "description": "The Unix timestamp when the token expires.",
+            "example": 1704067200,
+            "type": "integer",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "iat": {
+            "description": "The Unix timestamp when the token was issued.",
+            "example": 1704063600,
+            "type": "integer",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "iss": {
+            "description": "The issuer of the token.",
+            "example": "https://api.example.com",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "scope": {
+            "description": "A space-separated list of scopes associated with the token.",
+            "example": "read write",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "sub": {
+            "description": "The subject of the token (user ID).",
+            "example": "550e8400-e29b-41d4-a716-446655440000",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "username": {
+            "description": "The username of the resource owner.",
+            "example": "user@example.com",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "active"
+        ],
+        "title": "OauthIntrospect",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Oauth.Schemas.OauthIntrospect",
+        "x-validate": null
+      },
+      "OfferRequirements": {
+        "properties": {
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "offer_requirements"
+            ],
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "offer_id": {
+            "description": "The offer ID",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "options": {
+            "additionalProperties": {
+              "properties": {
+                "data": {
+                  "items": {
+                    "$ref": "#/components/schemas/OptionRequirement"
+                  },
+                  "type": "array",
+                  "x-struct": null,
+                  "x-validate": null
+                },
+                "object": {
+                  "description": "String representing the object's type. Objects of the same type share the same value.",
+                  "enum": [
+                    "list"
+                  ],
+                  "type": "string",
+                  "x-struct": null,
+                  "x-validate": null
+                }
+              },
+              "required": [
+                "object",
+                "data"
+              ],
+              "type": "object",
+              "x-struct": null,
+              "x-validate": null
+            },
+            "description": "Map of option ID to list of requirements for that option",
+            "type": "object",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "object",
+          "offer_id",
+          "options"
+        ],
+        "title": "OfferRequirements",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.OfferRequirements",
+        "x-validate": null
+      },
+      "SwapOutputToken": {
+        "additionalProperties": false,
+        "description": "ERC-20 metadata of a swap contract's output token.",
+        "properties": {
+          "decimals": {
+            "description": "ERC-20 token decimals",
+            "example": 6,
+            "type": "integer",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "name": {
+            "description": "ERC-20 token name",
+            "example": "USD Coin",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "swap_output_token"
+            ],
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "symbol": {
+            "description": "ERC-20 token symbol",
+            "example": "USDC",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "object",
+          "name",
+          "symbol",
+          "decimals"
+        ],
+        "title": "SwapOutputToken",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.SwapOutputToken",
+        "x-validate": null
+      },
+      "TokenBalance": {
+        "additionalProperties": false,
+        "description": "Current on-chain ERC-20 balance of an owner address.",
+        "properties": {
+          "balance": {
+            "description": "The balance as a uint256 decimal string in the token's smallest unit",
+            "example": "1000000",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "token_balance"
+            ],
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "object",
+          "balance"
+        ],
+        "title": "TokenBalance",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.TokenBalance",
+        "x-validate": null
+      },
+      "CreateParticipation": {
+        "description": "Parameters for creating an offer participation",
+        "properties": {
+          "amount": {
+            "description": "The participation amount",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "approval_transaction_hash": {
+            "description": "The approval transaction hash",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "asset_id": {
+            "description": "The ID of the asset",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "chain": {
+            "description": "The blockchain chain for the funding contract",
+            "enum": [
+              "ethereum_sepolia",
+              "base_sepolia",
+              "solana_devnet",
+              "ethereum_mainnet",
+              "base_mainnet",
+              "solana_mainnet"
+            ],
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "offer_id": {
+            "description": "The ID of the offer",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "offer_option_id": {
+            "description": "The ID of the offer option",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "wallet_address": {
+            "description": "The wallet address",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "offer_id",
+          "offer_option_id",
+          "chain",
+          "wallet_address",
+          "amount",
+          "asset_id",
+          "approval_transaction_hash"
+        ],
+        "title": "CreateParticipation",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.CreateParticipation",
+        "x-validate": null
+      },
+      "VerifyOwnershipRequest": {
+        "description": "Parameters consumed by VerifyOwnershipPlug to verify wallet ownership.",
+        "properties": {
+          "chain": {
+            "description": "The blockchain network the wallet belongs to.",
+            "enum": [
+              "ethereum_sepolia",
+              "base_sepolia",
+              "solana_devnet",
+              "ethereum_mainnet",
+              "base_mainnet",
+              "solana_mainnet"
+            ],
+            "example": "ethereum_sepolia",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "signature": {
+            "description": "The cryptographic signature of the challenge message.",
+            "example": "0xdeadbeef",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "wallet_address": {
+            "description": "The wallet address to verify. For EVM chains, must be a valid Ethereum address (normalized to lowercase).",
+            "example": "0x742d35cc6634c0532925a3b844bc9e7595f0beb1",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "wallet_address",
+          "chain",
+          "signature"
+        ],
+        "title": "VerifyOwnershipRequest",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.VerifyOwnershipRequest",
+        "x-validate": null
+      },
+      "Error": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "description": "A human-readable message providing more details about the error.",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "errors": {
+            "additionalProperties": {
+              "items": {
+                "type": "string",
+                "x-struct": null,
+                "x-validate": null
+              },
+              "type": "array",
+              "x-struct": null,
+              "x-validate": null
+            },
+            "type": "object",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "event_id": {
+            "description": "The unique identifier for the error event. This is useful for tracking and debugging.",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "message": {
+            "description": "For some errors that could be handled programmatically, a short string indicating the error code reported.",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "type": {
+            "description": "The type of error returned. One of `api_error`, `invalid_request_error`",
+            "enum": [
+              "api_error",
+              "invalid_request_error"
+            ],
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "type",
+          "message"
+        ],
+        "title": "Error",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.ApiError",
+        "x-validate": null
+      },
+      "Offer": {
+        "additionalProperties": false,
+        "description": "Offer summary",
+        "properties": {
+          "banner_url": {
+            "description": "The URL for the offer banner",
+            "format": "uri",
+            "nullable": true,
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "ends_at": {
+            "description": "When the offer ends",
+            "example": "2025-01-01T00:00:00.000000Z",
+            "format": "date-time",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "id": {
+            "description": "Unique identifier for the object.",
+            "example": "05edea81-98a7-4582-aa7c-040d57cb1858",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "logo_url": {
+            "description": "The URL for the offer logo",
+            "format": "uri",
+            "nullable": true,
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "offer"
+            ],
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "options": {
+            "description": "List of offer options",
+            "items": {
+              "$ref": "#/components/schemas/OfferOption"
+            },
+            "type": "array",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "slug": {
+            "description": "The slug identifier of the offer",
+            "example": "example-offer",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "starts_at": {
+            "description": "When the offer starts",
+            "example": "2025-01-01T00:00:00.000000Z",
+            "format": "date-time",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "tagline": {
+            "description": "Tagline text for the offer (English)",
+            "example": "Example Offer Tagline",
+            "nullable": true,
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "type": {
+            "description": "The type of the offer",
+            "enum": [
+              "sale",
+              "swap"
+            ],
+            "example": "sale",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "object",
+          "id",
+          "slug",
+          "type",
+          "options"
+        ],
+        "title": "Offer",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.Offer",
+        "x-validate": null
+      },
+      "SwapStatus": {
+        "additionalProperties": false,
+        "description": "Current status flags of a Superstate swap contract.",
+        "properties": {
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "swap_status"
+            ],
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "stopped": {
+            "description": "The contract's stopped() bitmask as a uint256 decimal string. Zero means no functionality is stopped.",
+            "example": "0",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "swap_level": {
+            "description": "The contract's SWAP_LEVEL() flag as a uint256 decimal string",
+            "example": "4",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "object",
+          "stopped",
+          "swap_level"
+        ],
+        "title": "SwapStatus",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.SwapStatus",
+        "x-validate": null
+      },
+      "Pii": {
+        "description": "The user's PII used to pre-fill tax forms. Fields that are unavailable are null.",
+        "properties": {
+          "date_of_birth": {
+            "description": "Date of birth as an ISO 8601 date (YYYY-MM-DD). Null for companies and when unavailable.",
+            "example": "1990-01-15",
+            "format": "date",
+            "nullable": true,
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "full_legal_name": {
+            "description": "Full legal name. For persons: first, middle and last name joined. For companies: the company name.",
+            "example": "Aleksander Nowak",
+            "nullable": true,
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "jurisdiction": {
+            "description": "Jurisdiction of the entity, sourced from the entity's address country",
+            "nullable": true,
+            "properties": {
+              "iso_2": {
+                "description": "ISO 3166-1 alpha-2 country code",
+                "example": "PL",
+                "type": "string",
+                "x-struct": null,
+                "x-validate": null
+              },
+              "name": {
+                "description": "Country display name",
+                "example": "Poland",
+                "nullable": true,
+                "type": "string",
+                "x-struct": null,
+                "x-validate": null
+              }
+            },
+            "required": [
+              "iso_2",
+              "name"
+            ],
+            "type": "object",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "kind": {
+            "description": "Kind of the entity the PII belongs to",
+            "enum": [
+              "person",
+              "company"
+            ],
+            "example": "person",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "user_pii"
+            ],
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "permanent_address": {
+            "description": "Permanent address of the entity",
+            "properties": {
+              "city": {
+                "example": "Warsaw",
+                "nullable": true,
+                "type": "string",
+                "x-struct": null,
+                "x-validate": null
+              },
+              "country": {
+                "description": "ISO 3166-1 alpha-2 country code",
+                "example": "PL",
+                "nullable": true,
+                "type": "string",
+                "x-struct": null,
+                "x-validate": null
+              },
+              "postal_code": {
+                "example": "00-001",
+                "nullable": true,
+                "type": "string",
+                "x-struct": null,
+                "x-validate": null
+              },
+              "state": {
+                "description": "State or region code",
+                "nullable": true,
+                "type": "string",
+                "x-struct": null,
+                "x-validate": null
+              },
+              "street": {
+                "example": "ul. Nowy Świat 12",
+                "nullable": true,
+                "type": "string",
+                "x-struct": null,
+                "x-validate": null
+              }
+            },
+            "required": [
+              "street",
+              "city",
+              "state",
+              "postal_code",
+              "country"
+            ],
+            "type": "object",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "tax_id": {
+            "description": "Tax identification number. For persons: SSN or foreign TIN. For companies: EIN.",
+            "nullable": true,
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "object",
+          "kind",
+          "full_legal_name",
+          "date_of_birth",
+          "jurisdiction",
+          "tax_id",
+          "permanent_address"
+        ],
+        "title": "Pii",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.Pii",
+        "x-validate": null
+      },
+      "CreateKycTokenRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "level_name": {
+            "default": "Sorting_KYC_Level",
+            "description": "The Sumsub verification level to start. Determines which screens the Sumsub WebSDK shows.",
+            "enum": [
+              "Sorting_KYC_Level",
+              "BasicKYCLevel",
+              "AccreditationIndividual_FullVerification"
+            ],
+            "example": "Sorting_KYC_Level",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "reset": {
+            "default": false,
+            "description": "Reset the Sumsub applicant before issuing the token, so an already-approved level can be executed again (e.g. to update stale PII). Send the kyc_reset value from the requirement status. Must not be sent when refreshing an expired token mid-flow, or the user's in-progress submission is wiped.",
+            "type": "boolean",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "title": "CreateKycTokenRequest",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.CreateKycTokenRequest",
+        "x-validate": null
+      },
+      "OptionRequirementJurisdictionFilter": {
+        "properties": {
+          "country_iso_2": {
+            "description": "The ISO 3166-1 alpha-2 country code",
+            "example": "US",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "regions": {
+            "description": "List of region codes for the country",
+            "example": [
+              "CA",
+              "NY"
+            ],
+            "items": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            },
+            "type": "array",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "country_iso_2"
+        ],
+        "title": "OptionRequirementJurisdictionFilter",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.OptionRequirement.JurisdictionFilter",
+        "x-validate": null
+      },
+      "OfferOption": {
+        "additionalProperties": false,
+        "description": "An option within an offer",
+        "properties": {
+          "bid_increment": {
+            "description": "Decimal string",
+            "nullable": true,
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "floor_price_usd": {
+            "description": "Decimal string",
+            "nullable": true,
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "id": {
+            "description": "Unique identifier for the object.",
+            "example": "05edea81-98a7-4582-aa7c-040d57cb1858",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "minimum_purchase_usd": {
+            "description": "Decimal string",
+            "nullable": true,
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "price_usd": {
+            "description": "Decimal string",
+            "nullable": true,
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "sale_agreement_url": {
+            "nullable": true,
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "slug": {
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "total_token_supply": {
+            "description": "Decimal string",
+            "nullable": true,
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "title": "OfferOption",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.OfferOption",
+        "x-validate": null
+      },
+      "CreateOfferOptionAddressRequest": {
+        "additionalProperties": false,
+        "description": "Connects a proven external wallet to an offer option. Requires a previously\ngenerated, unconsumed wallet-ownership challenge for the same wallet and\nchain. The signature is verified and the single-use challenge consumed during\nownership verification, before the bind. A rejected bind does not roll back the\nconsume, so the user re-signs to retry.\n",
+        "properties": {
+          "chain": {
+            "description": "The blockchain network the wallet belongs to.",
+            "enum": [
+              "ethereum_sepolia",
+              "base_sepolia",
+              "solana_devnet",
+              "ethereum_mainnet",
+              "base_mainnet",
+              "solana_mainnet"
+            ],
+            "example": "ethereum_sepolia",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "offer_option_id": {
+            "description": "The ID of the offer option to connect the wallet to.",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "signature": {
+            "description": "The cryptographic signature of the challenge message.",
+            "example": "0xdeadbeef",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "wallet_address": {
+            "description": "The external wallet address. For EVM chains, must be a valid Ethereum address (normalized to lowercase).",
+            "example": "0x742d35cc6634c0532925a3b844bc9e7595f0beb1",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "offer_option_id",
+          "wallet_address",
+          "chain",
+          "signature"
+        ],
+        "title": "CreateOfferOptionAddressRequest",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.CreateOfferOptionAddressRequest",
+        "x-validate": null
+      },
+      "DocumentSubmission": {
+        "properties": {
+          "form_type": {
+            "description": "The tax form derived from the entity kind",
+            "enum": [
+              "w8_ben",
+              "w8_ben_e"
+            ],
+            "example": "w8_ben",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "document_submission"
+            ],
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "status": {
+            "description": "The status of the document signing submission",
+            "enum": [
+              "INITIALIZED",
+              "SENT",
+              "VIEWED",
+              "COMPLETED",
+              "DECLINED",
+              "EXPIRED"
+            ],
+            "example": "SENT",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "object",
+          "status",
+          "form_type"
+        ],
+        "title": "DocumentSubmission",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.DocumentSubmission",
+        "x-validate": null
+      },
+      "AllowWalletBroadcastTransactionResponse": {
+        "properties": {
+          "action": {
+            "enum": [
+              "broadcast_transaction"
+            ],
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "data": {
+            "description": "The encoded transaction to broadcast on-chain to complete wallet allowlisting.",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "to": {
+            "description": "The contract address to submit the transaction to.",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "action",
+          "to",
+          "data"
+        ],
+        "title": "AllowWalletBroadcastTransactionResponse",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.AllowWalletBroadcastTransactionResponse",
+        "x-validate": null
+      },
+      "AllowWalletAlreadyAllowedResponse": {
+        "properties": {
+          "action": {
+            "enum": [
+              "none"
+            ],
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "already_allowed": {
+            "description": "True when the wallet is already allowed and no transaction is needed.",
+            "type": "boolean",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "action",
+          "already_allowed"
+        ],
+        "title": "AllowWalletAlreadyAllowedResponse",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.AllowWalletAlreadyAllowedResponse",
+        "x-validate": null
+      },
+      "OptionRequirementDocumentDetails": {
+        "properties": {
+          "document_type": {
+            "description": "The type of document the user must sign",
+            "enum": [
+              "tax_certification"
+            ],
+            "example": "tax_certification",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "document_type"
+        ],
+        "title": "OptionRequirementDocumentDetails",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.OptionRequirement.DocumentDetails",
+        "x-validate": null
+      },
+      "CreateWalletOwnershipChallengeRequest": {
+        "additionalProperties": false,
+        "description": "Creates a wallet ownership challenge. Two modes are supported:\n- **plain** (default): produces a random nonce. Only `wallet_address` and `chain` are required. `domain`, `uri`, and `statement` must not be provided.\n- **siwe**: produces an EIP-4361 Sign-In with Ethereum message. Requires `domain`, `uri`, and `statement` in addition to `wallet_address` and `chain`. Only supported for EVM chains.\n",
+        "properties": {
+          "chain": {
+            "description": "The blockchain network the wallet belongs to. EVM chains (e.g. `ethereum_sepolia`) support both plain and SIWE challenges. Non-EVM chains (e.g. `solana_devnet`) support plain challenges only.",
+            "enum": [
+              "ethereum_sepolia",
+              "base_sepolia",
+              "solana_devnet",
+              "ethereum_mainnet",
+              "base_mainnet",
+              "solana_mainnet"
+            ],
+            "example": "ethereum_sepolia",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "challenge_type": {
+            "default": "plain",
+            "description": "The type of challenge to generate. `plain` (default) produces a random nonce. `siwe` produces an EIP-4361 message and requires `domain`, `uri`, and `statement`.",
+            "enum": [
+              "plain",
+              "siwe"
+            ],
+            "example": "plain",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "domain": {
+            "description": "Required when `challenge_type` is `siwe`; must not be provided for plain challenges. The hostname of the requesting service. Must be a valid hostname (e.g. `example.com` or `app.example.com:3000`).",
+            "example": "example.com",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "statement": {
+            "description": "Required when `challenge_type` is `siwe`; must not be provided for plain challenges. A human-readable message the user is agreeing to. Must not contain newlines. Maximum 256 characters.",
+            "example": "Sign in with Ethereum",
+            "maxLength": 256,
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "uri": {
+            "description": "Required when `challenge_type` is `siwe`; must not be provided for plain challenges. The URI of the resource being accessed. Must be a valid URI with scheme and host.",
+            "example": "https://example.com/login",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "wallet_address": {
+            "description": "The wallet address to prove ownership of. For EVM chains, must be a valid 40-hex-digit Ethereum address (normalized to lowercase). For non-EVM chains, must not contain whitespace and is limited to 128 characters.",
+            "example": "0x742d35cc6634c0532925a3b844bc9e7595f0beb1",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "wallet_address",
+          "chain"
+        ],
+        "title": "CreateWalletOwnershipChallengeRequest",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.CreateWalletOwnershipChallengeRequest",
+        "x-validate": null
+      },
+      "OfferDetails": {
+        "additionalProperties": false,
+        "description": "Full offer details",
+        "properties": {
+          "about": {
+            "description": "About text for the offer (English)",
+            "nullable": true,
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "asset": {
+            "additionalProperties": false,
+            "description": "The asset for which the offer is created",
+            "properties": {
+              "code": {
+                "description": "The asset code (symbol)",
+                "type": "string",
+                "x-struct": null,
+                "x-validate": null
+              },
+              "fractional_digits": {
+                "description": "The number of fractional digits for the asset",
+                "type": "integer",
+                "x-struct": null,
+                "x-validate": null
+              },
+              "id": {
+                "description": "The asset ID",
+                "type": "string",
+                "x-struct": null,
+                "x-validate": null
+              },
+              "name": {
+                "description": "The asset name",
+                "type": "string",
+                "x-struct": null,
+                "x-validate": null
+              }
+            },
+            "required": [
+              "id",
+              "code",
+              "name",
+              "fractional_digits"
+            ],
+            "type": "object",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "banner_url": {
+            "description": "The URL for the offer banner",
+            "format": "uri",
+            "nullable": true,
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "category": {
+            "description": "The category of the offer",
+            "nullable": true,
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "ends_at": {
+            "description": "When the offer ends",
+            "example": "2025-01-01T00:00:00.000000Z",
+            "format": "date-time",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "faqs": {
+            "description": "List of FAQs for the offer",
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "answer": {
+                  "nullable": true,
+                  "type": "string",
+                  "x-struct": null,
+                  "x-validate": null
+                },
+                "question": {
+                  "nullable": true,
+                  "type": "string",
+                  "x-struct": null,
+                  "x-validate": null
+                }
+              },
+              "type": "object",
+              "x-struct": null,
+              "x-validate": null
+            },
+            "type": "array",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "funding_assets": {
+            "description": "List of assets that can be used to fund the offer",
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "description": "The asset code (symbol)",
+                  "type": "string",
+                  "x-struct": null,
+                  "x-validate": null
+                },
+                "fractional_digits": {
+                  "description": "The number of fractional digits for the asset",
+                  "type": "integer",
+                  "x-struct": null,
+                  "x-validate": null
+                },
+                "id": {
+                  "description": "The asset ID",
+                  "type": "string",
+                  "x-struct": null,
+                  "x-validate": null
+                },
+                "name": {
+                  "description": "The asset name",
+                  "type": "string",
+                  "x-struct": null,
+                  "x-validate": null
+                }
+              },
+              "required": [
+                "id",
+                "code",
+                "name",
+                "fractional_digits"
+              ],
+              "type": "object",
+              "x-struct": null,
+              "x-validate": null
+            },
+            "type": "array",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "id": {
+            "description": "Unique identifier for the object.",
+            "example": "05edea81-98a7-4582-aa7c-040d57cb1858",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "links": {
+            "description": "List of links related to the offer",
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "label": {
+                  "nullable": true,
+                  "type": "string",
+                  "x-struct": null,
+                  "x-validate": null
+                },
+                "url": {
+                  "nullable": true,
+                  "type": "string",
+                  "x-struct": null,
+                  "x-validate": null
+                }
+              },
+              "type": "object",
+              "x-struct": null,
+              "x-validate": null
+            },
+            "type": "array",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "logo_url": {
+            "description": "The URL for the offer logo",
+            "format": "uri",
+            "nullable": true,
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "milestones": {
+            "description": "List of milestones for the offer",
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "name": {
+                  "nullable": true,
+                  "type": "string",
+                  "x-struct": null,
+                  "x-validate": null
+                },
+                "schedule": {
+                  "nullable": true,
+                  "type": "string",
+                  "x-struct": null,
+                  "x-validate": null
+                },
+                "status": {
+                  "enum": [
+                    "completed",
+                    "active",
+                    "upcoming"
+                  ],
+                  "type": "string",
+                  "x-struct": null,
+                  "x-validate": null
+                }
+              },
+              "type": "object",
+              "x-struct": null,
+              "x-validate": null
+            },
+            "type": "array",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "name": {
+            "description": "The name of the offer",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "offer_details"
+            ],
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "options": {
+            "description": "List of offer options",
+            "items": {
+              "$ref": "#/components/schemas/OfferOption"
+            },
+            "type": "array",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "slug": {
+            "description": "The slug identifier of the offer",
+            "example": "example-offer",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "starts_at": {
+            "description": "When the offer starts",
+            "example": "2025-01-01T00:00:00.000000Z",
+            "format": "date-time",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "tagline": {
+            "description": "Tagline text for the offer (English)",
+            "nullable": true,
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "terms": {
+            "description": "List of offer terms",
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "key": {
+                  "nullable": true,
+                  "type": "string",
+                  "x-struct": null,
+                  "x-validate": null
+                },
+                "value": {
+                  "nullable": true,
+                  "type": "string",
+                  "x-struct": null,
+                  "x-validate": null
+                }
+              },
+              "type": "object",
+              "x-struct": null,
+              "x-validate": null
+            },
+            "type": "array",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "type": {
+            "description": "The type of the offer",
+            "enum": [
+              "sale",
+              "swap"
+            ],
+            "example": "sale",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "object",
+          "id",
+          "slug",
+          "name",
+          "type",
+          "options",
+          "terms",
+          "links",
+          "faqs",
+          "milestones",
+          "asset",
+          "funding_assets"
+        ],
+        "title": "OfferDetails",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.OfferDetails",
+        "x-validate": null
+      },
+      "TokenAllowance": {
+        "additionalProperties": false,
+        "description": "Current on-chain ERC-20 allowance for a token, owner and spender.",
+        "properties": {
+          "allowance": {
+            "description": "The allowance as a uint256 decimal string in the token's smallest unit",
+            "example": "1000000",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "token_allowance"
+            ],
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "object",
+          "allowance"
+        ],
+        "title": "TokenAllowance",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.TokenAllowance",
+        "x-validate": null
+      },
+      "AllowWalletResponse": {
+        "discriminator": {
+          "mapping": {
+            "broadcast_transaction": "#/components/schemas/AllowWalletBroadcastTransactionResponse",
+            "none": "#/components/schemas/AllowWalletAlreadyAllowedResponse"
+          },
+          "propertyName": "action"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/AllowWalletBroadcastTransactionResponse"
+          },
+          {
+            "$ref": "#/components/schemas/AllowWalletAlreadyAllowedResponse"
+          }
+        ],
+        "title": "AllowWalletResponse",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.AllowWalletResponse",
+        "x-validate": null
+      },
+      "WalletAuthorization": {
+        "additionalProperties": false,
+        "description": "Whether a wallet is authorized to swap on a Superstate swap contract.",
+        "properties": {
+          "authorized": {
+            "description": "Whether the wallet is authorized on the swap contract",
+            "example": true,
+            "type": "boolean",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "wallet_authorization"
+            ],
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "object",
+          "authorized"
+        ],
+        "title": "WalletAuthorization",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.WalletAuthorization",
+        "x-validate": null
+      },
+      "KycToken": {
+        "additionalProperties": false,
+        "properties": {
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "kyc_token"
+            ],
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "token": {
+            "description": "Short-lived Sumsub WebSDK access token scoped to the current user",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "object",
+          "token"
+        ],
+        "title": "KycToken",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.KycToken",
+        "x-validate": null
+      },
+      "OptionRequirementExternalWalletDetails": {
+        "properties": {
+          "protocol": {
+            "description": "The blockchain protocol",
+            "example": "ethereum",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "protocol"
+        ],
+        "title": "OptionRequirementExternalWalletDetails",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.OptionRequirement.ExternalWalletDetails",
+        "x-validate": null
+      },
+      "WalletOwnershipChallenge": {
+        "additionalProperties": false,
+        "properties": {
+          "expires_at": {
+            "description": "When the challenge expires",
+            "example": "2025-01-01T00:00:00.000000Z",
+            "format": "date-time",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "message": {
+            "description": "The challenge message to sign",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "message",
+          "expires_at"
+        ],
+        "title": "WalletOwnershipChallenge",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.WalletOwnershipChallenge",
+        "x-validate": null
+      },
+      "OptionRequirementWhitelistedWalletDetails": {
+        "properties": {
+          "max_wallets": {
+            "description": "Maximum number of whitelisted wallets a user may connect for this option",
+            "example": 1,
+            "type": "integer",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "max_wallets"
+        ],
+        "title": "OptionRequirementWhitelistedWalletDetails",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.OptionRequirement.WhitelistedWalletDetails",
+        "x-validate": null
+      },
+      "OauthToken": {
+        "additionalProperties": false,
+        "properties": {
+          "access_token": {
+            "description": "The access token",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "expires_in": {
+            "description": "Token lifetime in seconds",
+            "type": "integer",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "id_token": {
+            "description": "OpenID Connect ID token",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "refresh_token": {
+            "description": "The refresh token",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "token_type": {
+            "description": "Token type, e.g. Bearer",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "token_type",
+          "access_token",
+          "expires_in"
+        ],
+        "title": "OauthToken",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Oauth.Schemas.OauthToken",
+        "x-validate": null
+      },
+      "AllowWalletRequest": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/VerifyOwnershipRequest"
+          }
+        ],
+        "description": "Verifies wallet ownership via a previously generated challenge, then checks if the wallet\nis already allowed for the offer. If already allowed, returns 200 with an empty JSON object.\nOtherwise starts the supplier verification process and returns an encoded transaction\nto broadcast.\n",
+        "title": "AllowWalletRequest",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.AllowWalletRequest",
+        "x-validate": null
+      },
+      "SwapPreview": {
+        "additionalProperties": false,
+        "description": "Quote for swapping an amount of an input token on a swap contract.",
+        "properties": {
+          "fee": {
+            "description": "Fee charged on the swap, as a uint256 decimal string in the input token's smallest unit",
+            "example": "1000",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "swap_preview"
+            ],
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "pay_input_amount": {
+            "description": "Amount of the input token to pay, as a uint256 decimal string in the input token's smallest unit",
+            "example": "1000000",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "receive_output_amount": {
+            "description": "Amount of the output token to receive, as a uint256 decimal string in the output token's smallest unit",
+            "example": "999000",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "object",
+          "pay_input_amount",
+          "fee",
+          "receive_output_amount"
+        ],
+        "title": "SwapPreview",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.SwapPreview",
+        "x-validate": null
+      },
+      "OauthError": {
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "description": "OAuth error code",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "error_description": {
+            "description": "Human-readable error description",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "error",
+          "error_description"
+        ],
+        "title": "OauthError",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Oauth.Schemas.OauthError",
+        "x-validate": null
+      },
+      "OptionRequirementJurisdictionDetails": {
+        "properties": {
+          "filter_type": {
+            "description": "The type of filter",
+            "enum": [
+              "allow",
+              "reject"
+            ],
+            "example": "allow",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "filters": {
+            "description": "List of jurisdiction filters",
+            "items": {
+              "$ref": "#/components/schemas/OptionRequirementJurisdictionFilter"
+            },
+            "type": "array",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "filter_type",
+          "filters"
+        ],
+        "title": "OptionRequirementJurisdictionDetails",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.OptionRequirement.JurisdictionDetails",
+        "x-validate": null
+      },
+      "OfferOptionAddress": {
+        "additionalProperties": false,
+        "description": "A user's proven external wallet connected to an offer option.",
+        "properties": {
+          "address": {
+            "description": "The connected external wallet address.",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "created_at": {
+            "description": "When the binding was created.",
+            "example": "2025-01-01T00:00:00.000000Z",
+            "format": "date-time",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "id": {
+            "description": "Unique identifier for the object.",
+            "example": "05edea81-98a7-4582-aa7c-040d57cb1858",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "offer_option_id": {
+            "description": "The ID of the offer option.",
+            "example": "05edea81-98a7-4582-aa7c-040d57cb1858",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "protocol": {
+            "description": "The protocol the binding is scoped to. An EVM address binds once per option regardless of which EVM chain proved ownership.",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "id",
+          "offer_option_id",
+          "address",
+          "protocol",
+          "created_at"
+        ],
+        "title": "OfferOptionAddress",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.OfferOptionAddress",
+        "x-validate": null
+      },
+      "OptionRequirement": {
+        "properties": {
+          "details": {
+            "description": "Requirement-specific details.\nNull for kyc_approved, accreditation, identity_verified,\nproof_of_address, and source_of_funds types.\nExternalWalletDetails for external_wallet type.\nWhitelistedWalletDetails for whitelisted_wallet type.\nJurisdictionDetails for jurisdiction type.\nDocumentDetails for document type.\n",
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/OptionRequirementExternalWalletDetails"
+              },
+              {
+                "$ref": "#/components/schemas/OptionRequirementWhitelistedWalletDetails"
+              },
+              {
+                "$ref": "#/components/schemas/OptionRequirementJurisdictionDetails"
+              },
+              {
+                "$ref": "#/components/schemas/OptionRequirementDocumentDetails"
+              }
+            ],
+            "x-struct": null,
+            "x-validate": null
+          },
+          "id": {
+            "description": "Unique identifier for the object.",
+            "example": "05edea81-98a7-4582-aa7c-040d57cb1858",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "requirement"
+            ],
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          },
+          "type": {
+            "description": "The requirement type",
+            "enum": [
+              "kyc_approved",
+              "identity_verified",
+              "proof_of_address",
+              "source_of_funds",
+              "external_wallet",
+              "whitelisted_wallet",
+              "jurisdiction",
+              "accreditation",
+              "document"
+            ],
+            "example": "kyc_approved",
+            "type": "string",
+            "x-struct": null,
+            "x-validate": null
+          }
+        },
+        "required": [
+          "object",
+          "id",
+          "type"
+        ],
+        "title": "OptionRequirement",
+        "type": "object",
+        "x-struct": "Elixir.FrontlineAPIWeb.OpenApi.Schemas.OptionRequirement",
+        "x-validate": null
+      }
+    },
+    "securitySchemes": {
+      "OAuth2": {
+        "description": "OAuth 2.0 authorization and token endpoints",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "/oauth/authorize",
+            "refreshUrl": "/oauth/token",
+            "scopes": {},
+            "tokenUrl": "/oauth/token"
+          },
+          "clientCredentials": {
+            "refreshUrl": "/oauth/token",
+            "scopes": {},
+            "tokenUrl": "/oauth/token"
+          }
+        },
+        "type": "oauth2"
+      },
+      "TokenAuth": {
+        "description": "Session token for user authentication during OAuth authorization",
+        "scheme": "bearer",
+        "type": "http"
+      }
+    }
+  },
+  "info": {
+    "title": "Frontline API",
+    "version": "0.1.0"
+  },
+  "openapi": "3.0.0",
+  "paths": {
+    "/oauth/introspect": {
+      "post": {
+        "callbacks": {},
+        "description": "Returns metadata about an access token, including whether it is active.",
+        "operationId": "FrontlineAPIWeb.Oauth.IntrospectController.OpenApiSpec.introspect",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "client_id": {
+                    "description": "The client identifier.",
+                    "example": "550e8400-e29b-41d4-a716-446655440000",
+                    "type": "string",
+                    "x-struct": null,
+                    "x-validate": null
+                  },
+                  "client_secret": {
+                    "description": "The client secret.",
+                    "example": "my-client-secret",
+                    "type": "string",
+                    "x-struct": null,
+                    "x-validate": null
+                  },
+                  "token": {
+                    "description": "The token to introspect.",
+                    "example": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+                    "type": "string",
+                    "x-struct": null,
+                    "x-validate": null
+                  }
+                },
+                "required": [
+                  "token"
+                ],
+                "type": "object",
+                "x-struct": null,
+                "x-validate": null
+              }
+            }
+          },
+          "description": "Introspect request params",
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OauthIntrospect"
+                }
+              }
+            },
+            "description": "Token introspection result."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OauthError"
+                }
+              }
+            },
+            "description": "OAuth error response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OauthError"
+                }
+              }
+            },
+            "description": "OAuth error response"
+          }
+        },
+        "security": [],
+        "summary": "Introspect token",
+        "tags": [
+          "OAuth"
+        ]
+      }
+    },
+    "/oauth/revoke": {
+      "post": {
+        "callbacks": {},
+        "description": "Revokes an access or refresh token.",
+        "operationId": "FrontlineAPIWeb.Oauth.RevokeController.OpenApiSpec.revoke",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "client_id": {
+                    "description": "The client identifier.",
+                    "example": "550e8400-e29b-41d4-a716-446655440000",
+                    "type": "string",
+                    "x-struct": null,
+                    "x-validate": null
+                  },
+                  "client_secret": {
+                    "description": "The client secret.",
+                    "example": "my-client-secret",
+                    "type": "string",
+                    "x-struct": null,
+                    "x-validate": null
+                  },
+                  "token": {
+                    "description": "The token to revoke.",
+                    "example": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+                    "type": "string",
+                    "x-struct": null,
+                    "x-validate": null
+                  }
+                },
+                "required": [
+                  "token"
+                ],
+                "type": "object",
+                "x-struct": null,
+                "x-validate": null
+              }
+            }
+          },
+          "description": "Revoke request params",
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {}
+            },
+            "description": "Token revoked successfully."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OauthError"
+                }
+              }
+            },
+            "description": "OAuth error response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OauthError"
+                }
+              }
+            },
+            "description": "OAuth error response"
+          }
+        },
+        "security": [],
+        "summary": "Revoke token",
+        "tags": [
+          "OAuth"
+        ]
+      }
+    },
+    "/oauth/token": {
+      "post": {
+        "callbacks": {},
+        "description": "Issues access tokens for `authorization_code`, `client_credentials`, and `refresh_token` grants using an `application/x-www-form-urlencoded` request body. For the `authorization_code` grant, the partner exchanges the code obtained from `GET /oauth/authorize` along with a PKCE `code_verifier`.",
+        "operationId": "FrontlineAPIWeb.Oauth.TokenController.OpenApiSpec.token",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "properties": {
+                  "client_id": {
+                    "description": "OAuth client identifier. Required for all grant types when client authentication is sent in the request body.",
+                    "type": "string",
+                    "x-struct": null,
+                    "x-validate": null
+                  },
+                  "client_secret": {
+                    "description": "OAuth client secret. Required for all grant types when client authentication is sent in the request body.",
+                    "type": "string",
+                    "x-struct": null,
+                    "x-validate": null
+                  },
+                  "code": {
+                    "description": "Authorization code received from the `/oauth/authorize` endpoint. Required when `grant_type` is `authorization_code`.",
+                    "type": "string",
+                    "x-struct": null,
+                    "x-validate": null
+                  },
+                  "code_verifier": {
+                    "description": "PKCE code verifier corresponding to the `code_challenge` sent to `/oauth/authorize`. Required when `grant_type` is `authorization_code`.",
+                    "type": "string",
+                    "x-struct": null,
+                    "x-validate": null
+                  },
+                  "grant_type": {
+                    "description": "OAuth grant type. Supported values are `authorization_code`, `client_credentials`, and `refresh_token`.",
+                    "enum": [
+                      "authorization_code",
+                      "client_credentials",
+                      "refresh_token"
+                    ],
+                    "type": "string",
+                    "x-struct": null,
+                    "x-validate": null
+                  },
+                  "redirect_uri": {
+                    "description": "Must match the `redirect_uri` used in the original `/oauth/authorize` request. Required when `grant_type` is `authorization_code`.",
+                    "format": "uri",
+                    "type": "string",
+                    "x-struct": null,
+                    "x-validate": null
+                  },
+                  "refresh_token": {
+                    "description": "Required when `grant_type` is `refresh_token`.",
+                    "type": "string",
+                    "x-struct": null,
+                    "x-validate": null
+                  }
+                },
+                "required": [
+                  "grant_type"
+                ],
+                "type": "object",
+                "x-struct": null,
+                "x-validate": null
+              }
+            }
+          },
+          "description": "Token request params",
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OauthToken"
+                }
+              }
+            },
+            "description": "Successful token response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OauthError"
+                }
+              }
+            },
+            "description": "OAuth error response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OauthError"
+                }
+              }
+            },
+            "description": "OAuth error response"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OauthError"
+                }
+              }
+            },
+            "description": "OAuth error response"
+          }
+        },
+        "security": [],
+        "summary": "Issue OAuth access token",
+        "tags": [
+          "OAuth"
+        ]
+      }
+    },
+    "/v1/documents/{document_type}/submission": {
+      "post": {
+        "callbacks": {},
+        "description": "Creates a signing submission for the given document type (e.g. a W-8BEN tax certification) for the current entity. The signing link is emailed to the user. Re-posting acts as a resend/re-sign where the document state allows it. The submitted PII pre-fills the form and is forwarded to Passport, never persisted by Frontline.",
+        "operationId": "createDocumentSubmission",
+        "parameters": [
+          {
+            "description": "The type of document to submit for signing. Valid values: tax_certification",
+            "in": "path",
+            "name": "document_type",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": {
+                  "type": "string",
+                  "x-struct": null,
+                  "x-validate": null
+                },
+                "example": {
+                  "City": "Warsaw",
+                  "Country": "PL",
+                  "Country Of Citizenship": "Poland",
+                  "DOB": "01/15/1985",
+                  "Date": "06/16/2026",
+                  "Foreign Tax Number": "123-45-6789",
+                  "Full Name": "Aleksander Nowak",
+                  "Permanent Address": "ul. Nowy Świat 12",
+                  "Signature": "Aleksander Nowak"
+                },
+                "type": "object",
+                "x-struct": null,
+                "x-validate": null
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "additionalProperties": {
+                  "type": "string",
+                  "x-struct": null,
+                  "x-validate": null
+                },
+                "example": {
+                  "City": "Warsaw",
+                  "Country": "PL",
+                  "Country Of Citizenship": "Poland",
+                  "DOB": "01/15/1985",
+                  "Date": "06/16/2026",
+                  "Foreign Tax Number": "123-45-6789",
+                  "Full Name": "Aleksander Nowak",
+                  "Permanent Address": "ul. Nowy Świat 12",
+                  "Signature": "Aleksander Nowak"
+                },
+                "type": "object",
+                "x-struct": null,
+                "x-validate": null
+              }
+            }
+          },
+          "description": "Signing-form fields keyed by the document's DocuSeal field names. Forwarded verbatim to Passport to pre-fill the document, never persisted by Frontline.",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentSubmission"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Create a document signing submission for the authenticated partner and user",
+        "tags": [
+          "DocumentSubmissions"
+        ]
+      }
+    },
+    "/v1/kyc-token": {
+      "post": {
+        "callbacks": {},
+        "description": "Generates a short-lived Sumsub WebSDK access token for the current user so an identity verification flow can be started. Requires a user-scoped access token (authorization code grant); partner-only tokens (client credentials grant) are rejected.",
+        "operationId": "createKycToken",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateKycTokenRequest"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateKycTokenRequest"
+              }
+            }
+          },
+          "description": "KYC token params",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KycToken"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Generate a Sumsub KYC access token",
+        "tags": [
+          "KYC"
+        ]
+      }
+    },
+    "/v1/offers": {
+      "get": {
+        "callbacks": {},
+        "operationId": "listPartnerOffers",
+        "parameters": [
+          {
+            "description": "A cursor for use in pagination",
+            "example": "g3QAAAA...",
+            "in": "query",
+            "name": "starting_after",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "A cursor for use in pagination",
+            "example": "g3QAAAA...",
+            "in": "query",
+            "name": "starting_before",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "description": "A limit on the number of objects to be returned",
+              "example": 10,
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Cursor for the next page",
+            "in": "query",
+            "name": "starting_after",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Cursor for the previous page",
+            "in": "query",
+            "name": "starting_before",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Number of items to return",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "$ref": "#/components/schemas/Offer"
+                      },
+                      "type": "array",
+                      "x-struct": null,
+                      "x-validate": null
+                    },
+                    "object": {
+                      "description": "String representing the object's type. Objects of the same type share the same value.",
+                      "enum": [
+                        "list"
+                      ],
+                      "type": "string",
+                      "x-struct": null,
+                      "x-validate": null
+                    },
+                    "starting_after": {
+                      "description": "String representing the page cursor to used for querying the next page.",
+                      "example": "g3QAAAA...",
+                      "type": "string",
+                      "x-struct": null,
+                      "x-validate": null
+                    },
+                    "starting_before": {
+                      "description": "String representing the page cursor to used for querying the previous page.",
+                      "example": "g3QAAAA...",
+                      "type": "string",
+                      "x-struct": null,
+                      "x-validate": null
+                    }
+                  },
+                  "required": [
+                    "object",
+                    "data"
+                  ],
+                  "type": "object",
+                  "x-struct": null,
+                  "x-validate": null
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "List offers for the authenticated partner",
+        "tags": [
+          "Offers"
+        ]
+      }
+    },
+    "/v1/offers/{id}": {
+      "get": {
+        "callbacks": {},
+        "operationId": "getPartnerOffer",
+        "parameters": [
+          {
+            "description": "Offer ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OfferDetails"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Get an offer for the authenticated partner",
+        "tags": [
+          "Offers"
+        ]
+      }
+    },
+    "/v1/offers/{offer_id}/allow-wallet": {
+      "post": {
+        "callbacks": {},
+        "operationId": "allowWallet",
+        "parameters": [
+          {
+            "description": "The ID of the offer",
+            "in": "path",
+            "name": "offer_id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AllowWalletRequest"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/AllowWalletRequest"
+              }
+            }
+          },
+          "description": "Allow wallet params",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllowWalletResponse"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Allow a wallet address for an offer",
+        "tags": [
+          "Offers"
+        ]
+      }
+    },
+    "/v1/offers/{offer_id}/requirements": {
+      "get": {
+        "callbacks": {},
+        "operationId": "listOfferRequirements",
+        "parameters": [
+          {
+            "description": "The offer ID",
+            "in": "path",
+            "name": "offer_id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OfferRequirements"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "List requirements for all options of an offer",
+        "tags": [
+          "Requirements"
+        ]
+      }
+    },
+    "/v1/offers/{offer_id}/requirements/statuses": {
+      "get": {
+        "callbacks": {},
+        "operationId": "listOfferRequirementStatuses",
+        "parameters": [
+          {
+            "description": "The offer ID",
+            "in": "path",
+            "name": "offer_id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequirementStatuses"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "List requirement statuses for all options of an offer",
+        "tags": [
+          "Requirements"
+        ]
+      }
+    },
+    "/v1/offers/{offer_id}/submit-addresses": {
+      "post": {
+        "callbacks": {},
+        "operationId": "createOfferOptionAddress",
+        "parameters": [
+          {
+            "description": "The ID of the offer",
+            "in": "path",
+            "name": "offer_id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOfferOptionAddressRequest"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOfferOptionAddressRequest"
+              }
+            }
+          },
+          "description": "Offer option address params",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OfferOptionAddress"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Connect a proven external wallet to an offer option",
+        "tags": [
+          "Offers"
+        ]
+      }
+    },
+    "/v1/participations": {
+      "get": {
+        "callbacks": {},
+        "operationId": "listPartnerParticipations",
+        "parameters": [
+          {
+            "description": "A cursor for use in pagination",
+            "example": "g3QAAAA...",
+            "in": "query",
+            "name": "starting_after",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "A cursor for use in pagination",
+            "example": "g3QAAAA...",
+            "in": "query",
+            "name": "starting_before",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "description": "A limit on the number of objects to be returned",
+              "example": 10,
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Cursor for the next page",
+            "in": "query",
+            "name": "starting_after",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Cursor for the previous page",
+            "in": "query",
+            "name": "starting_before",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Number of items to return",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Flop filter parameters (e.g. by offer_id)",
+            "in": "query",
+            "name": "filters",
+            "required": false,
+            "schema": {
+              "items": {
+                "properties": {
+                  "field": {
+                    "type": "string",
+                    "x-struct": null,
+                    "x-validate": null
+                  },
+                  "op": {
+                    "type": "string",
+                    "x-struct": null,
+                    "x-validate": null
+                  },
+                  "value": {
+                    "type": "string",
+                    "x-struct": null,
+                    "x-validate": null
+                  }
+                },
+                "type": "object",
+                "x-struct": null,
+                "x-validate": null
+              },
+              "type": "array",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "$ref": "#/components/schemas/Participation"
+                      },
+                      "type": "array",
+                      "x-struct": null,
+                      "x-validate": null
+                    },
+                    "object": {
+                      "description": "String representing the object's type. Objects of the same type share the same value.",
+                      "enum": [
+                        "list"
+                      ],
+                      "type": "string",
+                      "x-struct": null,
+                      "x-validate": null
+                    },
+                    "starting_after": {
+                      "description": "String representing the page cursor to used for querying the next page.",
+                      "example": "g3QAAAA...",
+                      "type": "string",
+                      "x-struct": null,
+                      "x-validate": null
+                    },
+                    "starting_before": {
+                      "description": "String representing the page cursor to used for querying the previous page.",
+                      "example": "g3QAAAA...",
+                      "type": "string",
+                      "x-struct": null,
+                      "x-validate": null
+                    }
+                  },
+                  "required": [
+                    "object",
+                    "data"
+                  ],
+                  "type": "object",
+                  "x-struct": null,
+                  "x-validate": null
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "List participations for the authenticated partner and user",
+        "tags": [
+          "Participations"
+        ]
+      },
+      "post": {
+        "callbacks": {},
+        "operationId": "createPartnerParticipation",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateParticipation"
+              }
+            }
+          },
+          "description": "Participation creation params",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Participation"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Create a participation for the authenticated partner and user",
+        "tags": [
+          "Participations"
+        ]
+      }
+    },
+    "/v1/participations/{id}": {
+      "get": {
+        "callbacks": {},
+        "operationId": "getPartnerParticipation",
+        "parameters": [
+          {
+            "description": "Participation ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Participation"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Get a participation for the authenticated partner and user",
+        "tags": [
+          "Participations"
+        ]
+      }
+    },
+    "/v1/pii": {
+      "get": {
+        "callbacks": {},
+        "description": "Returns the user's PII (full legal name, country of citizenship, tax ID, permanent address) to pre-fill tax forms such as the W-8BEN. Fields that are unavailable are null.",
+        "operationId": "getPii",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pii"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Get PII for the authenticated partner and user",
+        "tags": [
+          "Pii"
+        ]
+      }
+    },
+    "/v1/swap/output-token": {
+      "get": {
+        "callbacks": {},
+        "description": "Resolves outputToken() on the Superstate swap contract and returns the ERC-20 name, symbol and decimals of that token.",
+        "operationId": "getSwapOutputToken",
+        "parameters": [
+          {
+            "description": "The swap contract address",
+            "in": "query",
+            "name": "contract_address",
+            "required": true,
+            "schema": {
+              "example": "0x742d35cc6634c0532925a3b844bc9e7595f0beb1",
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "The EVM chain to read from, e.g. ethereum_mainnet, ethereum_sepolia, base_mainnet or base_sepolia",
+            "in": "query",
+            "name": "chain",
+            "required": true,
+            "schema": {
+              "example": "ethereum_sepolia",
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwapOutputToken"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Get the swap contract's output token metadata",
+        "tags": [
+          "Swap"
+        ]
+      }
+    },
+    "/v1/swap/preview": {
+      "get": {
+        "callbacks": {},
+        "description": "Reads preview(inputToken, amount) on the Superstate swap contract and returns the quote: the input amount to pay, the fee charged on it and the output amount to receive.",
+        "operationId": "getSwapPreview",
+        "parameters": [
+          {
+            "description": "The swap contract address",
+            "in": "query",
+            "name": "contract_address",
+            "required": true,
+            "schema": {
+              "example": "0x742d35cc6634c0532925a3b844bc9e7595f0beb1",
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "The EVM chain to read from, e.g. ethereum_mainnet, ethereum_sepolia, base_mainnet or base_sepolia",
+            "in": "query",
+            "name": "chain",
+            "required": true,
+            "schema": {
+              "example": "ethereum_sepolia",
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "The input token contract address",
+            "in": "query",
+            "name": "input_token",
+            "required": true,
+            "schema": {
+              "example": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "Amount of the input token to swap, as a uint256 decimal string in the input token's smallest unit",
+            "in": "query",
+            "name": "amount",
+            "required": true,
+            "schema": {
+              "example": "1000000",
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwapPreview"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Preview a swap",
+        "tags": [
+          "Swap"
+        ]
+      }
+    },
+    "/v1/swap/status": {
+      "get": {
+        "callbacks": {},
+        "description": "Reads stopped() and SWAP_LEVEL() on the Superstate swap contract so clients can determine whether swaps are currently allowed.",
+        "operationId": "getSwapStatus",
+        "parameters": [
+          {
+            "description": "The swap contract address",
+            "in": "query",
+            "name": "contract_address",
+            "required": true,
+            "schema": {
+              "example": "0x742d35cc6634c0532925a3b844bc9e7595f0beb1",
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "The EVM chain to read from, e.g. ethereum_mainnet, ethereum_sepolia, base_mainnet or base_sepolia",
+            "in": "query",
+            "name": "chain",
+            "required": true,
+            "schema": {
+              "example": "ethereum_sepolia",
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwapStatus"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Get the swap contract's status",
+        "tags": [
+          "Swap"
+        ]
+      }
+    },
+    "/v1/token/allowance": {
+      "get": {
+        "callbacks": {},
+        "description": "Reads allowance(owner, spender) on the ERC-20 token contract. Can be used to determine whether an approval transaction is needed before a swap or token sale.",
+        "operationId": "getTokenAllowance",
+        "parameters": [
+          {
+            "description": "The ERC-20 token contract address",
+            "in": "query",
+            "name": "token_address",
+            "required": true,
+            "schema": {
+              "example": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "The address owning the tokens",
+            "in": "query",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "example": "0x8ba1f109551bd432803012645ac136ddd64dba72",
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "The address allowed to spend the tokens",
+            "in": "query",
+            "name": "spender",
+            "required": true,
+            "schema": {
+              "example": "0x742d35cc6634c0532925a3b844bc9e7595f0beb1",
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "The EVM chain to read from, e.g. ethereum_mainnet, ethereum_sepolia, base_mainnet or base_sepolia",
+            "in": "query",
+            "name": "chain",
+            "required": true,
+            "schema": {
+              "example": "ethereum_sepolia",
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenAllowance"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Get the on-chain ERC-20 allowance for a token, owner and spender",
+        "tags": [
+          "Token"
+        ]
+      }
+    },
+    "/v1/token/balance": {
+      "get": {
+        "callbacks": {},
+        "description": "Reads balanceOf(owner) on the ERC-20 token contract. Used to display the balance of the connected wallet the user will pay with.",
+        "operationId": "getTokenBalance",
+        "parameters": [
+          {
+            "description": "The ERC-20 token contract address",
+            "in": "query",
+            "name": "token_address",
+            "required": true,
+            "schema": {
+              "example": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "The address owning the tokens",
+            "in": "query",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "example": "0x8ba1f109551bd432803012645ac136ddd64dba72",
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "The EVM chain to read from, e.g. ethereum_mainnet, ethereum_sepolia, base_mainnet or base_sepolia",
+            "in": "query",
+            "name": "chain",
+            "required": true,
+            "schema": {
+              "example": "ethereum_sepolia",
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenBalance"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Get the on-chain ERC-20 balance of an address",
+        "tags": [
+          "Token"
+        ]
+      }
+    },
+    "/v1/wallet-ownership": {
+      "post": {
+        "callbacks": {},
+        "operationId": "createWalletOwnershipChallenge",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateWalletOwnershipChallengeRequest"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateWalletOwnershipChallengeRequest"
+              }
+            }
+          },
+          "description": "Wallet ownership challenge params",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WalletOwnershipChallenge"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Request a wallet ownership challenge",
+        "tags": [
+          "Wallet Ownership"
+        ]
+      }
+    },
+    "/v1/wallet/authorized": {
+      "get": {
+        "callbacks": {},
+        "description": "Reads authorized(address) on the Superstate swap contract to determine whether the given wallet is allowed to swap.",
+        "operationId": "getWalletAuthorized",
+        "parameters": [
+          {
+            "description": "The swap contract address",
+            "in": "query",
+            "name": "contract_address",
+            "required": true,
+            "schema": {
+              "example": "0x742d35cc6634c0532925a3b844bc9e7595f0beb1",
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "The wallet address to check",
+            "in": "query",
+            "name": "wallet_address",
+            "required": true,
+            "schema": {
+              "example": "0x8ba1f109551bd432803012645ac136ddd64dba72",
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          },
+          {
+            "description": "The EVM chain to read from, e.g. ethereum_mainnet, ethereum_sepolia, base_mainnet or base_sepolia",
+            "in": "query",
+            "name": "chain",
+            "required": true,
+            "schema": {
+              "example": "ethereum_sepolia",
+              "type": "string",
+              "x-struct": null,
+              "x-validate": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WalletAuthorization"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Check whether a wallet is authorized on a swap contract",
+        "tags": [
+          "Wallet"
+        ]
+      }
+    }
+  },
+  "security": [],
+  "servers": [
+    {
+      "url": "https://api.coinlist.co",
+      "variables": {}
+    }
+  ],
+  "tags": [
+    {
+      "name": "DocumentSubmissions"
+    },
+    {
+      "name": "KYC"
+    },
+    {
+      "name": "OAuth"
+    },
+    {
+      "name": "Offers"
+    },
+    {
+      "name": "Participations"
+    },
+    {
+      "name": "Pii"
+    },
+    {
+      "name": "Requirements"
+    },
+    {
+      "name": "Swap"
+    },
+    {
+      "name": "Token"
+    },
+    {
+      "name": "Wallet"
+    },
+    {
+      "name": "Wallet Ownership"
+    }
+  ]
+}

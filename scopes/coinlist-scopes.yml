@@ -1,0 +1,14 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/coinlist-passage-openapi-original.json
+schemes:
+- name: OAuth2
+  source: openapi/coinlist-passage-openapi-original.json
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: /oauth/authorize
+    tokenUrl: /oauth/token
+  - flow: clientCredentials
+    tokenUrl: /oauth/token
+  description: OAuth 2.0 authorization and token endpoints
+scopes: []

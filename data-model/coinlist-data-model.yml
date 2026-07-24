@@ -1,0 +1,273 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/coinlist-passage-openapi-original.json
+note: Entity graph derived from OpenAPI component schemas ($ref links). id-prefix/domain not published.
+entities:
+- name: RequirementStatuses
+  fields:
+  - object
+  - offer_id
+  - statuses
+  references: []
+- name: Participation
+  fields:
+  - amount
+  - amount_string
+  - asset
+  - chain
+  - id
+  - inserted_at
+  - object
+  - offer_id
+  - offer_option_id
+  - status
+  - updated_at
+  - wallet_address
+  references: []
+- name: OauthIntrospect
+  fields:
+  - active
+  - client_id
+  - exp
+  - iat
+  - iss
+  - scope
+  - sub
+  - username
+  references: []
+- name: OfferRequirements
+  fields:
+  - object
+  - offer_id
+  - options
+  references:
+  - OptionRequirement
+- name: SwapOutputToken
+  fields:
+  - decimals
+  - name
+  - object
+  - symbol
+  references: []
+- name: TokenBalance
+  fields:
+  - balance
+  - object
+  references: []
+- name: CreateParticipation
+  fields:
+  - amount
+  - approval_transaction_hash
+  - asset_id
+  - chain
+  - offer_id
+  - offer_option_id
+  - wallet_address
+  references: []
+- name: VerifyOwnershipRequest
+  fields:
+  - chain
+  - signature
+  - wallet_address
+  references: []
+- name: Error
+  fields:
+  - code
+  - errors
+  - event_id
+  - message
+  - type
+  references: []
+- name: Offer
+  fields:
+  - banner_url
+  - ends_at
+  - id
+  - logo_url
+  - object
+  - options
+  - slug
+  - starts_at
+  - tagline
+  - type
+  references:
+  - OfferOption
+- name: SwapStatus
+  fields:
+  - object
+  - stopped
+  - swap_level
+  references: []
+- name: Pii
+  fields:
+  - date_of_birth
+  - full_legal_name
+  - jurisdiction
+  - kind
+  - object
+  - permanent_address
+  - tax_id
+  references: []
+- name: CreateKycTokenRequest
+  fields:
+  - level_name
+  - reset
+  references: []
+- name: OptionRequirementJurisdictionFilter
+  fields:
+  - country_iso_2
+  - regions
+  references: []
+- name: OfferOption
+  fields:
+  - bid_increment
+  - floor_price_usd
+  - id
+  - minimum_purchase_usd
+  - price_usd
+  - sale_agreement_url
+  - slug
+  - total_token_supply
+  references: []
+- name: CreateOfferOptionAddressRequest
+  fields:
+  - chain
+  - offer_option_id
+  - signature
+  - wallet_address
+  references: []
+- name: DocumentSubmission
+  fields:
+  - form_type
+  - object
+  - status
+  references: []
+- name: AllowWalletBroadcastTransactionResponse
+  fields:
+  - action
+  - data
+  - to
+  references: []
+- name: AllowWalletAlreadyAllowedResponse
+  fields:
+  - action
+  - already_allowed
+  references: []
+- name: OptionRequirementDocumentDetails
+  fields:
+  - document_type
+  references: []
+- name: CreateWalletOwnershipChallengeRequest
+  fields:
+  - chain
+  - challenge_type
+  - domain
+  - statement
+  - uri
+  - wallet_address
+  references: []
+- name: OfferDetails
+  fields:
+  - about
+  - asset
+  - banner_url
+  - category
+  - ends_at
+  - faqs
+  - funding_assets
+  - id
+  - links
+  - logo_url
+  - milestones
+  - name
+  - object
+  - options
+  - slug
+  - starts_at
+  - tagline
+  - terms
+  - type
+  references:
+  - OfferOption
+- name: TokenAllowance
+  fields:
+  - allowance
+  - object
+  references: []
+- name: AllowWalletResponse
+  fields: []
+  references:
+  - AllowWalletAlreadyAllowedResponse
+  - AllowWalletBroadcastTransactionResponse
+- name: WalletAuthorization
+  fields:
+  - authorized
+  - object
+  references: []
+- name: KycToken
+  fields:
+  - object
+  - token
+  references: []
+- name: OptionRequirementExternalWalletDetails
+  fields:
+  - protocol
+  references: []
+- name: WalletOwnershipChallenge
+  fields:
+  - expires_at
+  - message
+  references: []
+- name: OptionRequirementWhitelistedWalletDetails
+  fields:
+  - max_wallets
+  references: []
+- name: OauthToken
+  fields:
+  - access_token
+  - expires_in
+  - id_token
+  - refresh_token
+  - token_type
+  references: []
+- name: AllowWalletRequest
+  fields: []
+  references:
+  - VerifyOwnershipRequest
+- name: SwapPreview
+  fields:
+  - fee
+  - object
+  - pay_input_amount
+  - receive_output_amount
+  references: []
+- name: OauthError
+  fields:
+  - error
+  - error_description
+  references: []
+- name: OptionRequirementJurisdictionDetails
+  fields:
+  - filter_type
+  - filters
+  references:
+  - OptionRequirementJurisdictionFilter
+- name: OfferOptionAddress
+  fields:
+  - address
+  - created_at
+  - id
+  - offer_option_id
+  - protocol
+  references: []
+- name: OptionRequirement
+  fields:
+  - details
+  - id
+  - object
+  - type
+  references:
+  - OptionRequirementDocumentDetails
+  - OptionRequirementExternalWalletDetails
+  - OptionRequirementJurisdictionDetails
+  - OptionRequirementWhitelistedWalletDetails

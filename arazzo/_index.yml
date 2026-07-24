@@ -1,0 +1,12 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/coinlist-passage-openapi-original.json
+workflows:
+- file: coinlist-invest-flow.yml
+  workflowId: invest-in-offer
+  title: CoinList Passage - Invest flow
+  summary: Load an offer, check on-chain balance/allowance, prove and allow-list the wallet, then create and track a participation.
+- file: coinlist-kyc-onboarding.yml
+  workflowId: kyc-and-documents
+  title: CoinList Passage - KYC and document onboarding
+  summary: Start a Sumsub KYC session, read stored PII, and create a tax-document signing submission.

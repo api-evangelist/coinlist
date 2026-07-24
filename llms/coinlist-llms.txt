@@ -1,0 +1,45 @@
+# Passage Docs
+
+## Docs
+
+- [Create a document signing submission for the authenticated partner and user](https://docs.passage.coinlist.co/api-reference/documentsubmissions/create-a-document-signing-submission-for-the-authenticated-partner-and-user.md): Creates a signing submission for the given document type (e.g. a W-8BEN tax certification) for the current entity. The signing link is emailed to the user. Re-posting acts as a resend/re-sign where the document state allows it. The submitted PII pre-fills the form and is forwarded to Passport, never…
+- [Generate a Sumsub KYC access token](https://docs.passage.coinlist.co/api-reference/kyc/generate-a-sumsub-kyc-access-token.md): Generates a short-lived Sumsub WebSDK access token for the current user so an identity verification flow can be started. Requires a user-scoped access token (authorization code grant); partner-only tokens (client credentials grant) are rejected.
+- [Introspect token](https://docs.passage.coinlist.co/api-reference/oauth/introspect-token.md): Returns metadata about an access token, including whether it is active.
+- [Issue OAuth access token](https://docs.passage.coinlist.co/api-reference/oauth/issue-oauth-access-token.md): Issues access tokens for `authorization_code`, `client_credentials`, and `refresh_token` grants using an `application/x-www-form-urlencoded` request body. For the `authorization_code` grant, the partner exchanges the code obtained from `GET /oauth/authorize` along with a PKCE `code_verifier`.
+- [Revoke token](https://docs.passage.coinlist.co/api-reference/oauth/revoke-token.md): Revokes an access or refresh token.
+- [Allow a wallet address for an offer](https://docs.passage.coinlist.co/api-reference/offers/allow-a-wallet-address-for-an-offer.md)
+- [Connect a proven external wallet to an offer option](https://docs.passage.coinlist.co/api-reference/offers/connect-a-proven-external-wallet-to-an-offer-option.md)
+- [Get an offer for the authenticated partner](https://docs.passage.coinlist.co/api-reference/offers/get-an-offer-for-the-authenticated-partner.md)
+- [List offers for the authenticated partner](https://docs.passage.coinlist.co/api-reference/offers/list-offers-for-the-authenticated-partner.md)
+- [Create a participation for the authenticated partner and user](https://docs.passage.coinlist.co/api-reference/participations/create-a-participation-for-the-authenticated-partner-and-user.md)
+- [Get a participation for the authenticated partner and user](https://docs.passage.coinlist.co/api-reference/participations/get-a-participation-for-the-authenticated-partner-and-user.md)
+- [List participations for the authenticated partner and user](https://docs.passage.coinlist.co/api-reference/participations/list-participations-for-the-authenticated-partner-and-user.md)
+- [Get PII for the authenticated partner and user](https://docs.passage.coinlist.co/api-reference/pii/get-pii-for-the-authenticated-partner-and-user.md): Returns the user's PII (full legal name, country of citizenship, tax ID, permanent address) to pre-fill tax forms such as the W-8BEN. Fields that are unavailable are null.
+- [List requirement statuses for all options of an offer](https://docs.passage.coinlist.co/api-reference/requirements/list-requirement-statuses-for-all-options-of-an-offer.md)
+- [List requirements for all options of an offer](https://docs.passage.coinlist.co/api-reference/requirements/list-requirements-for-all-options-of-an-offer.md)
+- [Get the swap contract's output token metadata](https://docs.passage.coinlist.co/api-reference/swap/get-the-swap-contracts-output-token-metadata.md): Resolves outputToken() on the Superstate swap contract and returns the ERC-20 name, symbol and decimals of that token.
+- [Get the swap contract's status](https://docs.passage.coinlist.co/api-reference/swap/get-the-swap-contracts-status.md): Reads stopped() and SWAP_LEVEL() on the Superstate swap contract so clients can determine whether swaps are currently allowed.
+- [Preview a swap](https://docs.passage.coinlist.co/api-reference/swap/preview-a-swap.md): Reads preview(inputToken, amount) on the Superstate swap contract and returns the quote: the input amount to pay, the fee charged on it and the output amount to receive.
+- [Get the on-chain ERC-20 allowance for a token, owner and spender](https://docs.passage.coinlist.co/api-reference/token/get-the-on-chain-erc-20-allowance-for-a-token-owner-and-spender.md): Reads allowance(owner, spender) on the ERC-20 token contract. Can be used to determine whether an approval transaction is needed before a swap or token sale.
+- [Get the on-chain ERC-20 balance of an address](https://docs.passage.coinlist.co/api-reference/token/get-the-on-chain-erc-20-balance-of-an-address.md): Reads balanceOf(owner) on the ERC-20 token contract. Used to display the balance of the connected wallet the user will pay with.
+- [Request a wallet ownership challenge](https://docs.passage.coinlist.co/api-reference/wallet-ownership/request-a-wallet-ownership-challenge.md)
+- [Check whether a wallet is authorized on a swap contract](https://docs.passage.coinlist.co/api-reference/wallet/check-whether-a-wallet-is-authorized-on-a-swap-contract.md): Reads authorized(address) on the Superstate swap contract to determine whether the given wallet is allowed to swap.
+- [React SDK changelog](https://docs.passage.coinlist.co/changelogs/react.md): Release history for @coinlist-co/react
+- [Embed token sales in your app](https://docs.passage.coinlist.co/guides/embed-token-sales.md): Surface CoinList-managed token sales directly inside your app. Your users discover and participate in offers without leaving your product - Passage runs the back end.
+- [Embed tokenized equities](https://docs.passage.coinlist.co/guides/embed-tokenized-equities.md): Offer shares from multiple issuers inside your wallet or app. Users discover, fund, and hold tokenized equities - Passage runs the regulated infrastructure underneath.
+- [Launch a public token sale](https://docs.passage.coinlist.co/guides/launch-public-token-sale.md): Run a compliant offering end-to-end. Passage handles KYC, eligibility, payments, and distributions - you focus on the product and the launch.
+- [Guides](https://docs.passage.coinlist.co/guides/overview.md): Pick the integration shape that fits - run a public token sale, embed CoinList-managed sales in your app, or offer tokenized equities.
+- [Passage Docs](https://docs.passage.coinlist.co/index.md): Build with Passage
+- [Recipes](https://docs.passage.coinlist.co/recipes.md): Step-by-step guides for Passage integrations with the React SDK.
+- [Fetch offers](https://docs.passage.coinlist.co/recipes/fetch-offers.md): List Passage offers for the signed-in user with OffersGrid or hooks.
+- [Build the invest flow](https://docs.passage.coinlist.co/recipes/invest-flow.md): Wallet connect, on-chain approval, and createParticipation - the full investment flow as built in the partner demo.
+- [Set up OAuth authentication](https://docs.passage.coinlist.co/recipes/oauth-authentication.md): Authenticate users with Passage and authorize your application using OAuth 2.0 with PKCE and a backend session.
+- [Create and track participations](https://docs.passage.coinlist.co/recipes/participations.md): List participations with useParticipations or CoinListClient, and create a participation for an offer option.
+- [Display offer details](https://docs.passage.coinlist.co/recipes/sale-details.md): Load full offer details with the React SDK or the API.
+- [SDK quickstart](https://docs.passage.coinlist.co/sdk/quickstart.md): Get OAuth credentials, install the Passage React SDK, and understand client, server, and API layers.
+- [Package overview](https://docs.passage.coinlist.co/sdks.md): Install @coinlist-co/react - React UI, hooks, client, and server utilities for Passage.
+- [Support](https://docs.passage.coinlist.co/support.md): Get help with Passage
+
+## OpenAPI Specs
+
+- [openapi](https://docs.passage.coinlist.co/api-reference/openapi.json)

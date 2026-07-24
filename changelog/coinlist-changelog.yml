@@ -1,0 +1,52 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.passage.coinlist.co/changelogs/react.md
+scheme: semver
+subject: '@coinlist-co/react (Passage Partner SDK)'
+current_version: 0.6.0
+note: Public dated changelog is the React SDK release history; the HTTP API is versioned
+  v1 in the URI path.
+entries:
+- version: 0.5.1
+  date: '2026-05-07'
+  breaking: true
+  highlights:
+  - 'Breaking: SessionStore.setSession now optional (formalizes read-only store mode)'
+  - 'Added: WritableSessionStoreRequiredError class'
+  - 'Fixed: eliminated unnecessary network retries on expired tokens in read-only mode'
+- version: 0.5.0
+  date: '2026-05-05'
+  breaking: true
+  highlights:
+  - 'Breaking: client methods renamed (fetchAllOffers -> fetchOffers, fetchAllParticipations -> fetchParticipations)'
+  - 'Breaking: hooks renamed (useCoinList* -> use*)'
+  - 'Breaking: SSR prop unified to data across hooks/components'
+  - 'Breaking: Base* components removed; import paths restructured; new /shared entry point'
+- version: 0.4.0
+  date: '2026-04-30'
+  breaking: false
+  highlights:
+  - 'Added: full data-fetching surface to CoinListServer'
+  - 'Added: useParticipations() hook; handleRequirement() and contactSupport() on CoinListClient'
+  - 'Removed: sandbox option from ClientConfig'
+- version: 0.3.0
+  date: '2026-04-23'
+  breaking: false
+  highlights:
+  - 'Added: Requirements API (fetchOfferRequirements, fetchRequirementStatuses, useCoinListRequirements)'
+  - 'Added: sandbox mode support; participations filtering by offer ID'
+- version: 0.2.0
+  date: '2026-04-13'
+  breaking: false
+  highlights:
+  - 'Added: Participations API methods and related types'
+- version: 0.1.0
+  date: '2026-04-02'
+  breaking: false
+  highlights:
+  - 'Added: offers fetching, grid component, OAuth helpers'
+- version: 0.0.1
+  date: '2026-03-01'
+  breaking: false
+  highlights:
+  - Initial release with core SDK functionality

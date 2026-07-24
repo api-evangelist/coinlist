@@ -1,8 +1,18 @@
 aid: coinlist
 name: CoinList
-description: 'CoinList is a company surfaced as a portfolio company of electric-capital, polychain and
-  added to the API Evangelist network as a stub for enrichment. Sector: fintech. This profile is a lead
-  awaiting the enrichment pipeline.'
+description: >-
+  CoinList is a fintech platform for the token economy - it runs compliant token
+  sales, tokenized equities, trading, staking, and wallet services for crypto
+  projects and investors. Its developer surface is Passage (the "Frontline API"),
+  a partner API that lets third parties embed CoinList-managed token sales and
+  tokenized equities directly inside their own apps: OAuth 2.0 (PKCE) partner and
+  user authentication, Sumsub KYC token issuance, tax-document signing, offers,
+  eligibility requirements, participations, wallet ownership proof and
+  allow-listing, and on-chain swap/token reads. Passage runs the regulated
+  infrastructure and back office; the partner focuses on the product. Shipped with
+  a React SDK (@coinlist-co/react) of UI components, hooks, and server helpers.
+  Added to the API Evangelist network from the electric-capital and polychain
+  portfolios and enriched from CoinList's public developer surface.
 url: https://raw.githubusercontent.com/api-evangelist/coinlist/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -11,18 +21,262 @@ x-backed-by:
 - polychain
 x-tier: stub
 x-tier-reason: portfolio-lead
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
+image: https://logo.clearbit.com/coinlist.co
 tags:
 - Company
 - Fintech
-apis: []
+- Cryptocurrency
+- Token Sales
+- Tokenized Equities
+- KYC
+- OAuth
+- Blockchain
+- Digital Assets
+- Embedded Finance
+apis:
+- aid: coinlist:coinlist-documentsubmissions-api
+  name: CoinList DocumentSubmissions API
+  description: The DocumentSubmissions API from CoinList — 1 operation(s) for documentsubmissions.
+  humanURL: https://docs.passage.coinlist.co/
+  baseURL: https://api.coinlist.co
+  tags:
+  - DocumentSubmissions
+  properties:
+  - type: OpenAPI
+    url: openapi/coinlist-documentsubmissions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.passage.coinlist.co/
+  - type: APIReference
+    url: https://docs.passage.coinlist.co/api-reference
+- aid: coinlist:coinlist-kyc-api
+  name: CoinList KYC API
+  description: The KYC API from CoinList — 1 operation(s) for kyc.
+  humanURL: https://docs.passage.coinlist.co/
+  baseURL: https://api.coinlist.co
+  tags:
+  - KYC
+  properties:
+  - type: OpenAPI
+    url: openapi/coinlist-kyc-api-openapi.yml
+  - type: Documentation
+    url: https://docs.passage.coinlist.co/
+  - type: APIReference
+    url: https://docs.passage.coinlist.co/api-reference
+- aid: coinlist:coinlist-oauth-api
+  name: CoinList OAuth API
+  description: The OAuth API from CoinList — 3 operation(s) for oauth.
+  humanURL: https://docs.passage.coinlist.co/
+  baseURL: https://api.coinlist.co
+  tags:
+  - OAuth
+  properties:
+  - type: OpenAPI
+    url: openapi/coinlist-oauth-api-openapi.yml
+  - type: Documentation
+    url: https://docs.passage.coinlist.co/
+  - type: APIReference
+    url: https://docs.passage.coinlist.co/api-reference
+- aid: coinlist:coinlist-offers-api
+  name: CoinList Offers API
+  description: The Offers API from CoinList — 4 operation(s) for offers.
+  humanURL: https://docs.passage.coinlist.co/
+  baseURL: https://api.coinlist.co
+  tags:
+  - Offers
+  properties:
+  - type: OpenAPI
+    url: openapi/coinlist-offers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.passage.coinlist.co/
+  - type: APIReference
+    url: https://docs.passage.coinlist.co/api-reference
+- aid: coinlist:coinlist-participations-api
+  name: CoinList Participations API
+  description: The Participations API from CoinList — 2 operation(s) for participations.
+  humanURL: https://docs.passage.coinlist.co/
+  baseURL: https://api.coinlist.co
+  tags:
+  - Participations
+  properties:
+  - type: OpenAPI
+    url: openapi/coinlist-participations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.passage.coinlist.co/
+  - type: APIReference
+    url: https://docs.passage.coinlist.co/api-reference
+- aid: coinlist:coinlist-pii-api
+  name: CoinList Pii API
+  description: The Pii API from CoinList — 1 operation(s) for pii.
+  humanURL: https://docs.passage.coinlist.co/
+  baseURL: https://api.coinlist.co
+  tags:
+  - Pii
+  properties:
+  - type: OpenAPI
+    url: openapi/coinlist-pii-api-openapi.yml
+  - type: Documentation
+    url: https://docs.passage.coinlist.co/
+  - type: APIReference
+    url: https://docs.passage.coinlist.co/api-reference
+- aid: coinlist:coinlist-requirements-api
+  name: CoinList Requirements API
+  description: The Requirements API from CoinList — 2 operation(s) for requirements.
+  humanURL: https://docs.passage.coinlist.co/
+  baseURL: https://api.coinlist.co
+  tags:
+  - Requirements
+  properties:
+  - type: OpenAPI
+    url: openapi/coinlist-requirements-api-openapi.yml
+  - type: Documentation
+    url: https://docs.passage.coinlist.co/
+  - type: APIReference
+    url: https://docs.passage.coinlist.co/api-reference
+- aid: coinlist:coinlist-swap-api
+  name: CoinList Swap API
+  description: The Swap API from CoinList — 3 operation(s) for swap.
+  humanURL: https://docs.passage.coinlist.co/
+  baseURL: https://api.coinlist.co
+  tags:
+  - Swap
+  properties:
+  - type: OpenAPI
+    url: openapi/coinlist-swap-api-openapi.yml
+  - type: Documentation
+    url: https://docs.passage.coinlist.co/
+  - type: APIReference
+    url: https://docs.passage.coinlist.co/api-reference
+- aid: coinlist:coinlist-token-api
+  name: CoinList Token API
+  description: The Token API from CoinList — 2 operation(s) for token.
+  humanURL: https://docs.passage.coinlist.co/
+  baseURL: https://api.coinlist.co
+  tags:
+  - Token
+  properties:
+  - type: OpenAPI
+    url: openapi/coinlist-token-api-openapi.yml
+  - type: Documentation
+    url: https://docs.passage.coinlist.co/
+  - type: APIReference
+    url: https://docs.passage.coinlist.co/api-reference
+- aid: coinlist:coinlist-wallet-api
+  name: CoinList Wallet API
+  description: The Wallet API from CoinList — 1 operation(s) for wallet.
+  humanURL: https://docs.passage.coinlist.co/
+  baseURL: https://api.coinlist.co
+  tags:
+  - Wallet
+  properties:
+  - type: OpenAPI
+    url: openapi/coinlist-wallet-api-openapi.yml
+  - type: Documentation
+    url: https://docs.passage.coinlist.co/
+  - type: APIReference
+    url: https://docs.passage.coinlist.co/api-reference
+- aid: coinlist:coinlist-wallet-ownership-api
+  name: CoinList Wallet Ownership API
+  description: The Wallet Ownership API from CoinList — 1 operation(s) for wallet ownership.
+  humanURL: https://docs.passage.coinlist.co/
+  baseURL: https://api.coinlist.co
+  tags:
+  - Wallet Ownership
+  properties:
+  - type: OpenAPI
+    url: openapi/coinlist-wallet-ownership-api-openapi.yml
+  - type: Documentation
+    url: https://docs.passage.coinlist.co/
+  - type: APIReference
+    url: https://docs.passage.coinlist.co/api-reference
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+# --- artifact pointers ---
+- type: Authentication
+  url: authentication/coinlist-authentication.yml
+- type: OAuthScopes
+  url: scopes/coinlist-scopes.yml
+- type: DomainSecurity
+  url: security/coinlist-domain-security.yml
+- type: Packages
+  url: packages/coinlist-packages.yml
+- type: SDKs
+  url: packages/coinlist-packages.yml
+- type: Components
+  url: components/coinlist-components.yml
+- type: MCPServer
+  url: mcp/coinlist-mcp.yml
+- type: LLMsTxt
+  url: llms/coinlist-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: AgenticAccess
+  url: agentic-access/coinlist-agentic-access.yml
+- type: Conventions
+  url: conventions/coinlist-conventions.yml
+- type: ErrorCatalog
+  url: errors/coinlist-problem-types.yml
+- type: DataModel
+  url: data-model/coinlist-data-model.yml
+- type: Conformance
+  url: conformance/coinlist-conformance.yml
+- type: Lifecycle
+  url: lifecycle/coinlist-lifecycle.yml
+- type: StatusPage
+  url: https://status.coinlist.co
+- type: ChangeLog
+  url: changelog/coinlist-changelog.yml
+- type: Arazzo
+  name: Invest flow
+  url: arazzo/coinlist-invest-flow.yml
+- type: Arazzo
+  name: KYC and document onboarding
+  url: arazzo/coinlist-kyc-onboarding.yml
+# --- identity / link properties ---
 - type: Website
   url: https://coinlist.co/
+- type: DeveloperPortal
+  url: https://passage.coinlist.co/
+- type: Documentation
+  url: https://docs.passage.coinlist.co/
+- type: APIReference
+  url: https://docs.passage.coinlist.co/api-reference
+- type: GettingStarted
+  url: https://docs.passage.coinlist.co/sdk/quickstart
+- type: GitHubOrganization
+  url: https://github.com/coinlist
+- type: Blog
+  url: https://blog.coinlist.co
+- type: Support
+  url: https://support.coinlist.co/
+- type: HelpCenter
+  url: https://coinlist.co/faq
+- type: TermsOfService
+  url: https://coinlist.co/terms
+- type: PrivacyPolicy
+  url: https://coinlist.co/privacy
+- type: Login
+  url: https://coinlist.co/login
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

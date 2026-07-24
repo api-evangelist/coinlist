@@ -1,0 +1,48 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/coinlist-passage-openapi-original.json
+format: custom
+note: Passage returns a Stripe-style JSON error envelope, not RFC 9457 problem+json.
+envelopes:
+  Error:
+    fields:
+    - type
+    - message
+    - code
+    - errors
+    - event_id
+    type_enum:
+    - api_error
+    - invalid_request_error
+    description: Standard API error. type + message required; errors is a field->messages map; event_id
+      aids debugging.
+  OauthError:
+    fields:
+    - error
+    - error_description
+    description: OAuth 2.0 error (RFC 6749 style) returned by /oauth/* endpoints.
+problems:
+- status: 400
+  title: OAuth error response
+  envelope: OauthError
+  source_operation: openapi/coinlist-passage-openapi-original.json#FrontlineAPIWeb.Oauth.IntrospectController.OpenApiSpec.introspect
+- status: 401
+  title: OAuth error response
+  envelope: OauthError
+  source_operation: openapi/coinlist-passage-openapi-original.json#FrontlineAPIWeb.Oauth.IntrospectController.OpenApiSpec.introspect
+- status: 400
+  title: OAuth error response
+  envelope: OauthError
+  source_operation: openapi/coinlist-passage-openapi-original.json#FrontlineAPIWeb.Oauth.RevokeController.OpenApiSpec.revoke
+- status: 401
+  title: OAuth error response
+  envelope: OauthError
+  source_operation: openapi/coinlist-passage-openapi-original.json#FrontlineAPIWeb.Oauth.RevokeController.OpenApiSpec.revoke
+- status: 400
+  title: OAuth error response
+  envelope: OauthError
+  source_operation: openapi/coinlist-passage-openapi-original.json#FrontlineAPIWeb.Oauth.TokenController.OpenApiSpec.token
+- status: 401
+  title: OAuth error response
+  envelope: OauthError
+  source_operation: openapi/coinlist-passage-openapi-original.json#FrontlineAPIWeb.Oauth.TokenController.OpenApiSpec.token

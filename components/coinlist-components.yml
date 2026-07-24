@@ -1,0 +1,35 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.passage.coinlist.co/sdks + https://docs.passage.coinlist.co/recipes
+loader:
+  library: '@coinlist-co/react'
+  install: npm install @coinlist-co/react
+  framework: React (Next.js-friendly, SSR-aware)
+families:
+- family: Offers
+  description: Prebuilt UI for discovering and rendering CoinList-managed token sale / tokenized-equity
+    offers inside a partner app.
+  components:
+  - name: OffersGrid
+    kind: react-component
+    description: Renders the signed-in user's Passage offers as a grid.
+- family: Hooks
+  description: React hooks that back the components and expose Passage data/actions.
+  components:
+  - name: useOffers
+    kind: react-hook
+  - name: useParticipations
+    kind: react-hook
+  - name: useRequirements
+    kind: react-hook
+clients:
+- name: CoinListClient
+  layer: browser
+  description: Starts/completes the OAuth PKCE redirect, hydrates the session, exposes fetchOffers/fetchOfferDetails
+    and requirement/support actions.
+- name: CoinListServer
+  layer: server
+  description: Exchanges the authorization code for tokens, persists and refreshes the session, and serves
+    access tokens to the client; full data-fetching surface.
+note: Distinct from server-side SDKs - these are client-side React UI components and hooks that embed
+  the Passage experience. The HTTP API remains the contract underneath (see openapi/).

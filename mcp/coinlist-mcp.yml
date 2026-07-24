@@ -1,0 +1,120 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/coinlist-passage-openapi-original.json
+status: candidate
+note: Candidate MCP tool surface derived from Passage OpenAPI operations. No official CoinList/Passage
+  MCP server found as of generation.
+server:
+  name: coinlist-passage
+  transport: http
+tools:
+- name: FrontlineAPIWeb.Oauth.IntrospectController.OpenApiSpec.introspect
+  description: Introspect token
+  method: POST
+  path: /oauth/introspect
+  source_operation: openapi/coinlist-passage-openapi-original.json#FrontlineAPIWeb.Oauth.IntrospectController.OpenApiSpec.introspect
+- name: FrontlineAPIWeb.Oauth.RevokeController.OpenApiSpec.revoke
+  description: Revoke token
+  method: POST
+  path: /oauth/revoke
+  source_operation: openapi/coinlist-passage-openapi-original.json#FrontlineAPIWeb.Oauth.RevokeController.OpenApiSpec.revoke
+- name: FrontlineAPIWeb.Oauth.TokenController.OpenApiSpec.token
+  description: Issue OAuth access token
+  method: POST
+  path: /oauth/token
+  source_operation: openapi/coinlist-passage-openapi-original.json#FrontlineAPIWeb.Oauth.TokenController.OpenApiSpec.token
+- name: createDocumentSubmission
+  description: Create a document signing submission for the authenticated partner and user
+  method: POST
+  path: /v1/documents/{document_type}/submission
+  source_operation: openapi/coinlist-passage-openapi-original.json#createDocumentSubmission
+- name: createKycToken
+  description: Generate a Sumsub KYC access token
+  method: POST
+  path: /v1/kyc-token
+  source_operation: openapi/coinlist-passage-openapi-original.json#createKycToken
+- name: listPartnerOffers
+  description: List offers for the authenticated partner
+  method: GET
+  path: /v1/offers
+  source_operation: openapi/coinlist-passage-openapi-original.json#listPartnerOffers
+- name: getPartnerOffer
+  description: Get an offer for the authenticated partner
+  method: GET
+  path: /v1/offers/{id}
+  source_operation: openapi/coinlist-passage-openapi-original.json#getPartnerOffer
+- name: allowWallet
+  description: Allow a wallet address for an offer
+  method: POST
+  path: /v1/offers/{offer_id}/allow-wallet
+  source_operation: openapi/coinlist-passage-openapi-original.json#allowWallet
+- name: listOfferRequirements
+  description: List requirements for all options of an offer
+  method: GET
+  path: /v1/offers/{offer_id}/requirements
+  source_operation: openapi/coinlist-passage-openapi-original.json#listOfferRequirements
+- name: listOfferRequirementStatuses
+  description: List requirement statuses for all options of an offer
+  method: GET
+  path: /v1/offers/{offer_id}/requirements/statuses
+  source_operation: openapi/coinlist-passage-openapi-original.json#listOfferRequirementStatuses
+- name: createOfferOptionAddress
+  description: Connect a proven external wallet to an offer option
+  method: POST
+  path: /v1/offers/{offer_id}/submit-addresses
+  source_operation: openapi/coinlist-passage-openapi-original.json#createOfferOptionAddress
+- name: listPartnerParticipations
+  description: List participations for the authenticated partner and user
+  method: GET
+  path: /v1/participations
+  source_operation: openapi/coinlist-passage-openapi-original.json#listPartnerParticipations
+- name: createPartnerParticipation
+  description: Create a participation for the authenticated partner and user
+  method: POST
+  path: /v1/participations
+  source_operation: openapi/coinlist-passage-openapi-original.json#createPartnerParticipation
+- name: getPartnerParticipation
+  description: Get a participation for the authenticated partner and user
+  method: GET
+  path: /v1/participations/{id}
+  source_operation: openapi/coinlist-passage-openapi-original.json#getPartnerParticipation
+- name: getPii
+  description: Get PII for the authenticated partner and user
+  method: GET
+  path: /v1/pii
+  source_operation: openapi/coinlist-passage-openapi-original.json#getPii
+- name: getSwapOutputToken
+  description: Get the swap contract's output token metadata
+  method: GET
+  path: /v1/swap/output-token
+  source_operation: openapi/coinlist-passage-openapi-original.json#getSwapOutputToken
+- name: getSwapPreview
+  description: Preview a swap
+  method: GET
+  path: /v1/swap/preview
+  source_operation: openapi/coinlist-passage-openapi-original.json#getSwapPreview
+- name: getSwapStatus
+  description: Get the swap contract's status
+  method: GET
+  path: /v1/swap/status
+  source_operation: openapi/coinlist-passage-openapi-original.json#getSwapStatus
+- name: getTokenAllowance
+  description: Get the on-chain ERC-20 allowance for a token, owner and spender
+  method: GET
+  path: /v1/token/allowance
+  source_operation: openapi/coinlist-passage-openapi-original.json#getTokenAllowance
+- name: getTokenBalance
+  description: Get the on-chain ERC-20 balance of an address
+  method: GET
+  path: /v1/token/balance
+  source_operation: openapi/coinlist-passage-openapi-original.json#getTokenBalance
+- name: createWalletOwnershipChallenge
+  description: Request a wallet ownership challenge
+  method: POST
+  path: /v1/wallet-ownership
+  source_operation: openapi/coinlist-passage-openapi-original.json#createWalletOwnershipChallenge
+- name: getWalletAuthorized
+  description: Check whether a wallet is authorized on a swap contract
+  method: GET
+  path: /v1/wallet/authorized
+  source_operation: openapi/coinlist-passage-openapi-original.json#getWalletAuthorized

@@ -1,0 +1,16 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for CoinList Passage (Frontline API)
+  version: 1.0.0
+extends: openapi/coinlist-passage-openapi-original.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-07-18'
+    x-api-category: fintech / token-sale infrastructure
+    description: 'Passage (Frontline API) is CoinList''s partner API for embedding compliant token sales
+      and tokenized equities: OAuth 2.0 (PKCE) partner+user auth, KYC token issuance, document signing,
+      offers, requirements, participations, wallet ownership/allow-listing, and on-chain swap/token reads.'
+- target: $.servers[0]
+  update:
+    description: Production

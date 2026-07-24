@@ -1,0 +1,30 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/coinlist-passage-openapi-original.json
+standards:
+- id: oauth2
+  conforms: true
+  evidence: securitySchemes.OAuth2 type oauth2 (authorizationCode + clientCredentials)
+- id: oauth2-pkce
+  conforms: true
+  evidence: 'docs: OAuth 2.0 with PKCE (RFC 7636); code_verifier on authorization_code grant'
+- id: rfc7662-token-introspection
+  conforms: true
+  evidence: POST /oauth/introspect
+- id: rfc7009-token-revocation
+  conforms: true
+  evidence: POST /oauth/revoke
+- id: openid-connect
+  conforms: false
+  evidence: no /.well-known/openid-configuration; no id_token
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: custom JSON error envelope (type/message/code), not application/problem+json
+- id: cursor-pagination
+  conforms: true
+  evidence: list responses use object:list + data[] + starting_after/starting_before cursors + limit
+- id: idempotency-keys
+  conforms: false
+  evidence: no Idempotency-Key parameter in OpenAPI
+- id: json-api
+  conforms: false

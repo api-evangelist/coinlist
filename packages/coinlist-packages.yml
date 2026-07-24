@@ -1,0 +1,19 @@
+generated: '2026-07-18'
+method: searched
+source: https://www.npmjs.com/package/@coinlist-co/react
+packages:
+- language: javascript
+  registry: npm
+  name: '@coinlist-co/react'
+  url: https://www.npmjs.com/package/@coinlist-co/react
+  install: npm install @coinlist-co/react
+  version: 0.6.0
+  official: true
+  description: CoinList Passage Partner SDK - React UI components, hooks, client, and server
+    utilities for embedding token sales and tokenized equities.
+  repository: https://github.com/coinlist/coinlist-frontend-sdk
+  homepage: https://docs.passage.coinlist.co/sdks
+  maintainers:
+  - mattd@coinlist.co
+  - yakov@coinlist.co
+  - iliyan@coinlist.co

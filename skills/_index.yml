@@ -1,0 +1,16 @@
+generated: '2026-07-18'
+method: generated
+source: openapi/coinlist-passage-openapi-original.json
+skills:
+- file: coinlist-embed-token-sale.md
+  name: Embed a CoinList token sale offer
+  api: openapi/coinlist-passage-openapi-original.json
+  operations: [listPartnerOffers, getPartnerOffer, listOfferRequirements, listOfferRequirementStatuses]
+- file: coinlist-invest-flow.md
+  name: Complete the Passage invest flow
+  api: openapi/coinlist-passage-openapi-original.json
+  operations: [getPartnerOffer, getTokenBalance, getTokenAllowance, createWalletOwnershipChallenge, allowWallet, createPartnerParticipation, getPartnerParticipation]
+- file: coinlist-kyc-onboarding.md
+  name: Onboard a user through KYC and tax documents
+  api: openapi/coinlist-passage-openapi-original.json
+  operations: [createKycToken, getPii, createDocumentSubmission]

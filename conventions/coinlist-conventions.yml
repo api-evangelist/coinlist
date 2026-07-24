@@ -1,0 +1,43 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.passage.coinlist.co/ + openapi/coinlist-passage-openapi-original.json
+authentication:
+  style: OAuth 2.0 Bearer
+  flows:
+  - authorizationCode (PKCE, user-scoped)
+  - clientCredentials (partner-scoped)
+  token_header: 'Authorization: Bearer <access_token>'
+  ref: authentication/coinlist-authentication.yml
+idempotency:
+  supported: false
+  note: No Idempotency-Key header documented or present in the OpenAPI.
+pagination:
+  style: cursor
+  params:
+  - limit
+  - starting_after
+  - starting_before
+  response_fields:
+  - object (="list")
+  - data[]
+  - starting_after
+  - starting_before
+  note: Stripe-style cursor pagination on list endpoints (offers, participations).
+error_envelope:
+  shape: custom JSON
+  fields:
+  - type
+  - message
+  - code
+  - errors
+  - event_id
+  ref: errors/coinlist-problem-types.yml
+request_tracing:
+  field: event_id
+  note: Errors carry an event_id for support/debugging.
+versioning:
+  style: uri-path
+  current: v1
+  ref: lifecycle/coinlist-lifecycle.yml
+rate_limit_signaling:
+  note: Not documented in the public OpenAPI or docs.

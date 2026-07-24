@@ -1,0 +1,46 @@
+arazzo: 1.0.1
+info:
+  title: CoinList Passage - KYC and document onboarding
+  version: 1.0.0
+  description: Start a Sumsub KYC session, read stored PII, and create a tax-document signing submission for a Passage user.
+sourceDescriptions:
+- name: passage
+  url: ../openapi/coinlist-passage-openapi-original.json
+  type: openapi
+workflows:
+- workflowId: kyc-and-documents
+  summary: Complete the identity and tax-document requirements that gate participation.
+  description: All steps require a user-scoped (authorization_code + PKCE) access token; partner-only tokens are rejected.
+  inputs:
+    type: object
+    properties:
+      document_type: { type: string }
+  steps:
+  - stepId: start-kyc
+    operationId: createKycToken
+    requestBody:
+      contentType: application/json
+      payload: {}
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      kyc_token: $response.body
+  - stepId: read-pii
+    operationId: getPii
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      pii: $response.body
+  - stepId: sign-document
+    operationId: createDocumentSubmission
+    parameters:
+    - name: document_type
+      in: path
+      value: $inputs.document_type
+    requestBody:
+      contentType: application/json
+      payload: {}
+    successCriteria:
+    - condition: $statusCode == 200
+  outputs:
+    pii: $steps.read-pii.outputs.pii

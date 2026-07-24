@@ -1,0 +1,15 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.passage.coinlist.co/ + https://status.coinlist.co
+versioning:
+  scheme: uri-path
+  current: v1
+  docs: https://docs.passage.coinlist.co/api-reference
+deprecation:
+  policy_url: null
+  sunset_header: null
+  note: No published API deprecation policy found; SDK breaking changes tracked in the React SDK changelog.
+sla:
+  url: null
+status_page: https://status.coinlist.co
+deprecated_operations: []
