@@ -209,6 +209,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/coinlist-passage-overlay.yaml
 # --- artifact pointers ---
 - type: Authentication
   url: authentication/coinlist-authentication.yml
