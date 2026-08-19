@@ -1,0 +1,42 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Frontline DocumentSubmissions KYC API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "KYC",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate a Sumsub KYC access token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.coinlist.co/v1/kyc-token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Generates a short-lived Sumsub WebSDK access token for the current user so an identity verification flow can be started. Requires a user-scoped access token (authorization code grant); partner-only tokens (client credentials grant) are rejected."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

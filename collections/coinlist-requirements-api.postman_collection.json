@@ -1,0 +1,377 @@
+{
+  "item": [
+    {
+      "id": "7ba33e0d-038c-4614-b840-b17f648fe104",
+      "name": "Requirements",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8df28fbf-94a0-46fc-a6e5-abc330fcbaac",
+          "name": "List requirements for all options of an offer",
+          "request": {
+            "name": "List requirements for all options of an offer",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "offers",
+                ":offer_id",
+                "requirements"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "offer_id",
+                  "description": "(Required) The offer ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "redirect_uri",
+                  "value": "/oauth/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/oauth/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "579caabb-9e08-4397-8d24-169f06e621fd",
+              "name": "Successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "offers",
+                    ":offer_id",
+                    "requirements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "offer_id",
+                      "description": "(Required) The offer ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"offer_requirements\",\n  \"offer_id\": \"string\",\n  \"options\": {\n    \"key_0\": {\n      \"object\": \"list\",\n      \"data\": [\n        {\n          \"object\": \"requirement\",\n          \"id\": \"05edea81-98a7-4582-aa7c-040d57cb1858\",\n          \"type\": \"kyc_approved\",\n          \"details\": {\n            \"protocol\": \"ethereum\"\n          }\n        },\n        {\n          \"object\": \"requirement\",\n          \"id\": \"05edea81-98a7-4582-aa7c-040d57cb1858\",\n          \"type\": \"kyc_approved\",\n          \"details\": {\n            \"protocol\": \"ethereum\"\n          }\n        }\n      ]\n    },\n    \"key_1\": {\n      \"object\": \"list\",\n      \"data\": [\n        {\n          \"object\": \"requirement\",\n          \"id\": \"05edea81-98a7-4582-aa7c-040d57cb1858\",\n          \"type\": \"kyc_approved\",\n          \"details\": {\n            \"protocol\": \"ethereum\"\n          }\n        },\n        {\n          \"object\": \"requirement\",\n          \"id\": \"05edea81-98a7-4582-aa7c-040d57cb1858\",\n          \"type\": \"kyc_approved\",\n          \"details\": {\n            \"protocol\": \"ethereum\"\n          }\n        }\n      ]\n    },\n    \"key_2\": {\n      \"object\": \"list\",\n      \"data\": [\n        {\n          \"object\": \"requirement\",\n          \"id\": \"05edea81-98a7-4582-aa7c-040d57cb1858\",\n          \"type\": \"kyc_approved\",\n          \"details\": {\n            \"protocol\": \"ethereum\"\n          }\n        },\n        {\n          \"object\": \"requirement\",\n          \"id\": \"05edea81-98a7-4582-aa7c-040d57cb1858\",\n          \"type\": \"kyc_approved\",\n          \"details\": {\n            \"protocol\": \"ethereum\"\n          }\n        }\n      ]\n    },\n    \"key_3\": {\n      \"object\": \"list\",\n      \"data\": [\n        {\n          \"object\": \"requirement\",\n          \"id\": \"05edea81-98a7-4582-aa7c-040d57cb1858\",\n          \"type\": \"kyc_approved\",\n          \"details\": {\n            \"protocol\": \"ethereum\"\n          }\n        },\n        {\n          \"object\": \"requirement\",\n          \"id\": \"05edea81-98a7-4582-aa7c-040d57cb1858\",\n          \"type\": \"kyc_approved\",\n          \"details\": {\n            \"protocol\": \"ethereum\"\n          }\n        }\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f7b40883-02f8-4da8-99f5-8b0859f880ce",
+              "name": "Error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "offers",
+                    ":offer_id",
+                    "requirements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "offer_id",
+                      "description": "(Required) The offer ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"invalid_request_error\",\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"errors\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"event_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "74af0c75-21a5-4142-b047-4223ac86eab5",
+          "name": "List requirement statuses for all options of an offer",
+          "request": {
+            "name": "List requirement statuses for all options of an offer",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "offers",
+                ":offer_id",
+                "requirements",
+                "statuses"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "offer_id",
+                  "description": "(Required) The offer ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "redirect_uri",
+                  "value": "/oauth/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/oauth/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d52a5e78-d028-470d-9135-a7f02567910d",
+              "name": "Successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "offers",
+                    ":offer_id",
+                    "requirements",
+                    "statuses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "offer_id",
+                      "description": "(Required) The offer ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"requirement_statuses\",\n  \"offer_id\": \"string\",\n  \"statuses\": {\n    \"key_0\": \"rejected\",\n    \"key_1\": \"rejected\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "776239e6-04b1-4602-a34f-56eada1746a1",
+              "name": "Error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "offers",
+                    ":offer_id",
+                    "requirements",
+                    "statuses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "offer_id",
+                      "description": "(Required) The offer ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"api_error\",\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"errors\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ],\n    \"key_1\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"event_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.coinlist.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c22a406f-a680-4293-a3a1-638c0742bcab",
+    "name": "Frontline DocumentSubmissions Requirements API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,323 @@
+{
+  "item": [
+    {
+      "id": "60d0baeb-ef7e-4a6c-b549-8b740ef14432",
+      "name": "DocumentSubmissions",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "828cbc8e-25e5-4306-abf5-638a36867978",
+          "name": "Create a document signing submission for the authenticated partner and user",
+          "request": {
+            "name": "Create a document signing submission for the authenticated partner and user",
+            "description": {
+              "content": "Creates a signing submission for the given document type (e.g. a W-8BEN tax certification) for the current entity. The signing link is emailed to the user. Re-posting acts as a resend/re-sign where the document state allows it. The submitted PII pre-fills the form and is forwarded to Passport, never persisted by Frontline.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "documents",
+                ":document_type",
+                "submission"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "document_type",
+                  "description": "(Required) The type of document to submit for signing. Valid values: tax_certification"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "redirect_uri",
+                  "value": "/oauth/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/oauth/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "key_0",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "key_1",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "164b06aa-d071-4c38-a103-eaff5e43c1e5",
+              "name": "Successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "documents",
+                    ":document_type",
+                    "submission"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "document_type",
+                      "description": "(Required) The type of document to submit for signing. Valid values: tax_certification"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "City",
+                      "value": "Warsaw"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Country",
+                      "value": "PL"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Country Of Citizenship",
+                      "value": "Poland"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "DOB",
+                      "value": "01/15/1985"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Date",
+                      "value": "06/16/2026"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Foreign Tax Number",
+                      "value": "123-45-6789"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Full Name",
+                      "value": "Aleksander Nowak"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Permanent Address",
+                      "value": "ul. Nowy Świat 12"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Signature",
+                      "value": "Aleksander Nowak"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"document_submission\",\n  \"status\": \"SENT\",\n  \"form_type\": \"w8_ben\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dfe6f164-7bd6-436a-9c60-8934c27057d7",
+              "name": "Error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "documents",
+                    ":document_type",
+                    "submission"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "document_type",
+                      "description": "(Required) The type of document to submit for signing. Valid values: tax_certification"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "City",
+                      "value": "Warsaw"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Country",
+                      "value": "PL"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Country Of Citizenship",
+                      "value": "Poland"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "DOB",
+                      "value": "01/15/1985"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Date",
+                      "value": "06/16/2026"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Foreign Tax Number",
+                      "value": "123-45-6789"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Full Name",
+                      "value": "Aleksander Nowak"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Permanent Address",
+                      "value": "ul. Nowy Świat 12"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "Signature",
+                      "value": "Aleksander Nowak"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"invalid_request_error\",\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"errors\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"event_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.coinlist.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "5d6d8d2b-e0cd-4ec6-9aca-38c4482ccf09",
+    "name": "Frontline DocumentSubmissions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

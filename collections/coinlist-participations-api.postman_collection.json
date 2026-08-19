@@ -1,0 +1,625 @@
+{
+  "item": [
+    {
+      "id": "8fad7e77-368d-437e-b69e-b756b054dc32",
+      "name": "Participations",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bede7d16-d8ef-4b8b-9842-f17dc1fea336",
+          "name": "List participations for the authenticated partner and user",
+          "request": {
+            "name": "List participations for the authenticated partner and user",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "participations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "starting_after",
+                  "value": "<string>",
+                  "description": "A cursor for use in pagination"
+                },
+                {
+                  "disabled": false,
+                  "key": "starting_before",
+                  "value": "<string>",
+                  "description": "A cursor for use in pagination"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "disabled": false,
+                  "key": "starting_after",
+                  "value": "<string>",
+                  "description": "Cursor for the next page"
+                },
+                {
+                  "disabled": false,
+                  "key": "starting_before",
+                  "value": "<string>",
+                  "description": "Cursor for the previous page"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of items to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "filters",
+                  "value": "{\"field\":\"<string>\",\"op\":\"<string>\",\"value\":\"<string>\"}",
+                  "description": "Flop filter parameters (e.g. by offer_id)"
+                },
+                {
+                  "disabled": false,
+                  "key": "filters",
+                  "value": "{\"field\":\"<string>\",\"op\":\"<string>\",\"value\":\"<string>\"}",
+                  "description": "Flop filter parameters (e.g. by offer_id)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "redirect_uri",
+                  "value": "/oauth/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/oauth/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8da6a392-d4f2-4a62-ac56-a9ddfcd422d6",
+              "name": "Successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "participations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "starting_after",
+                      "value": "g3QAAAA..."
+                    },
+                    {
+                      "key": "starting_before",
+                      "value": "g3QAAAA..."
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "starting_before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filters",
+                      "value": "[object Object]"
+                    },
+                    {
+                      "key": "filters",
+                      "value": "[object Object]"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"object\": \"participation\",\n      \"id\": \"05edea81-98a7-4582-aa7c-040d57cb1858\",\n      \"offer_id\": \"string\",\n      \"offer_option_id\": \"string\",\n      \"status\": \"remitted\",\n      \"amount\": \"string\",\n      \"amount_string\": \"string\",\n      \"asset\": {\n        \"id\": \"string\",\n        \"code\": \"string\",\n        \"name\": \"string\",\n        \"fractional_digits\": 3407\n      },\n      \"chain\": \"base_mainnet\",\n      \"inserted_at\": \"2025-01-01T00:00:00.000000Z\",\n      \"updated_at\": \"2025-01-01T00:00:00.000000Z\",\n      \"wallet_address\": \"string\"\n    },\n    {\n      \"object\": \"participation\",\n      \"id\": \"05edea81-98a7-4582-aa7c-040d57cb1858\",\n      \"offer_id\": \"string\",\n      \"offer_option_id\": \"string\",\n      \"status\": \"pending\",\n      \"amount\": \"string\",\n      \"amount_string\": \"string\",\n      \"asset\": {\n        \"id\": \"string\",\n        \"code\": \"string\",\n        \"name\": \"string\",\n        \"fractional_digits\": 1106\n      },\n      \"chain\": \"base_sepolia\",\n      \"inserted_at\": \"2025-01-01T00:00:00.000000Z\",\n      \"updated_at\": \"2025-01-01T00:00:00.000000Z\",\n      \"wallet_address\": \"string\"\n    }\n  ],\n  \"starting_after\": \"g3QAAAA...\",\n  \"starting_before\": \"g3QAAAA...\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a6c34da5-f7a2-4ee5-8270-a8625a6550c3",
+              "name": "Error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "participations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "starting_after",
+                      "value": "g3QAAAA..."
+                    },
+                    {
+                      "key": "starting_before",
+                      "value": "g3QAAAA..."
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "starting_before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filters",
+                      "value": "[object Object]"
+                    },
+                    {
+                      "key": "filters",
+                      "value": "[object Object]"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"api_error\",\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"errors\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"event_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ef07e930-db77-4e57-ba4b-7bb5d59ea7de",
+          "name": "Create a participation for the authenticated partner and user",
+          "request": {
+            "name": "Create a participation for the authenticated partner and user",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "participations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "redirect_uri",
+                  "value": "/oauth/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/oauth/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"offer_id\": \"<string>\",\n  \"offer_option_id\": \"<string>\",\n  \"chain\": \"<string>\",\n  \"wallet_address\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"asset_id\": \"<string>\",\n  \"approval_transaction_hash\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f04760a3-d012-4c32-8ca6-78870bd2468a",
+              "name": "Successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "participations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"offer_id\": \"<string>\",\n  \"offer_option_id\": \"<string>\",\n  \"chain\": \"<string>\",\n  \"wallet_address\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"asset_id\": \"<string>\",\n  \"approval_transaction_hash\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"participation\",\n  \"id\": \"05edea81-98a7-4582-aa7c-040d57cb1858\",\n  \"offer_id\": \"string\",\n  \"offer_option_id\": \"string\",\n  \"status\": \"failed\",\n  \"amount\": \"string\",\n  \"amount_string\": \"string\",\n  \"asset\": {\n    \"id\": \"string\",\n    \"code\": \"string\",\n    \"name\": \"string\",\n    \"fractional_digits\": 2186\n  },\n  \"chain\": \"ethereum_sepolia\",\n  \"inserted_at\": \"2025-01-01T00:00:00.000000Z\",\n  \"updated_at\": \"2025-01-01T00:00:00.000000Z\",\n  \"wallet_address\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5fd60ece-1cd8-4456-a2ca-130224534b76",
+              "name": "Error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "participations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"offer_id\": \"<string>\",\n  \"offer_option_id\": \"<string>\",\n  \"chain\": \"<string>\",\n  \"wallet_address\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"asset_id\": \"<string>\",\n  \"approval_transaction_hash\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"api_error\",\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"errors\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ],\n    \"key_1\": [\n      \"string\",\n      \"string\"\n    ],\n    \"key_2\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"event_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5899b8fa-cbb4-4a4d-9b5e-cefd9e2f631f",
+          "name": "Get a participation for the authenticated partner and user",
+          "request": {
+            "name": "Get a participation for the authenticated partner and user",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "participations",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Participation ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "redirect_uri",
+                  "value": "/oauth/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/oauth/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "05eb9b45-d535-48e5-9086-96dd1b764426",
+              "name": "Successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "participations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Participation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"participation\",\n  \"id\": \"05edea81-98a7-4582-aa7c-040d57cb1858\",\n  \"offer_id\": \"string\",\n  \"offer_option_id\": \"string\",\n  \"status\": \"failed\",\n  \"amount\": \"string\",\n  \"amount_string\": \"string\",\n  \"asset\": {\n    \"id\": \"string\",\n    \"code\": \"string\",\n    \"name\": \"string\",\n    \"fractional_digits\": 2186\n  },\n  \"chain\": \"ethereum_sepolia\",\n  \"inserted_at\": \"2025-01-01T00:00:00.000000Z\",\n  \"updated_at\": \"2025-01-01T00:00:00.000000Z\",\n  \"wallet_address\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d195a57a-bce8-459f-95ab-3fcbe4d6418c",
+              "name": "Error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "participations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Participation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"api_error\",\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"errors\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ],\n    \"key_1\": [\n      \"string\",\n      \"string\"\n    ],\n    \"key_2\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"event_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.coinlist.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e77ac5df-91cf-4eb9-949f-fe749142c49f",
+    "name": "Frontline DocumentSubmissions Participations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

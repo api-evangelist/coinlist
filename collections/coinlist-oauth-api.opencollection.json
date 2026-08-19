@@ -1,0 +1,92 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Frontline DocumentSubmissions OAuth API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OAuth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Introspect token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.coinlist.co/oauth/introspect",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns metadata about an access token, including whether it is active."
+        },
+        {
+          "info": {
+            "name": "Revoke token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.coinlist.co/oauth/revoke",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Revokes an access or refresh token."
+        },
+        {
+          "info": {
+            "name": "Issue OAuth access token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.coinlist.co/oauth/token",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "client_id",
+                  "value": ""
+                },
+                {
+                  "name": "client_secret",
+                  "value": ""
+                },
+                {
+                  "name": "code",
+                  "value": ""
+                },
+                {
+                  "name": "code_verifier",
+                  "value": ""
+                },
+                {
+                  "name": "grant_type",
+                  "value": ""
+                },
+                {
+                  "name": "redirect_uri",
+                  "value": ""
+                },
+                {
+                  "name": "refresh_token",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Issues access tokens for `authorization_code`, `client_credentials`, and `refresh_token` grants using an `application/x-www-form-urlencoded` request body. For the `authorization_code` grant, the partner exchanges the code obtained from `GET /oauth/authorize` along with a PKCE `code_verifier`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

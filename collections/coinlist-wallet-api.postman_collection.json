@@ -1,0 +1,224 @@
+{
+  "item": [
+    {
+      "id": "978e8f34-0555-4d96-ab97-30004677865d",
+      "name": "Wallet",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "09189a29-2e96-453d-92bc-f3173e27134e",
+          "name": "Check whether a wallet is authorized on a swap contract",
+          "request": {
+            "name": "Check whether a wallet is authorized on a swap contract",
+            "description": {
+              "content": "Reads authorized(address) on the Superstate swap contract to determine whether the given wallet is allowed to swap.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "wallet",
+                "authorized"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "contract_address",
+                  "value": "<string>",
+                  "description": "(Required) The swap contract address"
+                },
+                {
+                  "disabled": false,
+                  "key": "wallet_address",
+                  "value": "<string>",
+                  "description": "(Required) The wallet address to check"
+                },
+                {
+                  "disabled": false,
+                  "key": "chain",
+                  "value": "<string>",
+                  "description": "(Required) The EVM chain to read from, e.g. ethereum_mainnet, ethereum_sepolia, base_mainnet or base_sepolia"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "redirect_uri",
+                  "value": "/oauth/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/oauth/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "dd0b4533-f57d-42a0-a4ec-ec027d64acfc",
+              "name": "Successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallet",
+                    "authorized"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contract_address",
+                      "value": "0x742d35cc6634c0532925a3b844bc9e7595f0beb1"
+                    },
+                    {
+                      "key": "wallet_address",
+                      "value": "0x8ba1f109551bd432803012645ac136ddd64dba72"
+                    },
+                    {
+                      "key": "chain",
+                      "value": "ethereum_sepolia"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"wallet_authorization\",\n  \"authorized\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6fc31eb7-73ec-474c-a870-647ab9fdcfdb",
+              "name": "Error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallet",
+                    "authorized"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "contract_address",
+                      "value": "0x742d35cc6634c0532925a3b844bc9e7595f0beb1"
+                    },
+                    {
+                      "key": "wallet_address",
+                      "value": "0x8ba1f109551bd432803012645ac136ddd64dba72"
+                    },
+                    {
+                      "key": "chain",
+                      "value": "ethereum_sepolia"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"api_error\",\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"errors\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"event_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.coinlist.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "79aecd12-3b54-4cb5-96f1-b4d80e5e4133",
+    "name": "Frontline DocumentSubmissions Wallet API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

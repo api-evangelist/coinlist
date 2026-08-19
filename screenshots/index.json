@@ -1,0 +1,11 @@
+[
+  {
+    "repo": "coinlist",
+    "captured_at": "2026-08-17T123123",
+    "source_url": "https://passage.coinlist.co/",
+    "source_type": "DeveloperPortal",
+    "file": "coinlist-2026-08-17T123123.png",
+    "bytes": 150481,
+    "capture": "playwright-local"
+  }
+]

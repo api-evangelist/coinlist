@@ -1,0 +1,241 @@
+{
+  "item": [
+    {
+      "id": "02884d9a-ef3c-413f-9144-5a7a8404f3d4",
+      "name": "KYC",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "890374bd-47db-465e-a9c4-2e904c2f0fa1",
+          "name": "Generate a Sumsub KYC access token",
+          "request": {
+            "name": "Generate a Sumsub KYC access token",
+            "description": {
+              "content": "Generates a short-lived Sumsub WebSDK access token for the current user so an identity verification flow can be started. Requires a user-scoped access token (authorization code grant); partner-only tokens (client credentials grant) are rejected.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "kyc-token"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "redirect_uri",
+                  "value": "/oauth/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "/oauth/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "level_name",
+                  "value": "Sorting_KYC_Level",
+                  "description": "The Sumsub verification level to start. Determines which screens the Sumsub WebSDK shows."
+                },
+                {
+                  "disabled": false,
+                  "key": "reset",
+                  "value": "false",
+                  "description": "Reset the Sumsub applicant before issuing the token, so an already-approved level can be executed again (e.g. to update stale PII). Send the kyc_reset value from the requirement status. Must not be sent when refreshing an expired token mid-flow, or the user's in-progress submission is wiped."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5ae0c459-862c-4204-9837-5cbbc5fb8297",
+              "name": "Successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "kyc-token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The Sumsub verification level to start. Determines which screens the Sumsub WebSDK shows.",
+                        "type": "text/plain"
+                      },
+                      "key": "level_name",
+                      "value": "Sorting_KYC_Level"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Reset the Sumsub applicant before issuing the token, so an already-approved level can be executed again (e.g. to update stale PII). Send the kyc_reset value from the requirement status. Must not be sent when refreshing an expired token mid-flow, or the user's in-progress submission is wiped.",
+                        "type": "text/plain"
+                      },
+                      "key": "reset",
+                      "value": "false"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"kyc_token\",\n  \"token\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "88ca10f3-bb37-4766-a876-a09011d59b15",
+              "name": "Error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "kyc-token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The Sumsub verification level to start. Determines which screens the Sumsub WebSDK shows.",
+                        "type": "text/plain"
+                      },
+                      "key": "level_name",
+                      "value": "Sorting_KYC_Level"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Reset the Sumsub applicant before issuing the token, so an already-approved level can be executed again (e.g. to update stale PII). Send the kyc_reset value from the requirement status. Must not be sent when refreshing an expired token mid-flow, or the user's in-progress submission is wiped.",
+                        "type": "text/plain"
+                      },
+                      "key": "reset",
+                      "value": "false"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"api_error\",\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"errors\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ],\n    \"key_1\": [\n      \"string\",\n      \"string\"\n    ],\n    \"key_2\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"event_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.coinlist.co",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f6110ee1-cbf7-472b-85ca-d849f36c237c",
+    "name": "Frontline DocumentSubmissions KYC API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

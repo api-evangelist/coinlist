@@ -1,0 +1,149 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Frontline DocumentSubmissions Offers API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Offers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List offers for the authenticated partner",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coinlist.co/v1/offers",
+            "params": [
+              {
+                "name": "starting_after",
+                "value": "g3QAAAA...",
+                "type": "query",
+                "description": "A cursor for use in pagination"
+              },
+              {
+                "name": "starting_before",
+                "value": "g3QAAAA...",
+                "type": "query",
+                "description": "A cursor for use in pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "List offers for the authenticated partner"
+        },
+        {
+          "info": {
+            "name": "Get an offer for the authenticated partner",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coinlist.co/v1/offers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Offer ID"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get an offer for the authenticated partner"
+        },
+        {
+          "info": {
+            "name": "Allow a wallet address for an offer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.coinlist.co/v1/offers/:offer_id/allow-wallet",
+            "params": [
+              {
+                "name": "offer_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the offer"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Allow a wallet address for an offer"
+        },
+        {
+          "info": {
+            "name": "Connect a proven external wallet to an offer option",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.coinlist.co/v1/offers/:offer_id/submit-addresses",
+            "params": [
+              {
+                "name": "offer_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the offer"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Connect a proven external wallet to an offer option"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

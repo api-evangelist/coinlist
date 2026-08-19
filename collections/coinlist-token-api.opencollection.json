@@ -1,0 +1,104 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Frontline DocumentSubmissions Token API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Token",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the on-chain ERC-20 allowance for a token, owner and spender",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coinlist.co/v1/token/allowance",
+            "params": [
+              {
+                "name": "token_address",
+                "value": "",
+                "type": "query",
+                "description": "The ERC-20 token contract address"
+              },
+              {
+                "name": "owner",
+                "value": "",
+                "type": "query",
+                "description": "The address owning the tokens"
+              },
+              {
+                "name": "spender",
+                "value": "",
+                "type": "query",
+                "description": "The address allowed to spend the tokens"
+              },
+              {
+                "name": "chain",
+                "value": "",
+                "type": "query",
+                "description": "The EVM chain to read from, e.g. ethereum_mainnet, ethereum_sepolia, base_mainnet or base_sepolia"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Reads allowance(owner, spender) on the ERC-20 token contract. Can be used to determine whether an approval transaction is needed before a swap or token sale."
+        },
+        {
+          "info": {
+            "name": "Get the on-chain ERC-20 balance of an address",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coinlist.co/v1/token/balance",
+            "params": [
+              {
+                "name": "token_address",
+                "value": "",
+                "type": "query",
+                "description": "The ERC-20 token contract address"
+              },
+              {
+                "name": "owner",
+                "value": "",
+                "type": "query",
+                "description": "The address owning the tokens"
+              },
+              {
+                "name": "chain",
+                "value": "",
+                "type": "query",
+                "description": "The EVM chain to read from, e.g. ethereum_mainnet, ethereum_sepolia, base_mainnet or base_sepolia"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Reads balanceOf(owner) on the ERC-20 token contract. Used to display the balance of the connected wallet the user will pay with."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,50 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Frontline DocumentSubmissions API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "DocumentSubmissions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a document signing submission for the authenticated partner and user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.coinlist.co/v1/documents/:document_type/submission",
+            "params": [
+              {
+                "name": "document_type",
+                "value": "",
+                "type": "path",
+                "description": "The type of document to submit for signing. Valid values: tax_certification"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Creates a signing submission for the given document type (e.g. a W-8BEN tax certification) for the current entity. The signing link is emailed to the user. Re-posting acts as a resend/re-sign where the document state allows it. The submitted PII pre-fills the form and is forwarded to Passport, never persisted by Frontline."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

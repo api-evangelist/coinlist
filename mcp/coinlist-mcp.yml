@@ -118,3 +118,9 @@ tools:
   method: GET
   path: /v1/wallet/authorized
   source_operation: openapi/coinlist-passage-openapi-original.json#getWalletAuthorized
+deployment:
+  mode: none
+  verified: derived
+  tools: 22
+  checked: '2026-08-12'
+  source: catalog MCP census

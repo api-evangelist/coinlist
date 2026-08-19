@@ -1,0 +1,58 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Frontline DocumentSubmissions Wallet API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Wallet",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check whether a wallet is authorized on a swap contract",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coinlist.co/v1/wallet/authorized",
+            "params": [
+              {
+                "name": "contract_address",
+                "value": "",
+                "type": "query",
+                "description": "The swap contract address"
+              },
+              {
+                "name": "wallet_address",
+                "value": "",
+                "type": "query",
+                "description": "The wallet address to check"
+              },
+              {
+                "name": "chain",
+                "value": "",
+                "type": "query",
+                "description": "The EVM chain to read from, e.g. ethereum_mainnet, ethereum_sepolia, base_mainnet or base_sepolia"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Reads authorized(address) on the Superstate swap contract to determine whether the given wallet is allowed to swap."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

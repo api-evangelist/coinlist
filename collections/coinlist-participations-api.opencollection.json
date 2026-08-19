@@ -1,0 +1,115 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Frontline DocumentSubmissions Participations API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Participations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List participations for the authenticated partner and user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coinlist.co/v1/participations",
+            "params": [
+              {
+                "name": "starting_after",
+                "value": "g3QAAAA...",
+                "type": "query",
+                "description": "A cursor for use in pagination"
+              },
+              {
+                "name": "starting_before",
+                "value": "g3QAAAA...",
+                "type": "query",
+                "description": "A cursor for use in pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query",
+                "description": "Flop filter parameters (e.g. by offer_id)"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "List participations for the authenticated partner and user"
+        },
+        {
+          "info": {
+            "name": "Create a participation for the authenticated partner and user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.coinlist.co/v1/participations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Create a participation for the authenticated partner and user"
+        },
+        {
+          "info": {
+            "name": "Get a participation for the authenticated partner and user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.coinlist.co/v1/participations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Participation ID"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get a participation for the authenticated partner and user"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
