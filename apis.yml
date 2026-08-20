@@ -44,6 +44,17 @@ tags:
 - Token Sales
 - Tokenized Equities
 - KYC
+- Authentication
+- Blockchain
+- Digital Assets
+- Embedded Finance
+tags_raw:
+- Company
+- Fintech
+- Cryptocurrency
+- Token Sales
+- Tokenized Equities
+- KYC
 - OAuth
 - Blockchain
 - Digital Assets
@@ -55,6 +66,8 @@ apis:
   humanURL: https://docs.passage.coinlist.co/
   baseURL: https://api.coinlist.co
   tags:
+  - Document Submissions
+  tags_raw:
   - DocumentSubmissions
   properties:
   - type: OpenAPI
@@ -83,6 +96,8 @@ apis:
   humanURL: https://docs.passage.coinlist.co/
   baseURL: https://api.coinlist.co
   tags:
+  - Authentication
+  tags_raw:
   - OAuth
   properties:
   - type: OpenAPI
@@ -125,6 +140,8 @@ apis:
   humanURL: https://docs.passage.coinlist.co/
   baseURL: https://api.coinlist.co
   tags:
+  - PII
+  tags_raw:
   - Pii
   properties:
   - type: OpenAPI
@@ -181,6 +198,8 @@ apis:
   humanURL: https://docs.passage.coinlist.co/
   baseURL: https://api.coinlist.co
   tags:
+  - Wallets
+  tags_raw:
   - Wallet
   properties:
   - type: OpenAPI
