@@ -4,8 +4,14 @@ info:
   version: 1.0.0
   description: Start a Sumsub KYC session, read stored PII, and create a tax-document signing submission for a Passage user.
 sourceDescriptions:
-- name: passage
-  url: ../openapi/coinlist-passage-openapi-original.json
+- name: documentsubmissionsApi
+  url: ../openapi/coinlist-documentsubmissions-api-openapi.yml
+  type: openapi
+- name: kycApi
+  url: ../openapi/coinlist-kyc-api-openapi.yml
+  type: openapi
+- name: piiApi
+  url: ../openapi/coinlist-pii-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: kyc-and-documents
@@ -14,7 +20,7 @@ workflows:
   inputs:
     type: object
     properties:
-      document_type: { type: string }
+      document_type: {type: string}
   steps:
   - stepId: start-kyc
     operationId: createKycToken

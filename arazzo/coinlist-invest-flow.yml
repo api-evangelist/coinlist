@@ -4,8 +4,17 @@ info:
   version: 1.0.0
   description: Load an offer, check on-chain balance/allowance, prove and allow-list the wallet, then create and track a participation.
 sourceDescriptions:
-- name: passage
-  url: ../openapi/coinlist-passage-openapi-original.json
+- name: offersApi
+  url: ../openapi/coinlist-offers-api-openapi.yml
+  type: openapi
+- name: participationsApi
+  url: ../openapi/coinlist-participations-api-openapi.yml
+  type: openapi
+- name: tokenApi
+  url: ../openapi/coinlist-token-api-openapi.yml
+  type: openapi
+- name: walletOwnershipApi
+  url: ../openapi/coinlist-wallet-ownership-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: invest-in-offer
@@ -14,12 +23,12 @@ workflows:
   inputs:
     type: object
     properties:
-      offer_id: { type: string }
-      token_address: { type: string }
-      owner: { type: string }
-      spender: { type: string }
-      wallet_address: { type: string }
-      chain: { type: string }
+      offer_id: {type: string}
+      token_address: {type: string}
+      owner: {type: string}
+      spender: {type: string}
+      wallet_address: {type: string}
+      chain: {type: string}
   steps:
   - stepId: load-offer
     operationId: getPartnerOffer
