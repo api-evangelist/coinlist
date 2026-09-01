@@ -78,7 +78,7 @@ apis:
   humanURL: https://docs.passage.coinlist.co/
   baseURL: https://api.coinlist.co
   tags:
-  - DocumentSubmissions
+  - Document Submissions
   tags_raw:
   - DocumentSubmissions
   properties:
@@ -152,7 +152,7 @@ apis:
   humanURL: https://docs.passage.coinlist.co/
   baseURL: https://api.coinlist.co
   tags:
-  - Pii
+  - PII
   tags_raw:
   - Pii
   properties:
