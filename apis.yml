@@ -72,22 +72,6 @@ tags_raw:
 - Digital Assets
 - Embedded Finance
 apis:
-- aid: coinlist:coinlist-documentsubmissions-api
-  name: CoinList DocumentSubmissions API
-  description: The DocumentSubmissions API from CoinList — 1 operation(s) for documentsubmissions.
-  humanURL: https://docs.passage.coinlist.co/
-  baseURL: https://api.coinlist.co
-  tags:
-  - Document Submissions
-  tags_raw:
-  - DocumentSubmissions
-  properties:
-  - type: OpenAPI
-    url: openapi/coinlist-documentsubmissions-api-openapi.yml
-  - type: Documentation
-    url: https://docs.passage.coinlist.co/
-  - type: APIReference
-    url: https://docs.passage.coinlist.co/api-reference
 - aid: coinlist:coinlist-kyc-api
   name: CoinList KYC API
   description: The KYC API from CoinList — 1 operation(s) for kyc.
@@ -98,22 +82,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/coinlist-kyc-api-openapi.yml
-  - type: Documentation
-    url: https://docs.passage.coinlist.co/
-  - type: APIReference
-    url: https://docs.passage.coinlist.co/api-reference
-- aid: coinlist:coinlist-oauth-api
-  name: CoinList OAuth API
-  description: The OAuth API from CoinList — 3 operation(s) for oauth.
-  humanURL: https://docs.passage.coinlist.co/
-  baseURL: https://api.coinlist.co
-  tags:
-  - Authentication
-  tags_raw:
-  - OAuth
-  properties:
-  - type: OpenAPI
-    url: openapi/coinlist-oauth-api-openapi.yml
   - type: Documentation
     url: https://docs.passage.coinlist.co/
   - type: APIReference
@@ -230,6 +198,34 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/coinlist-wallet-ownership-api-openapi.yml
+  - type: Documentation
+    url: https://docs.passage.coinlist.co/
+  - type: APIReference
+    url: https://docs.passage.coinlist.co/api-reference
+- aid: coinlist:coinlist-oauth-api
+  name: CoinList O Auth API
+  description: The OAuth API from CoinList — 3 operation(s) for oauth.
+  humanURL: https://docs.passage.coinlist.co/
+  baseURL: https://api.coinlist.co
+  tags:
+  - OAuth
+  properties:
+  - type: OpenAPI
+    url: openapi/coinlist-oauth-api-openapi.yml
+  - type: Documentation
+    url: https://docs.passage.coinlist.co/
+  - type: APIReference
+    url: https://docs.passage.coinlist.co/api-reference
+- aid: coinlist:coinlist-document-submissions-api
+  name: CoinList document submissions API
+  description: The document submissions API from CoinList — 1 operation(s) for document submissions.
+  humanURL: https://docs.passage.coinlist.co/
+  baseURL: https://api.coinlist.co
+  tags:
+  - document submissions
+  properties:
+  - type: OpenAPI
+    url: openapi/coinlist-document-submissions-api-openapi.yml
   - type: Documentation
     url: https://docs.passage.coinlist.co/
   - type: APIReference
