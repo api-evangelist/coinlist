@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Frontline DocumentSubmissions Requirements API
+  title: Frontline Requirements API
   version: 0.1.0
 servers:
 - url: https://api.coinlist.co
@@ -73,110 +73,6 @@ paths:
       - Requirements
 components:
   schemas:
-    OptionRequirementJurisdictionDetails:
-      properties:
-        filter_type:
-          description: The type of filter
-          enum:
-          - allow
-          - reject
-          example: allow
-          type: string
-          x-struct: null
-          x-validate: null
-        filters:
-          description: List of jurisdiction filters
-          items:
-            $ref: '#/components/schemas/OptionRequirementJurisdictionFilter'
-          type: array
-          x-struct: null
-          x-validate: null
-      required:
-      - filter_type
-      - filters
-      title: OptionRequirementJurisdictionDetails
-      type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.OptionRequirement.JurisdictionDetails
-      x-validate: null
-    OptionRequirement:
-      properties:
-        details:
-          description: 'Requirement-specific details.
-
-            Null for kyc_approved, accreditation, identity_verified,
-
-            proof_of_address, and source_of_funds types.
-
-            ExternalWalletDetails for external_wallet type.
-
-            WhitelistedWalletDetails for whitelisted_wallet type.
-
-            JurisdictionDetails for jurisdiction type.
-
-            DocumentDetails for document type.
-
-            '
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/OptionRequirementExternalWalletDetails'
-          - $ref: '#/components/schemas/OptionRequirementWhitelistedWalletDetails'
-          - $ref: '#/components/schemas/OptionRequirementJurisdictionDetails'
-          - $ref: '#/components/schemas/OptionRequirementDocumentDetails'
-          x-struct: null
-          x-validate: null
-        id:
-          description: Unique identifier for the object.
-          example: 05edea81-98a7-4582-aa7c-040d57cb1858
-          type: string
-          x-struct: null
-          x-validate: null
-        object:
-          description: String representing the object's type. Objects of the same type share the same value.
-          enum:
-          - requirement
-          type: string
-          x-struct: null
-          x-validate: null
-        type:
-          description: The requirement type
-          enum:
-          - kyc_approved
-          - identity_verified
-          - proof_of_address
-          - source_of_funds
-          - external_wallet
-          - whitelisted_wallet
-          - jurisdiction
-          - accreditation
-          - document
-          example: kyc_approved
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - object
-      - id
-      - type
-      title: OptionRequirement
-      type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.OptionRequirement
-      x-validate: null
-    OptionRequirementDocumentDetails:
-      properties:
-        document_type:
-          description: The type of document the user must sign
-          enum:
-          - tax_certification
-          example: tax_certification
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - document_type
-      title: OptionRequirementDocumentDetails
-      type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.OptionRequirement.DocumentDetails
-      x-validate: null
     OptionRequirementWhitelistedWalletDetails:
       properties:
         max_wallets:
@@ -190,20 +86,6 @@ components:
       title: OptionRequirementWhitelistedWalletDetails
       type: object
       x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.OptionRequirement.WhitelistedWalletDetails
-      x-validate: null
-    OptionRequirementExternalWalletDetails:
-      properties:
-        protocol:
-          description: The blockchain protocol
-          example: ethereum
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - protocol
-      title: OptionRequirementExternalWalletDetails
-      type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.OptionRequirement.ExternalWalletDetails
       x-validate: null
     Error:
       additionalProperties: false
@@ -249,6 +131,197 @@ components:
       title: Error
       type: object
       x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.ApiError
+      x-validate: null
+    OptionRequirement:
+      properties:
+        details:
+          description: 'Requirement-specific details.
+
+            Null for kyc_approved, accreditation, identity_verified,
+
+            proof_of_address, and source_of_funds types.
+
+            ExternalWalletDetails for external_wallet type.
+
+            WhitelistedWalletDetails for whitelisted_wallet type.
+
+            JurisdictionDetails for jurisdiction type.
+
+            DocumentDetails for document type.
+
+            '
+          oneOf:
+          - $ref: '#/components/schemas/OptionRequirementExternalWalletDetails'
+          - $ref: '#/components/schemas/OptionRequirementWhitelistedWalletDetails'
+          - $ref: '#/components/schemas/OptionRequirementJurisdictionDetails'
+          - $ref: '#/components/schemas/OptionRequirementDocumentDetails'
+          x-struct: null
+          x-validate: null
+        id:
+          description: Unique identifier for the object.
+          example: 05edea81-98a7-4582-aa7c-040d57cb1858
+          type: string
+          x-struct: null
+          x-validate: null
+        object:
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - requirement
+          type: string
+          x-struct: null
+          x-validate: null
+        type:
+          description: The requirement type
+          enum:
+          - kyc_approved
+          - identity_verified
+          - proof_of_address
+          - source_of_funds
+          - external_wallet
+          - whitelisted_wallet
+          - jurisdiction
+          - accreditation
+          - document
+          example: kyc_approved
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - object
+      - id
+      - type
+      title: OptionRequirement
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.OptionRequirement
+      x-validate: null
+    OptionRequirementExternalWalletDetails:
+      properties:
+        protocol:
+          description: The blockchain protocol
+          example: ethereum
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - protocol
+      title: OptionRequirementExternalWalletDetails
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.OptionRequirement.ExternalWalletDetails
+      x-validate: null
+    OptionRequirementJurisdictionFilter:
+      properties:
+        country_iso_2:
+          description: The ISO 3166-1 alpha-2 country code
+          example: US
+          type: string
+          x-struct: null
+          x-validate: null
+        regions:
+          description: List of region codes for the country
+          example:
+          - CA
+          - NY
+          items:
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - country_iso_2
+      title: OptionRequirementJurisdictionFilter
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.OptionRequirement.JurisdictionFilter
+      x-validate: null
+    OptionRequirementDocumentDetails:
+      properties:
+        document_type:
+          description: The type of document the user must sign
+          enum:
+          - tax_certification
+          example: tax_certification
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - document_type
+      title: OptionRequirementDocumentDetails
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.OptionRequirement.DocumentDetails
+      x-validate: null
+    OptionRequirementJurisdictionDetails:
+      properties:
+        filter_type:
+          description: The type of filter
+          enum:
+          - allow
+          - reject
+          example: allow
+          type: string
+          x-struct: null
+          x-validate: null
+        filters:
+          description: List of jurisdiction filters
+          items:
+            $ref: '#/components/schemas/OptionRequirementJurisdictionFilter'
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - filter_type
+      - filters
+      title: OptionRequirementJurisdictionDetails
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.OptionRequirement.JurisdictionDetails
+      x-validate: null
+    OfferRequirements:
+      properties:
+        object:
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - offer_requirements
+          type: string
+          x-struct: null
+          x-validate: null
+        offer_id:
+          description: The offer ID
+          type: string
+          x-struct: null
+          x-validate: null
+        options:
+          additionalProperties:
+            properties:
+              data:
+                items:
+                  $ref: '#/components/schemas/OptionRequirement'
+                type: array
+                x-struct: null
+                x-validate: null
+              object:
+                description: String representing the object's type. Objects of the same type share the same value.
+                enum:
+                - list
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - object
+            - data
+            type: object
+            x-struct: null
+            x-validate: null
+          description: Map of option ID to list of requirements for that option
+          type: object
+          x-struct: null
+          x-validate: null
+      required:
+      - object
+      - offer_id
+      - options
+      title: OfferRequirements
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.OfferRequirements
       x-validate: null
     RequirementStatuses:
       properties:
@@ -327,80 +400,6 @@ components:
       title: RequirementStatuses
       type: object
       x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.RequirementStatuses
-      x-validate: null
-    OfferRequirements:
-      properties:
-        object:
-          description: String representing the object's type. Objects of the same type share the same value.
-          enum:
-          - offer_requirements
-          type: string
-          x-struct: null
-          x-validate: null
-        offer_id:
-          description: The offer ID
-          type: string
-          x-struct: null
-          x-validate: null
-        options:
-          additionalProperties:
-            properties:
-              data:
-                items:
-                  $ref: '#/components/schemas/OptionRequirement'
-                type: array
-                x-struct: null
-                x-validate: null
-              object:
-                description: String representing the object's type. Objects of the same type share the same value.
-                enum:
-                - list
-                type: string
-                x-struct: null
-                x-validate: null
-            required:
-            - object
-            - data
-            type: object
-            x-struct: null
-            x-validate: null
-          description: Map of option ID to list of requirements for that option
-          type: object
-          x-struct: null
-          x-validate: null
-      required:
-      - object
-      - offer_id
-      - options
-      title: OfferRequirements
-      type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.OfferRequirements
-      x-validate: null
-    OptionRequirementJurisdictionFilter:
-      properties:
-        country_iso_2:
-          description: The ISO 3166-1 alpha-2 country code
-          example: US
-          type: string
-          x-struct: null
-          x-validate: null
-        regions:
-          description: List of region codes for the country
-          example:
-          - CA
-          - NY
-          items:
-            type: string
-            x-struct: null
-            x-validate: null
-          type: array
-          x-struct: null
-          x-validate: null
-      required:
-      - country_iso_2
-      title: OptionRequirementJurisdictionFilter
-      type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.OptionRequirement.JurisdictionFilter
       x-validate: null
   securitySchemes:
     OAuth2:

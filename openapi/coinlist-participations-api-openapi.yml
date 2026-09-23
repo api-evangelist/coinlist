@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Frontline DocumentSubmissions Participations API
+  title: Frontline Participations API
   version: 0.1.0
 servers:
 - url: https://api.coinlist.co
@@ -206,63 +206,6 @@ paths:
       - Participations
 components:
   schemas:
-    CreateParticipation:
-      description: Parameters for creating an offer participation
-      properties:
-        amount:
-          description: The participation amount
-          type: string
-          x-struct: null
-          x-validate: null
-        approval_transaction_hash:
-          description: The approval transaction hash
-          type: string
-          x-struct: null
-          x-validate: null
-        asset_id:
-          description: The ID of the asset
-          type: string
-          x-struct: null
-          x-validate: null
-        chain:
-          description: The blockchain chain for the funding contract
-          enum:
-          - ethereum_sepolia
-          - base_sepolia
-          - solana_devnet
-          - ethereum_mainnet
-          - base_mainnet
-          - solana_mainnet
-          type: string
-          x-struct: null
-          x-validate: null
-        offer_id:
-          description: The ID of the offer
-          type: string
-          x-struct: null
-          x-validate: null
-        offer_option_id:
-          description: The ID of the offer option
-          type: string
-          x-struct: null
-          x-validate: null
-        wallet_address:
-          description: The wallet address
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - offer_id
-      - offer_option_id
-      - chain
-      - wallet_address
-      - amount
-      - asset_id
-      - approval_transaction_hash
-      title: CreateParticipation
-      type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.CreateParticipation
-      x-validate: null
     Error:
       additionalProperties: false
       properties:
@@ -418,8 +361,9 @@ components:
           x-validate: null
         wallet_address:
           description: The wallet address for the participation
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
           x-struct: null
           x-validate: null
       required:
@@ -435,6 +379,63 @@ components:
       title: Participation
       type: object
       x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.Participation
+      x-validate: null
+    CreateParticipation:
+      description: Parameters for creating an offer participation
+      properties:
+        amount:
+          description: The participation amount
+          type: string
+          x-struct: null
+          x-validate: null
+        approval_transaction_hash:
+          description: The approval transaction hash
+          type: string
+          x-struct: null
+          x-validate: null
+        asset_id:
+          description: The ID of the asset
+          type: string
+          x-struct: null
+          x-validate: null
+        chain:
+          description: The blockchain chain for the funding contract
+          enum:
+          - ethereum_sepolia
+          - base_sepolia
+          - solana_devnet
+          - ethereum_mainnet
+          - base_mainnet
+          - solana_mainnet
+          type: string
+          x-struct: null
+          x-validate: null
+        offer_id:
+          description: The ID of the offer
+          type: string
+          x-struct: null
+          x-validate: null
+        offer_option_id:
+          description: The ID of the offer option
+          type: string
+          x-struct: null
+          x-validate: null
+        wallet_address:
+          description: The wallet address
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - offer_id
+      - offer_option_id
+      - chain
+      - wallet_address
+      - amount
+      - asset_id
+      - approval_transaction_hash
+      title: CreateParticipation
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.CreateParticipation
       x-validate: null
   securitySchemes:
     OAuth2:

@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Frontline DocumentSubmissions KYC API
+  title: Frontline KYC API
   version: 0.1.0
 servers:
 - url: https://api.coinlist.co
@@ -45,30 +45,6 @@ paths:
       - KYC
 components:
   schemas:
-    CreateKycTokenRequest:
-      additionalProperties: false
-      properties:
-        level_name:
-          default: Sorting_KYC_Level
-          description: The Sumsub verification level to start. Determines which screens the Sumsub WebSDK shows.
-          enum:
-          - Sorting_KYC_Level
-          - BasicKYCLevel
-          - AccreditationIndividual_FullVerification
-          example: Sorting_KYC_Level
-          type: string
-          x-struct: null
-          x-validate: null
-        reset:
-          default: false
-          description: Reset the Sumsub applicant before issuing the token, so an already-approved level can be executed again (e.g. to update stale PII). Send the kyc_reset value from the requirement status. Must not be sent when refreshing an expired token mid-flow, or the user's in-progress submission is wiped.
-          type: boolean
-          x-struct: null
-          x-validate: null
-      title: CreateKycTokenRequest
-      type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.CreateKycTokenRequest
-      x-validate: null
     Error:
       additionalProperties: false
       properties:
@@ -113,6 +89,30 @@ components:
       title: Error
       type: object
       x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.ApiError
+      x-validate: null
+    CreateKycTokenRequest:
+      additionalProperties: false
+      properties:
+        level_name:
+          default: Sorting_KYC_Level
+          description: The Sumsub verification level to start. Determines which screens the Sumsub WebSDK shows.
+          enum:
+          - Sorting_KYC_Level
+          - BasicKYCLevel
+          - AccreditationIndividual_FullVerification
+          example: Sorting_KYC_Level
+          type: string
+          x-struct: null
+          x-validate: null
+        reset:
+          default: false
+          description: Reset the Sumsub applicant before issuing the token, so an already-approved level can be executed again (e.g. to update stale PII). Send the kyc_reset value from the requirement status. Must not be sent when refreshing an expired token mid-flow, or the user's in-progress submission is wiped.
+          type: boolean
+          x-struct: null
+          x-validate: null
+      title: CreateKycTokenRequest
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.CreateKycTokenRequest
       x-validate: null
     KycToken:
       additionalProperties: false

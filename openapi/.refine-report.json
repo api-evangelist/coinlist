@@ -1,17 +1,7 @@
 {
   "provider": "coinlist",
   "sources": [
-    "coinlist-documentsubmissions-api-openapi.yml",
-    "coinlist-kyc-api-openapi.yml",
-    "coinlist-oauth-api-openapi.yml",
-    "coinlist-offers-api-openapi.yml",
-    "coinlist-participations-api-openapi.yml",
-    "coinlist-pii-api-openapi.yml",
-    "coinlist-requirements-api-openapi.yml",
-    "coinlist-swap-api-openapi.yml",
-    "coinlist-token-api-openapi.yml",
-    "coinlist-wallet-api-openapi.yml",
-    "coinlist-wallet-ownership-api-openapi.yml"
+    "_original/coinlist-passage-openapi-original.json"
   ],
   "outputs": [
     "coinlist-documentsubmissions-api-openapi.yml",
@@ -26,9 +16,28 @@
     "coinlist-wallet-api-openapi.yml",
     "coinlist-wallet-ownership-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 2 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "coinlist-passage-openapi-original.json: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "superseded outputs removed: coinlist-document-submissions-api-openapi.yml, coinlist-o-auth-api-openapi.yml",
+    "apis.yml register: written (+2 apis, 11 total)"
+  ],
+  "skipped": [
+    "coinlist-document-submissions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "coinlist-kyc-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "coinlist-o-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "coinlist-offers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "coinlist-participations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "coinlist-pii-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "coinlist-requirements-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "coinlist-swap-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "coinlist-token-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "coinlist-wallet-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "coinlist-wallet-ownership-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

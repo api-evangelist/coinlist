@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Frontline DocumentSubmissions OAuth API
+  title: Frontline O Auth API
   version: 0.1.0
 servers:
 - url: https://api.coinlist.co
@@ -234,6 +234,42 @@ components:
       type: object
       x-struct: Elixir.FrontlineAPIWeb.OpenApi.Oauth.Schemas.OauthError
       x-validate: null
+    OauthToken:
+      additionalProperties: false
+      properties:
+        access_token:
+          description: The access token
+          type: string
+          x-struct: null
+          x-validate: null
+        expires_in:
+          description: Token lifetime in seconds
+          type: integer
+          x-struct: null
+          x-validate: null
+        id_token:
+          description: OpenID Connect ID token
+          type: string
+          x-struct: null
+          x-validate: null
+        refresh_token:
+          description: The refresh token
+          type: string
+          x-struct: null
+          x-validate: null
+        token_type:
+          description: Token type, e.g. Bearer
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - token_type
+      - access_token
+      - expires_in
+      title: OauthToken
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Oauth.Schemas.OauthToken
+      x-validate: null
     OauthIntrospect:
       description: Token introspection response. When active is false, only that field is returned.
       properties:
@@ -290,42 +326,6 @@ components:
       title: OauthIntrospect
       type: object
       x-struct: Elixir.FrontlineAPIWeb.OpenApi.Oauth.Schemas.OauthIntrospect
-      x-validate: null
-    OauthToken:
-      additionalProperties: false
-      properties:
-        access_token:
-          description: The access token
-          type: string
-          x-struct: null
-          x-validate: null
-        expires_in:
-          description: Token lifetime in seconds
-          type: integer
-          x-struct: null
-          x-validate: null
-        id_token:
-          description: OpenID Connect ID token
-          type: string
-          x-struct: null
-          x-validate: null
-        refresh_token:
-          description: The refresh token
-          type: string
-          x-struct: null
-          x-validate: null
-        token_type:
-          description: Token type, e.g. Bearer
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - token_type
-      - access_token
-      - expires_in
-      title: OauthToken
-      type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Oauth.Schemas.OauthToken
       x-validate: null
   securitySchemes:
     OAuth2:

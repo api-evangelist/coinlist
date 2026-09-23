@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Frontline DocumentSubmissions Swap API
+  title: Frontline Swap API
   version: 0.1.0
 servers:
 - url: https://api.coinlist.co
@@ -155,44 +155,6 @@ paths:
       - Swap
 components:
   schemas:
-    SwapPreview:
-      additionalProperties: false
-      description: Quote for swapping an amount of an input token on a swap contract.
-      properties:
-        fee:
-          description: Fee charged on the swap, as a uint256 decimal string in the input token's smallest unit
-          example: '1000'
-          type: string
-          x-struct: null
-          x-validate: null
-        object:
-          description: String representing the object's type. Objects of the same type share the same value.
-          enum:
-          - swap_preview
-          type: string
-          x-struct: null
-          x-validate: null
-        pay_input_amount:
-          description: Amount of the input token to pay, as a uint256 decimal string in the input token's smallest unit
-          example: '1000000'
-          type: string
-          x-struct: null
-          x-validate: null
-        receive_output_amount:
-          description: Amount of the output token to receive, as a uint256 decimal string in the output token's smallest unit
-          example: '999000'
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - object
-      - pay_input_amount
-      - fee
-      - receive_output_amount
-      title: SwapPreview
-      type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.SwapPreview
-      x-validate: null
     Error:
       additionalProperties: false
       properties:
@@ -268,6 +230,44 @@ components:
       title: SwapStatus
       type: object
       x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.SwapStatus
+      x-validate: null
+    SwapPreview:
+      additionalProperties: false
+      description: Quote for swapping an amount of an input token on a swap contract.
+      properties:
+        fee:
+          description: Fee charged on the swap, as a uint256 decimal string in the input token's smallest unit
+          example: '1000'
+          type: string
+          x-struct: null
+          x-validate: null
+        object:
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - swap_preview
+          type: string
+          x-struct: null
+          x-validate: null
+        pay_input_amount:
+          description: Amount of the input token to pay, as a uint256 decimal string in the input token's smallest unit
+          example: '1000000'
+          type: string
+          x-struct: null
+          x-validate: null
+        receive_output_amount:
+          description: Amount of the output token to receive, as a uint256 decimal string in the output token's smallest unit
+          example: '999000'
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - object
+      - pay_input_amount
+      - fee
+      - receive_output_amount
+      title: SwapPreview
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.SwapPreview
       x-validate: null
     SwapOutputToken:
       additionalProperties: false
