@@ -49,6 +49,9 @@ specificationVersion: '0.23'
 created: '2026-07-17'
 modified: '2026-07-18'
 image: https://logo.clearbit.com/coinlist.co
+x-docs-platform: mintlify
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-09-24
 tags:
 - Company
 - Fintech
@@ -226,8 +229,6 @@ apis:
   humanURL: https://docs.passage.coinlist.co/
   baseURL: https://api.coinlist.co
   tags:
-  - Document Submissions
-  tags_raw:
   - document submissions
   properties:
   - type: OpenAPI

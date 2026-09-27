@@ -17,20 +17,20 @@
     "coinlist-wallet-ownership-api-openapi.yml"
   ],
   "archived": [
-    "deleted 2 superseded output(s) from the previous generation"
+    "deleted 1 superseded output(s) from the previous generation"
   ],
   "errors": [],
   "warnings": [],
   "notes": [
     "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "coinlist-passage-openapi-original.json: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
-    "superseded outputs removed: coinlist-document-submissions-api-openapi.yml, coinlist-o-auth-api-openapi.yml",
-    "apis.yml register: written (+2 apis, 11 total)"
+    "superseded outputs removed: coinlist-document-submissions-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 11 total)"
   ],
   "skipped": [
     "coinlist-document-submissions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "coinlist-kyc-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "coinlist-o-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "coinlist-oauth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "coinlist-offers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "coinlist-participations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "coinlist-pii-api-openapi.yml: previously refined output, superseded by openapi/_original/",

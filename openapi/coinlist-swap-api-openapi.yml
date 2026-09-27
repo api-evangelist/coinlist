@@ -155,6 +155,75 @@ paths:
       - Swap
 components:
   schemas:
+    SwapStatus:
+      additionalProperties: false
+      description: Current status flags of a Superstate swap contract.
+      properties:
+        object:
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - swap_status
+          type: string
+          x-struct: null
+          x-validate: null
+        stopped:
+          description: The contract's stopped() bitmask as a uint256 decimal string. Zero means no functionality is stopped.
+          example: '0'
+          type: string
+          x-struct: null
+          x-validate: null
+        swap_level:
+          description: The contract's SWAP_LEVEL() flag as a uint256 decimal string
+          example: '4'
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - object
+      - stopped
+      - swap_level
+      title: SwapStatus
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.SwapStatus
+      x-validate: null
+    SwapOutputToken:
+      additionalProperties: false
+      description: ERC-20 metadata of a swap contract's output token.
+      properties:
+        decimals:
+          description: ERC-20 token decimals
+          example: 6
+          type: integer
+          x-struct: null
+          x-validate: null
+        name:
+          description: ERC-20 token name
+          example: USD Coin
+          type: string
+          x-struct: null
+          x-validate: null
+        object:
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - swap_output_token
+          type: string
+          x-struct: null
+          x-validate: null
+        symbol:
+          description: ERC-20 token symbol
+          example: USDC
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - object
+      - name
+      - symbol
+      - decimals
+      title: SwapOutputToken
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.SwapOutputToken
+      x-validate: null
     Error:
       additionalProperties: false
       properties:
@@ -200,37 +269,6 @@ components:
       type: object
       x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.ApiError
       x-validate: null
-    SwapStatus:
-      additionalProperties: false
-      description: Current status flags of a Superstate swap contract.
-      properties:
-        object:
-          description: String representing the object's type. Objects of the same type share the same value.
-          enum:
-          - swap_status
-          type: string
-          x-struct: null
-          x-validate: null
-        stopped:
-          description: The contract's stopped() bitmask as a uint256 decimal string. Zero means no functionality is stopped.
-          example: '0'
-          type: string
-          x-struct: null
-          x-validate: null
-        swap_level:
-          description: The contract's SWAP_LEVEL() flag as a uint256 decimal string
-          example: '4'
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - object
-      - stopped
-      - swap_level
-      title: SwapStatus
-      type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.SwapStatus
-      x-validate: null
     SwapPreview:
       additionalProperties: false
       description: Quote for swapping an amount of an input token on a swap contract.
@@ -268,44 +306,6 @@ components:
       title: SwapPreview
       type: object
       x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.SwapPreview
-      x-validate: null
-    SwapOutputToken:
-      additionalProperties: false
-      description: ERC-20 metadata of a swap contract's output token.
-      properties:
-        decimals:
-          description: ERC-20 token decimals
-          example: 6
-          type: integer
-          x-struct: null
-          x-validate: null
-        name:
-          description: ERC-20 token name
-          example: USD Coin
-          type: string
-          x-struct: null
-          x-validate: null
-        object:
-          description: String representing the object's type. Objects of the same type share the same value.
-          enum:
-          - swap_output_token
-          type: string
-          x-struct: null
-          x-validate: null
-        symbol:
-          description: ERC-20 token symbol
-          example: USDC
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - object
-      - name
-      - symbol
-      - decimals
-      title: SwapOutputToken
-      type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.SwapOutputToken
       x-validate: null
   securitySchemes:
     OAuth2:
