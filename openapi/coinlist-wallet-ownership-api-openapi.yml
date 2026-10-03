@@ -44,28 +44,6 @@ paths:
       - Wallet Ownership
 components:
   schemas:
-    WalletOwnershipChallenge:
-      additionalProperties: false
-      properties:
-        expires_at:
-          description: When the challenge expires
-          example: '2025-01-01T00:00:00.000000Z'
-          format: date-time
-          type: string
-          x-struct: null
-          x-validate: null
-        message:
-          description: The challenge message to sign
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - message
-      - expires_at
-      title: WalletOwnershipChallenge
-      type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.WalletOwnershipChallenge
-      x-validate: null
     Error:
       additionalProperties: false
       properties:
@@ -175,6 +153,28 @@ components:
       title: CreateWalletOwnershipChallengeRequest
       type: object
       x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.CreateWalletOwnershipChallengeRequest
+      x-validate: null
+    WalletOwnershipChallenge:
+      additionalProperties: false
+      properties:
+        expires_at:
+          description: When the challenge expires
+          example: '2025-01-01T00:00:00.000000Z'
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        message:
+          description: The challenge message to sign
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - message
+      - expires_at
+      title: WalletOwnershipChallenge
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.WalletOwnershipChallenge
       x-validate: null
   securitySchemes:
     OAuth2:

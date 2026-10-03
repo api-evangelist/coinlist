@@ -85,6 +85,45 @@ paths:
       - document submissions
 components:
   schemas:
+    DocumentSubmission:
+      properties:
+        form_type:
+          description: The tax form derived from the entity kind
+          enum:
+          - w8_ben
+          - w8_ben_e
+          example: w8_ben
+          type: string
+          x-struct: null
+          x-validate: null
+        object:
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - document_submission
+          type: string
+          x-struct: null
+          x-validate: null
+        status:
+          description: The status of the document signing submission
+          enum:
+          - INITIALIZED
+          - SENT
+          - VIEWED
+          - COMPLETED
+          - DECLINED
+          - EXPIRED
+          example: SENT
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - object
+      - status
+      - form_type
+      title: DocumentSubmission
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.DocumentSubmission
+      x-validate: null
     Error:
       additionalProperties: false
       properties:
@@ -129,45 +168,6 @@ components:
       title: Error
       type: object
       x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.ApiError
-      x-validate: null
-    DocumentSubmission:
-      properties:
-        form_type:
-          description: The tax form derived from the entity kind
-          enum:
-          - w8_ben
-          - w8_ben_e
-          example: w8_ben
-          type: string
-          x-struct: null
-          x-validate: null
-        object:
-          description: String representing the object's type. Objects of the same type share the same value.
-          enum:
-          - document_submission
-          type: string
-          x-struct: null
-          x-validate: null
-        status:
-          description: The status of the document signing submission
-          enum:
-          - INITIALIZED
-          - SENT
-          - VIEWED
-          - COMPLETED
-          - DECLINED
-          - EXPIRED
-          example: SENT
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - object
-      - status
-      - form_type
-      title: DocumentSubmission
-      type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.DocumentSubmission
       x-validate: null
   securitySchemes:
     OAuth2:

@@ -62,6 +62,30 @@ paths:
       - Wallet
 components:
   schemas:
+    WalletAuthorization:
+      additionalProperties: false
+      description: Whether a wallet is authorized to swap on a Superstate swap contract.
+      properties:
+        authorized:
+          description: Whether the wallet is authorized on the swap contract
+          example: true
+          type: boolean
+          x-struct: null
+          x-validate: null
+        object:
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - wallet_authorization
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - object
+      - authorized
+      title: WalletAuthorization
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.WalletAuthorization
+      x-validate: null
     Error:
       additionalProperties: false
       properties:
@@ -106,30 +130,6 @@ components:
       title: Error
       type: object
       x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.ApiError
-      x-validate: null
-    WalletAuthorization:
-      additionalProperties: false
-      description: Whether a wallet is authorized to swap on a Superstate swap contract.
-      properties:
-        authorized:
-          description: Whether the wallet is authorized on the swap contract
-          example: true
-          type: boolean
-          x-struct: null
-          x-validate: null
-        object:
-          description: String representing the object's type. Objects of the same type share the same value.
-          enum:
-          - wallet_authorization
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - object
-      - authorized
-      title: WalletAuthorization
-      type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.WalletAuthorization
       x-validate: null
   securitySchemes:
     OAuth2:
