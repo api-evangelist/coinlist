@@ -73,30 +73,81 @@ paths:
       - Requirements
 components:
   schemas:
-    OptionRequirementJurisdictionDetails:
+    OptionRequirementExternalWalletDetails:
       properties:
-        filter_type:
-          description: The type of filter
-          enum:
-          - allow
-          - reject
-          example: allow
+        protocol:
+          description: The blockchain protocol
+          example: ethereum
           type: string
           x-struct: null
           x-validate: null
-        filters:
-          description: List of jurisdiction filters
-          items:
-            $ref: '#/components/schemas/OptionRequirementJurisdictionFilter'
-          type: array
+      required:
+      - protocol
+      title: OptionRequirementExternalWalletDetails
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.OptionRequirement.ExternalWalletDetails
+      x-validate: null
+    OfferRequirements:
+      properties:
+        object:
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - offer_requirements
+          type: string
+          x-struct: null
+          x-validate: null
+        offer_id:
+          description: The offer ID
+          type: string
+          x-struct: null
+          x-validate: null
+        options:
+          additionalProperties:
+            properties:
+              data:
+                items:
+                  $ref: '#/components/schemas/OptionRequirement'
+                type: array
+                x-struct: null
+                x-validate: null
+              object:
+                description: String representing the object's type. Objects of the same type share the same value.
+                enum:
+                - list
+                type: string
+                x-struct: null
+                x-validate: null
+            required:
+            - object
+            - data
+            type: object
+            x-struct: null
+            x-validate: null
+          description: Map of option ID to list of requirements for that option
+          type: object
           x-struct: null
           x-validate: null
       required:
-      - filter_type
-      - filters
-      title: OptionRequirementJurisdictionDetails
+      - object
+      - offer_id
+      - options
+      title: OfferRequirements
       type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.OptionRequirement.JurisdictionDetails
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.OfferRequirements
+      x-validate: null
+    OptionRequirementWhitelistedWalletDetails:
+      properties:
+        max_wallets:
+          description: Maximum number of whitelisted wallets a user may connect for this option
+          example: 1
+          type: integer
+          x-struct: null
+          x-validate: null
+      required:
+      - max_wallets
+      title: OptionRequirementWhitelistedWalletDetails
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.OptionRequirement.WhitelistedWalletDetails
       x-validate: null
     OptionRequirement:
       properties:
@@ -159,6 +210,32 @@ components:
       title: OptionRequirement
       type: object
       x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.OptionRequirement
+      x-validate: null
+    OptionRequirementJurisdictionFilter:
+      properties:
+        country_iso_2:
+          description: The ISO 3166-1 alpha-2 country code
+          example: US
+          type: string
+          x-struct: null
+          x-validate: null
+        regions:
+          description: List of region codes for the country
+          example:
+          - CA
+          - NY
+          items:
+            type: string
+            x-struct: null
+            x-validate: null
+          type: array
+          x-struct: null
+          x-validate: null
+      required:
+      - country_iso_2
+      title: OptionRequirementJurisdictionFilter
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.OptionRequirement.JurisdictionFilter
       x-validate: null
     RequirementStatuses:
       properties:
@@ -299,107 +376,30 @@ components:
       type: object
       x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.ApiError
       x-validate: null
-    OptionRequirementExternalWalletDetails:
+    OptionRequirementJurisdictionDetails:
       properties:
-        protocol:
-          description: The blockchain protocol
-          example: ethereum
+        filter_type:
+          description: The type of filter
+          enum:
+          - allow
+          - reject
+          example: allow
           type: string
           x-struct: null
           x-validate: null
-      required:
-      - protocol
-      title: OptionRequirementExternalWalletDetails
-      type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.OptionRequirement.ExternalWalletDetails
-      x-validate: null
-    OptionRequirementJurisdictionFilter:
-      properties:
-        country_iso_2:
-          description: The ISO 3166-1 alpha-2 country code
-          example: US
-          type: string
-          x-struct: null
-          x-validate: null
-        regions:
-          description: List of region codes for the country
-          example:
-          - CA
-          - NY
+        filters:
+          description: List of jurisdiction filters
           items:
-            type: string
-            x-struct: null
-            x-validate: null
+            $ref: '#/components/schemas/OptionRequirementJurisdictionFilter'
           type: array
           x-struct: null
           x-validate: null
       required:
-      - country_iso_2
-      title: OptionRequirementJurisdictionFilter
+      - filter_type
+      - filters
+      title: OptionRequirementJurisdictionDetails
       type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.OptionRequirement.JurisdictionFilter
-      x-validate: null
-    OfferRequirements:
-      properties:
-        object:
-          description: String representing the object's type. Objects of the same type share the same value.
-          enum:
-          - offer_requirements
-          type: string
-          x-struct: null
-          x-validate: null
-        offer_id:
-          description: The offer ID
-          type: string
-          x-struct: null
-          x-validate: null
-        options:
-          additionalProperties:
-            properties:
-              data:
-                items:
-                  $ref: '#/components/schemas/OptionRequirement'
-                type: array
-                x-struct: null
-                x-validate: null
-              object:
-                description: String representing the object's type. Objects of the same type share the same value.
-                enum:
-                - list
-                type: string
-                x-struct: null
-                x-validate: null
-            required:
-            - object
-            - data
-            type: object
-            x-struct: null
-            x-validate: null
-          description: Map of option ID to list of requirements for that option
-          type: object
-          x-struct: null
-          x-validate: null
-      required:
-      - object
-      - offer_id
-      - options
-      title: OfferRequirements
-      type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.OfferRequirements
-      x-validate: null
-    OptionRequirementWhitelistedWalletDetails:
-      properties:
-        max_wallets:
-          description: Maximum number of whitelisted wallets a user may connect for this option
-          example: 1
-          type: integer
-          x-struct: null
-          x-validate: null
-      required:
-      - max_wallets
-      title: OptionRequirementWhitelistedWalletDetails
-      type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.OptionRequirement.WhitelistedWalletDetails
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.OptionRequirement.JurisdictionDetails
       x-validate: null
   securitySchemes:
     OAuth2:
