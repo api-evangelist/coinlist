@@ -47,7 +47,7 @@ accessModel:
   method: derived
 specificationVersion: '0.23'
 created: '2026-07-17'
-modified: '2026-07-18'
+modified: '2026-10-06'
 image: https://logo.clearbit.com/coinlist.co
 x-docs-platform: mintlify
 x-docs-platform-confidence: medium
@@ -243,6 +243,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- url: https://blog.coinlist.co/rss/
+  type: BlogRSS
 - type: Overlay
   url: overlays/coinlist-passage-overlay.yaml
 # --- artifact pointers ---
