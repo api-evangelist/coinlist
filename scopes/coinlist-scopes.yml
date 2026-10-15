@@ -1,9 +1,102 @@
-generated: '2026-07-18'
-method: derived
-source: openapi/coinlist-passage-openapi-original.json
+generated: '2026-10-14'
+method: none
+source: openapi/coinlist-document-submissions-api-openapi.yml, openapi/coinlist-kyc-api-openapi.yml,
+  openapi/coinlist-oauth-api-openapi.yml, openapi/coinlist-offers-api-openapi.yml, openapi/coinlist-participations-api-openapi.yml,
+  openapi/coinlist-pii-api-openapi.yml, openapi/coinlist-requirements-api-openapi.yml, openapi/coinlist-swap-api-openapi.yml,
+  openapi/coinlist-token-api-openapi.yml, openapi/coinlist-wallet-api-openapi.yml, openapi/coinlist-wallet-ownership-api-openapi.yml
 schemes:
 - name: OAuth2
-  source: openapi/coinlist-passage-openapi-original.json
+  source: openapi/coinlist-document-submissions-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: /oauth/authorize
+    tokenUrl: /oauth/token
+  - flow: clientCredentials
+    tokenUrl: /oauth/token
+  description: OAuth 2.0 authorization and token endpoints
+- name: OAuth2
+  source: openapi/coinlist-kyc-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: /oauth/authorize
+    tokenUrl: /oauth/token
+  - flow: clientCredentials
+    tokenUrl: /oauth/token
+  description: OAuth 2.0 authorization and token endpoints
+- name: OAuth2
+  source: openapi/coinlist-oauth-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: /oauth/authorize
+    tokenUrl: /oauth/token
+  - flow: clientCredentials
+    tokenUrl: /oauth/token
+  description: OAuth 2.0 authorization and token endpoints
+- name: OAuth2
+  source: openapi/coinlist-offers-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: /oauth/authorize
+    tokenUrl: /oauth/token
+  - flow: clientCredentials
+    tokenUrl: /oauth/token
+  description: OAuth 2.0 authorization and token endpoints
+- name: OAuth2
+  source: openapi/coinlist-participations-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: /oauth/authorize
+    tokenUrl: /oauth/token
+  - flow: clientCredentials
+    tokenUrl: /oauth/token
+  description: OAuth 2.0 authorization and token endpoints
+- name: OAuth2
+  source: openapi/coinlist-pii-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: /oauth/authorize
+    tokenUrl: /oauth/token
+  - flow: clientCredentials
+    tokenUrl: /oauth/token
+  description: OAuth 2.0 authorization and token endpoints
+- name: OAuth2
+  source: openapi/coinlist-requirements-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: /oauth/authorize
+    tokenUrl: /oauth/token
+  - flow: clientCredentials
+    tokenUrl: /oauth/token
+  description: OAuth 2.0 authorization and token endpoints
+- name: OAuth2
+  source: openapi/coinlist-swap-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: /oauth/authorize
+    tokenUrl: /oauth/token
+  - flow: clientCredentials
+    tokenUrl: /oauth/token
+  description: OAuth 2.0 authorization and token endpoints
+- name: OAuth2
+  source: openapi/coinlist-token-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: /oauth/authorize
+    tokenUrl: /oauth/token
+  - flow: clientCredentials
+    tokenUrl: /oauth/token
+  description: OAuth 2.0 authorization and token endpoints
+- name: OAuth2
+  source: openapi/coinlist-wallet-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: /oauth/authorize
+    tokenUrl: /oauth/token
+  - flow: clientCredentials
+    tokenUrl: /oauth/token
+  description: OAuth 2.0 authorization and token endpoints
+- name: OAuth2
+  source: openapi/coinlist-wallet-ownership-api-openapi.yml
   flows:
   - flow: authorizationCode
     authorizationUrl: /oauth/authorize
@@ -12,3 +105,5 @@ schemes:
     tokenUrl: /oauth/token
   description: OAuth 2.0 authorization and token endpoints
 scopes: []
+note: The OAuth2 security scheme(s) in the OpenAPI declare no scopes, and no security requirement
+  references one.
