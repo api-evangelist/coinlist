@@ -234,37 +234,50 @@ paths:
       - Offers
 components:
   schemas:
-    AllowWalletResponse:
-      discriminator:
-        mapping:
-          broadcast_transaction: '#/components/schemas/AllowWalletBroadcastTransactionResponse'
-          none: '#/components/schemas/AllowWalletAlreadyAllowedResponse'
-        propertyName: action
-      oneOf:
-      - $ref: '#/components/schemas/AllowWalletBroadcastTransactionResponse'
-      - $ref: '#/components/schemas/AllowWalletAlreadyAllowedResponse'
-      title: AllowWalletResponse
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.AllowWalletResponse
-      x-validate: null
-    AllowWalletAlreadyAllowedResponse:
+    Error:
+      additionalProperties: false
       properties:
-        action:
-          enum:
-          - none
+        code:
+          description: A human-readable message providing more details about the error.
           type: string
           x-struct: null
           x-validate: null
-        already_allowed:
-          description: True when the wallet is already allowed and no transaction is needed.
-          type: boolean
+        errors:
+          additionalProperties:
+            items:
+              type: string
+              x-struct: null
+              x-validate: null
+            type: array
+            x-struct: null
+            x-validate: null
+          type: object
+          x-struct: null
+          x-validate: null
+        event_id:
+          description: The unique identifier for the error event. This is useful for tracking and debugging.
+          type: string
+          x-struct: null
+          x-validate: null
+        message:
+          description: For some errors that could be handled programmatically, a short string indicating the error code reported.
+          type: string
+          x-struct: null
+          x-validate: null
+        type:
+          description: The type of error returned. One of `api_error`, `invalid_request_error`
+          enum:
+          - api_error
+          - invalid_request_error
+          type: string
           x-struct: null
           x-validate: null
       required:
-      - action
-      - already_allowed
-      title: AllowWalletAlreadyAllowedResponse
+      - type
+      - message
+      title: Error
       type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.AllowWalletAlreadyAllowedResponse
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.ApiError
       x-validate: null
     OfferOption:
       additionalProperties: false
@@ -341,6 +354,61 @@ components:
       type: object
       x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.AllowWalletRequest
       x-validate: null
+    AllowWalletResponse:
+      discriminator:
+        mapping:
+          broadcast_transaction: '#/components/schemas/AllowWalletBroadcastTransactionResponse'
+          none: '#/components/schemas/AllowWalletAlreadyAllowedResponse'
+        propertyName: action
+      oneOf:
+      - $ref: '#/components/schemas/AllowWalletBroadcastTransactionResponse'
+      - $ref: '#/components/schemas/AllowWalletAlreadyAllowedResponse'
+      title: AllowWalletResponse
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.AllowWalletResponse
+      x-validate: null
+    OfferOptionAddress:
+      additionalProperties: false
+      description: A user's proven external wallet connected to an offer option.
+      properties:
+        address:
+          description: The connected external wallet address.
+          type: string
+          x-struct: null
+          x-validate: null
+        created_at:
+          description: When the binding was created.
+          example: '2025-01-01T00:00:00.000000Z'
+          format: date-time
+          type: string
+          x-struct: null
+          x-validate: null
+        id:
+          description: Unique identifier for the object.
+          example: 05edea81-98a7-4582-aa7c-040d57cb1858
+          type: string
+          x-struct: null
+          x-validate: null
+        offer_option_id:
+          description: The ID of the offer option.
+          example: 05edea81-98a7-4582-aa7c-040d57cb1858
+          type: string
+          x-struct: null
+          x-validate: null
+        protocol:
+          description: The protocol the binding is scoped to. An EVM address binds once per option regardless of which EVM chain proved ownership.
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - id
+      - offer_option_id
+      - address
+      - protocol
+      - created_at
+      title: OfferOptionAddress
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.OfferOptionAddress
+      x-validate: null
     CreateOfferOptionAddressRequest:
       additionalProperties: false
       description: 'Connects a proven external wallet to an offer option. Requires a previously
@@ -393,87 +461,6 @@ components:
       title: CreateOfferOptionAddressRequest
       type: object
       x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.CreateOfferOptionAddressRequest
-      x-validate: null
-    VerifyOwnershipRequest:
-      description: Parameters consumed by VerifyOwnershipPlug to verify wallet ownership.
-      properties:
-        chain:
-          description: The blockchain network the wallet belongs to.
-          enum:
-          - ethereum_sepolia
-          - base_sepolia
-          - solana_devnet
-          - ethereum_mainnet
-          - base_mainnet
-          - solana_mainnet
-          example: ethereum_sepolia
-          type: string
-          x-struct: null
-          x-validate: null
-        signature:
-          description: The cryptographic signature of the challenge message.
-          example: '0xdeadbeef'
-          type: string
-          x-struct: null
-          x-validate: null
-        wallet_address:
-          description: The wallet address to verify. For EVM chains, must be a valid Ethereum address (normalized to lowercase).
-          example: '0x742d35cc6634c0532925a3b844bc9e7595f0beb1'
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - wallet_address
-      - chain
-      - signature
-      title: VerifyOwnershipRequest
-      type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.VerifyOwnershipRequest
-      x-validate: null
-    Error:
-      additionalProperties: false
-      properties:
-        code:
-          description: A human-readable message providing more details about the error.
-          type: string
-          x-struct: null
-          x-validate: null
-        errors:
-          additionalProperties:
-            items:
-              type: string
-              x-struct: null
-              x-validate: null
-            type: array
-            x-struct: null
-            x-validate: null
-          type: object
-          x-struct: null
-          x-validate: null
-        event_id:
-          description: The unique identifier for the error event. This is useful for tracking and debugging.
-          type: string
-          x-struct: null
-          x-validate: null
-        message:
-          description: For some errors that could be handled programmatically, a short string indicating the error code reported.
-          type: string
-          x-struct: null
-          x-validate: null
-        type:
-          description: The type of error returned. One of `api_error`, `invalid_request_error`
-          enum:
-          - api_error
-          - invalid_request_error
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - type
-      - message
-      title: Error
-      type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.ApiError
       x-validate: null
     AllowWalletBroadcastTransactionResponse:
       properties:
@@ -588,48 +575,61 @@ components:
       type: object
       x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.Offer
       x-validate: null
-    OfferOptionAddress:
-      additionalProperties: false
-      description: A user's proven external wallet connected to an offer option.
+    VerifyOwnershipRequest:
+      description: Parameters consumed by VerifyOwnershipPlug to verify wallet ownership.
       properties:
-        address:
-          description: The connected external wallet address.
+        chain:
+          description: The blockchain network the wallet belongs to.
+          enum:
+          - ethereum_sepolia
+          - base_sepolia
+          - solana_devnet
+          - ethereum_mainnet
+          - base_mainnet
+          - solana_mainnet
+          example: ethereum_sepolia
           type: string
           x-struct: null
           x-validate: null
-        created_at:
-          description: When the binding was created.
-          example: '2025-01-01T00:00:00.000000Z'
-          format: date-time
+        signature:
+          description: The cryptographic signature of the challenge message.
+          example: '0xdeadbeef'
           type: string
           x-struct: null
           x-validate: null
-        id:
-          description: Unique identifier for the object.
-          example: 05edea81-98a7-4582-aa7c-040d57cb1858
-          type: string
-          x-struct: null
-          x-validate: null
-        offer_option_id:
-          description: The ID of the offer option.
-          example: 05edea81-98a7-4582-aa7c-040d57cb1858
-          type: string
-          x-struct: null
-          x-validate: null
-        protocol:
-          description: The protocol the binding is scoped to. An EVM address binds once per option regardless of which EVM chain proved ownership.
+        wallet_address:
+          description: The wallet address to verify. For EVM chains, must be a valid Ethereum address (normalized to lowercase).
+          example: '0x742d35cc6634c0532925a3b844bc9e7595f0beb1'
           type: string
           x-struct: null
           x-validate: null
       required:
-      - id
-      - offer_option_id
-      - address
-      - protocol
-      - created_at
-      title: OfferOptionAddress
+      - wallet_address
+      - chain
+      - signature
+      title: VerifyOwnershipRequest
       type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.OfferOptionAddress
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.VerifyOwnershipRequest
+      x-validate: null
+    AllowWalletAlreadyAllowedResponse:
+      properties:
+        action:
+          enum:
+          - none
+          type: string
+          x-struct: null
+          x-validate: null
+        already_allowed:
+          description: True when the wallet is already allowed and no transaction is needed.
+          type: boolean
+          x-struct: null
+          x-validate: null
+      required:
+      - action
+      - already_allowed
+      title: AllowWalletAlreadyAllowedResponse
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.AllowWalletAlreadyAllowedResponse
       x-validate: null
     OfferDetails:
       additionalProperties: false

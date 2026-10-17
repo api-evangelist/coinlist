@@ -214,26 +214,6 @@ paths:
       - OAuth
 components:
   schemas:
-    OauthError:
-      additionalProperties: false
-      properties:
-        error:
-          description: OAuth error code
-          type: string
-          x-struct: null
-          x-validate: null
-        error_description:
-          description: Human-readable error description
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - error
-      - error_description
-      title: OauthError
-      type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Oauth.Schemas.OauthError
-      x-validate: null
     OauthToken:
       additionalProperties: false
       properties:
@@ -269,6 +249,26 @@ components:
       title: OauthToken
       type: object
       x-struct: Elixir.FrontlineAPIWeb.OpenApi.Oauth.Schemas.OauthToken
+      x-validate: null
+    OauthError:
+      additionalProperties: false
+      properties:
+        error:
+          description: OAuth error code
+          type: string
+          x-struct: null
+          x-validate: null
+        error_description:
+          description: Human-readable error description
+          type: string
+          x-struct: null
+          x-validate: null
+      required:
+      - error
+      - error_description
+      title: OauthError
+      type: object
+      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Oauth.Schemas.OauthError
       x-validate: null
     OauthIntrospect:
       description: Token introspection response. When active is false, only that field is returned.
