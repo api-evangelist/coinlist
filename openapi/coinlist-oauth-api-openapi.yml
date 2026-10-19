@@ -24,25 +24,17 @@ paths:
                   description: The client identifier.
                   example: 550e8400-e29b-41d4-a716-446655440000
                   type: string
-                  x-struct: null
-                  x-validate: null
                 client_secret:
                   description: The client secret.
                   example: my-client-secret
                   type: string
-                  x-struct: null
-                  x-validate: null
                 token:
                   description: The token to introspect.
                   example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
                   type: string
-                  x-struct: null
-                  x-validate: null
               required:
               - token
               type: object
-              x-struct: null
-              x-validate: null
         description: Introspect request params
         required: false
       responses:
@@ -83,25 +75,17 @@ paths:
                   description: The client identifier.
                   example: 550e8400-e29b-41d4-a716-446655440000
                   type: string
-                  x-struct: null
-                  x-validate: null
                 client_secret:
                   description: The client secret.
                   example: my-client-secret
                   type: string
-                  x-struct: null
-                  x-validate: null
                 token:
                   description: The token to revoke.
                   example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
                   type: string
-                  x-struct: null
-                  x-validate: null
               required:
               - token
               type: object
-              x-struct: null
-              x-validate: null
         description: Revoke request params
         required: false
       responses:
@@ -139,23 +123,15 @@ paths:
                 client_id:
                   description: OAuth client identifier. Required for all grant types when client authentication is sent in the request body.
                   type: string
-                  x-struct: null
-                  x-validate: null
                 client_secret:
                   description: OAuth client secret. Required for all grant types when client authentication is sent in the request body.
                   type: string
-                  x-struct: null
-                  x-validate: null
                 code:
                   description: Authorization code received from the `/oauth/authorize` endpoint. Required when `grant_type` is `authorization_code`.
                   type: string
-                  x-struct: null
-                  x-validate: null
                 code_verifier:
                   description: PKCE code verifier corresponding to the `code_challenge` sent to `/oauth/authorize`. Required when `grant_type` is `authorization_code`.
                   type: string
-                  x-struct: null
-                  x-validate: null
                 grant_type:
                   description: OAuth grant type. Supported values are `authorization_code`, `client_credentials`, and `refresh_token`.
                   enum:
@@ -163,24 +139,16 @@ paths:
                   - client_credentials
                   - refresh_token
                   type: string
-                  x-struct: null
-                  x-validate: null
                 redirect_uri:
                   description: Must match the `redirect_uri` used in the original `/oauth/authorize` request. Required when `grant_type` is `authorization_code`.
                   format: uri
                   type: string
-                  x-struct: null
-                  x-validate: null
                 refresh_token:
                   description: Required when `grant_type` is `refresh_token`.
                   type: string
-                  x-struct: null
-                  x-validate: null
               required:
               - grant_type
               type: object
-              x-struct: null
-              x-validate: null
         description: Token request params
         required: false
       responses:
@@ -214,62 +182,44 @@ paths:
       - OAuth
 components:
   schemas:
-    OauthToken:
-      additionalProperties: false
-      properties:
-        access_token:
-          description: The access token
-          type: string
-          x-struct: null
-          x-validate: null
-        expires_in:
-          description: Token lifetime in seconds
-          type: integer
-          x-struct: null
-          x-validate: null
-        id_token:
-          description: OpenID Connect ID token
-          type: string
-          x-struct: null
-          x-validate: null
-        refresh_token:
-          description: The refresh token
-          type: string
-          x-struct: null
-          x-validate: null
-        token_type:
-          description: Token type, e.g. Bearer
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - token_type
-      - access_token
-      - expires_in
-      title: OauthToken
-      type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Oauth.Schemas.OauthToken
-      x-validate: null
     OauthError:
       additionalProperties: false
       properties:
         error:
           description: OAuth error code
           type: string
-          x-struct: null
-          x-validate: null
         error_description:
           description: Human-readable error description
           type: string
-          x-struct: null
-          x-validate: null
       required:
       - error
       - error_description
       title: OauthError
       type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Oauth.Schemas.OauthError
-      x-validate: null
+    OauthToken:
+      additionalProperties: false
+      properties:
+        access_token:
+          description: The access token
+          type: string
+        expires_in:
+          description: Token lifetime in seconds
+          type: integer
+        id_token:
+          description: OpenID Connect ID token
+          type: string
+        refresh_token:
+          description: The refresh token
+          type: string
+        token_type:
+          description: Token type, e.g. Bearer
+          type: string
+      required:
+      - token_type
+      - access_token
+      - expires_in
+      title: OauthToken
+      type: object
     OauthIntrospect:
       description: Token introspection response. When active is false, only that field is returned.
       properties:
@@ -277,56 +227,38 @@ components:
           description: Whether the token is active.
           example: true
           type: boolean
-          x-struct: null
-          x-validate: null
         client_id:
           description: The client identifier for the OAuth 2.0 client that requested this token.
           example: 550e8400-e29b-41d4-a716-446655440000
           type: string
-          x-struct: null
-          x-validate: null
         exp:
           description: The Unix timestamp when the token expires.
           example: 1704067200
           type: integer
-          x-struct: null
-          x-validate: null
         iat:
           description: The Unix timestamp when the token was issued.
           example: 1704063600
           type: integer
-          x-struct: null
-          x-validate: null
         iss:
           description: The issuer of the token.
           example: https://api.example.com
           type: string
-          x-struct: null
-          x-validate: null
         scope:
           description: A space-separated list of scopes associated with the token.
           example: read write
           type: string
-          x-struct: null
-          x-validate: null
         sub:
           description: The subject of the token (user ID).
           example: 550e8400-e29b-41d4-a716-446655440000
           type: string
-          x-struct: null
-          x-validate: null
         username:
           description: The username of the resource owner.
           example: user@example.com
           type: string
-          x-struct: null
-          x-validate: null
       required:
       - active
       title: OauthIntrospect
       type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Oauth.Schemas.OauthIntrospect
-      x-validate: null
   securitySchemes:
     OAuth2:
       description: OAuth 2.0 authorization and token endpoints

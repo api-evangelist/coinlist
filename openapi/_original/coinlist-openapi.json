@@ -1,0 +1,3886 @@
+{
+  "components": {
+    "responses": {},
+    "schemas": {
+      "RequirementStatuses": {
+        "properties": {
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "requirement_statuses"
+            ],
+            "type": "string"
+          },
+          "offer_id": {
+            "description": "The offer ID",
+            "type": "string"
+          },
+          "statuses": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "not_started",
+                    "in_progress",
+                    "action_needed",
+                    "completed",
+                    "rejected"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "description": "Object form, used when the status carries extra data: the action-needed reason and/or the Sumsub flow that resolves the requirement (kyc_level + kyc_reset, to be sent to the kyc-token endpoint as-is).",
+                  "properties": {
+                    "action": {
+                      "enum": [
+                        "kyc_not_verified",
+                        "update_pii_data"
+                      ],
+                      "type": "string"
+                    },
+                    "kyc_level": {
+                      "description": "The Sumsub verification level that resolves this requirement",
+                      "enum": [
+                        "Sorting_KYC_Level",
+                        "BasicKYCLevel",
+                        "AccreditationIndividual_FullVerification"
+                      ],
+                      "type": "string"
+                    },
+                    "kyc_reset": {
+                      "description": "Whether the Sumsub applicant must be reset before starting the flow (redoing an already-approved level, e.g. to update stale PII)",
+                      "type": "boolean"
+                    },
+                    "status": {
+                      "enum": [
+                        "not_started",
+                        "in_progress",
+                        "action_needed",
+                        "completed",
+                        "rejected"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ],
+                  "type": "object"
+                }
+              ]
+            },
+            "description": "Map of requirement ID to status",
+            "type": "object"
+          }
+        },
+        "required": [
+          "object",
+          "offer_id",
+          "statuses"
+        ],
+        "title": "RequirementStatuses",
+        "type": "object"
+      },
+      "Participation": {
+        "additionalProperties": false,
+        "description": "An offer participation",
+        "properties": {
+          "amount": {
+            "description": "The participation amount",
+            "type": "string"
+          },
+          "amount_string": {
+            "description": "The participation amount formatted as a human-readable string",
+            "type": "string"
+          },
+          "asset": {
+            "description": "The asset details for the participation",
+            "properties": {
+              "code": {
+                "description": "The asset code (symbol)",
+                "type": "string"
+              },
+              "fractional_digits": {
+                "description": "The number of fractional digits for the asset",
+                "type": "integer"
+              },
+              "id": {
+                "description": "The asset ID",
+                "type": "string"
+              },
+              "name": {
+                "description": "The asset name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "code",
+              "name",
+              "fractional_digits"
+            ],
+            "type": "object"
+          },
+          "chain": {
+            "description": "The chain for the participation contract",
+            "enum": [
+              "ethereum_sepolia",
+              "base_sepolia",
+              "solana_devnet",
+              "ethereum_mainnet",
+              "base_mainnet",
+              "solana_mainnet"
+            ],
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier for the object.",
+            "example": "05edea81-98a7-4582-aa7c-040d57cb1858",
+            "type": "string"
+          },
+          "inserted_at": {
+            "description": "When the participation was created",
+            "example": "2025-01-01T00:00:00.000000Z",
+            "format": "date-time",
+            "nullable": false,
+            "type": "string"
+          },
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "participation"
+            ],
+            "type": "string"
+          },
+          "offer_id": {
+            "description": "The ID of the offer",
+            "type": "string"
+          },
+          "offer_option_id": {
+            "description": "The ID of the offer option",
+            "type": "string"
+          },
+          "status": {
+            "description": "The participation status",
+            "enum": [
+              "prepared",
+              "pending",
+              "submitted",
+              "completed",
+              "failed",
+              "remit_submitted",
+              "remitted",
+              "remit_failed"
+            ],
+            "type": "string"
+          },
+          "updated_at": {
+            "description": "When the participation was last updated",
+            "example": "2025-01-01T00:00:00.000000Z",
+            "format": "date-time",
+            "nullable": false,
+            "type": "string"
+          },
+          "wallet_address": {
+            "description": "The wallet address for the participation",
+            "nullable": true,
+            "type": "string"
+          }
+        },
+        "required": [
+          "object",
+          "id",
+          "offer_id",
+          "offer_option_id",
+          "status",
+          "amount",
+          "amount_string",
+          "asset",
+          "chain"
+        ],
+        "title": "Participation",
+        "type": "object"
+      },
+      "OfferSummary": {
+        "additionalProperties": false,
+        "description": "Offer summary",
+        "properties": {
+          "banner_url": {
+            "description": "The URL for the offer banner. Null for offer types that don't require one (e.g. ondo::swap).",
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "ends_at": {
+            "description": "When the offer ends. Null when the offer has no end date",
+            "example": "2025-01-01T00:00:00.000000Z",
+            "format": "date-time",
+            "nullable": true,
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier for the object.",
+            "example": "05edea81-98a7-4582-aa7c-040d57cb1858",
+            "type": "string"
+          },
+          "logo_url": {
+            "description": "The URL for the offer logo",
+            "format": "uri",
+            "type": "string"
+          },
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "offer"
+            ],
+            "type": "string"
+          },
+          "options": {
+            "description": "List of offer options",
+            "items": {
+              "$ref": "#/components/schemas/OfferOption"
+            },
+            "type": "array"
+          },
+          "slug": {
+            "description": "The slug identifier of the offer",
+            "example": "example-offer",
+            "type": "string"
+          },
+          "starts_at": {
+            "description": "When the offer starts",
+            "example": "2025-01-01T00:00:00.000000Z",
+            "format": "date-time",
+            "nullable": true,
+            "type": "string"
+          },
+          "tagline": {
+            "description": "Tagline text for the offer (English). Null for offer types that don't require one (e.g. ondo::swap).",
+            "example": "Example Offer Tagline",
+            "nullable": true,
+            "type": "string"
+          },
+          "type": {
+            "description": "Offer type",
+            "enum": [
+              "coinlist::token_sale",
+              "superstate::swap",
+              "ondo::swap"
+            ],
+            "example": "coinlist::token_sale",
+            "type": "string"
+          }
+        },
+        "required": [
+          "object",
+          "id",
+          "slug",
+          "type",
+          "tagline",
+          "starts_at",
+          "ends_at",
+          "logo_url",
+          "banner_url",
+          "options"
+        ],
+        "title": "OfferSummary",
+        "type": "object"
+      },
+      "OndoSwapQuote": {
+        "additionalProperties": false,
+        "description": "Indicative, size- and side-aware price for an Ondo asset. Free to poll and does not consume an attestation.",
+        "properties": {
+          "asset_address": {
+            "description": "ERC-20 contract address of the quoted asset",
+            "example": "0x14c3abf95cb9c93a8b82c1cdcb76d72cb87b2d4c",
+            "type": "string"
+          },
+          "asset_decimals": {
+            "description": "Decimals of the asset_address contract. token_base_units is denominated in these, so divide by 10^asset_decimals to display whole tokens.",
+            "example": 18,
+            "type": "integer"
+          },
+          "chain_id": {
+            "description": "EIP-155 chain id the quote is priced on. Always \"1\": Ondo runs no testnet, so every environment prices against Ethereum mainnet.",
+            "example": "1",
+            "type": "string"
+          },
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "ondo_swap_quote"
+            ],
+            "type": "string"
+          },
+          "price": {
+            "description": "Price per whole token in USD, already scaled and so needing none of the handling token_base_units does. Ondo denominates it in USDon, which is 18 decimals on Ethereum, the only chain quoted here.",
+            "example": "225.273151158540753535",
+            "type": "string"
+          },
+          "side": {
+            "description": "Side the quote was priced for",
+            "enum": [
+              "buy",
+              "sell"
+            ],
+            "example": "buy",
+            "type": "string"
+          },
+          "symbol": {
+            "description": "Ondo asset symbol",
+            "example": "AAPLon",
+            "type": "string"
+          },
+          "ticker": {
+            "description": "Ticker of the underlying security",
+            "example": "AAPL",
+            "type": "string"
+          },
+          "token_base_units": {
+            "description": "Quantity of the asset in its smallest unit, as a decimal string. Use it as-is to build calldata, or scale it by asset_decimals to display it. Note this is not the token_amount request parameter, which is in whole tokens.",
+            "example": "5000000000000000000",
+            "type": "string"
+          }
+        },
+        "required": [
+          "object",
+          "chain_id",
+          "symbol",
+          "ticker",
+          "asset_address",
+          "asset_decimals",
+          "side",
+          "token_base_units",
+          "price"
+        ],
+        "title": "OndoSwapQuote",
+        "type": "object"
+      },
+      "OauthIntrospect": {
+        "description": "Token introspection response. When active is false, only that field is returned.",
+        "properties": {
+          "active": {
+            "description": "Whether the token is active.",
+            "example": true,
+            "type": "boolean"
+          },
+          "client_id": {
+            "description": "The client identifier for the OAuth 2.0 client that requested this token.",
+            "example": "550e8400-e29b-41d4-a716-446655440000",
+            "type": "string"
+          },
+          "exp": {
+            "description": "The Unix timestamp when the token expires.",
+            "example": 1704067200,
+            "type": "integer"
+          },
+          "iat": {
+            "description": "The Unix timestamp when the token was issued.",
+            "example": 1704063600,
+            "type": "integer"
+          },
+          "iss": {
+            "description": "The issuer of the token.",
+            "example": "https://api.example.com",
+            "type": "string"
+          },
+          "scope": {
+            "description": "A space-separated list of scopes associated with the token.",
+            "example": "read write",
+            "type": "string"
+          },
+          "sub": {
+            "description": "The subject of the token (user ID).",
+            "example": "550e8400-e29b-41d4-a716-446655440000",
+            "type": "string"
+          },
+          "username": {
+            "description": "The username of the resource owner.",
+            "example": "user@example.com",
+            "type": "string"
+          }
+        },
+        "required": [
+          "active"
+        ],
+        "title": "OauthIntrospect",
+        "type": "object"
+      },
+      "OfferRequirements": {
+        "properties": {
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "offer_requirements"
+            ],
+            "type": "string"
+          },
+          "offer_id": {
+            "description": "The offer ID",
+            "type": "string"
+          },
+          "options": {
+            "additionalProperties": {
+              "properties": {
+                "data": {
+                  "items": {
+                    "$ref": "#/components/schemas/OptionRequirement"
+                  },
+                  "type": "array"
+                },
+                "object": {
+                  "description": "String representing the object's type. Objects of the same type share the same value.",
+                  "enum": [
+                    "list"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "object",
+                "data"
+              ],
+              "type": "object"
+            },
+            "description": "Map of option ID to list of requirements for that option",
+            "type": "object"
+          }
+        },
+        "required": [
+          "object",
+          "offer_id",
+          "options"
+        ],
+        "title": "OfferRequirements",
+        "type": "object"
+      },
+      "SwapOutputToken": {
+        "additionalProperties": false,
+        "description": "ERC-20 metadata of a swap contract's output token.",
+        "properties": {
+          "decimals": {
+            "description": "ERC-20 token decimals",
+            "example": 6,
+            "type": "integer"
+          },
+          "name": {
+            "description": "ERC-20 token name",
+            "example": "USD Coin",
+            "type": "string"
+          },
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "swap_output_token"
+            ],
+            "type": "string"
+          },
+          "symbol": {
+            "description": "ERC-20 token symbol",
+            "example": "USDC",
+            "type": "string"
+          }
+        },
+        "required": [
+          "object",
+          "name",
+          "symbol",
+          "decimals"
+        ],
+        "title": "SwapOutputToken",
+        "type": "object"
+      },
+      "TokenBalance": {
+        "additionalProperties": false,
+        "description": "Current on-chain ERC-20 balance of an owner address.",
+        "properties": {
+          "balance": {
+            "description": "The balance as a uint256 decimal string in the token's smallest unit",
+            "example": "1000000",
+            "type": "string"
+          },
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "token_balance"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "object",
+          "balance"
+        ],
+        "title": "TokenBalance",
+        "type": "object"
+      },
+      "CreateParticipation": {
+        "description": "Parameters for creating an offer participation",
+        "properties": {
+          "amount": {
+            "description": "The participation amount",
+            "type": "string"
+          },
+          "approval_transaction_hash": {
+            "description": "The approval transaction hash",
+            "type": "string"
+          },
+          "asset_id": {
+            "description": "The ID of the asset",
+            "type": "string"
+          },
+          "chain": {
+            "description": "The blockchain chain for the funding contract",
+            "enum": [
+              "ethereum_sepolia",
+              "base_sepolia",
+              "solana_devnet",
+              "ethereum_mainnet",
+              "base_mainnet",
+              "solana_mainnet"
+            ],
+            "type": "string"
+          },
+          "offer_id": {
+            "description": "The ID of the offer",
+            "type": "string"
+          },
+          "offer_option_id": {
+            "description": "The ID of the offer option",
+            "type": "string"
+          },
+          "wallet_address": {
+            "description": "The wallet address",
+            "type": "string"
+          }
+        },
+        "required": [
+          "offer_id",
+          "offer_option_id",
+          "chain",
+          "wallet_address",
+          "amount",
+          "asset_id",
+          "approval_transaction_hash"
+        ],
+        "title": "CreateParticipation",
+        "type": "object"
+      },
+      "VerifyOwnershipRequest": {
+        "description": "Parameters consumed by VerifyOwnershipPlug to verify wallet ownership.",
+        "properties": {
+          "chain": {
+            "description": "The blockchain network the wallet belongs to.",
+            "enum": [
+              "ethereum_sepolia",
+              "base_sepolia",
+              "solana_devnet",
+              "ethereum_mainnet",
+              "base_mainnet",
+              "solana_mainnet"
+            ],
+            "example": "ethereum_sepolia",
+            "type": "string"
+          },
+          "signature": {
+            "description": "The cryptographic signature of the challenge message.",
+            "example": "0xdeadbeef",
+            "type": "string"
+          },
+          "wallet_address": {
+            "description": "The wallet address to verify. For EVM chains, must be a valid Ethereum address (normalized to lowercase).",
+            "example": "0x742d35cc6634c0532925a3b844bc9e7595f0beb1",
+            "type": "string"
+          }
+        },
+        "required": [
+          "wallet_address",
+          "chain",
+          "signature"
+        ],
+        "title": "VerifyOwnershipRequest",
+        "type": "object"
+      },
+      "Error": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "description": "A human-readable message providing more details about the error.",
+            "type": "string"
+          },
+          "errors": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "type": "object"
+          },
+          "event_id": {
+            "description": "The unique identifier for the error event. This is useful for tracking and debugging.",
+            "type": "string"
+          },
+          "message": {
+            "description": "For some errors that could be handled programmatically, a short string indicating the error code reported.",
+            "type": "string"
+          },
+          "type": {
+            "description": "The type of error returned. One of `api_error`, `invalid_request_error`",
+            "enum": [
+              "api_error",
+              "invalid_request_error"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "message"
+        ],
+        "title": "Error",
+        "type": "object"
+      },
+      "Offer": {
+        "additionalProperties": false,
+        "description": "Full offer details",
+        "properties": {
+          "about": {
+            "description": "About text for the offer (English)",
+            "nullable": true,
+            "type": "string"
+          },
+          "asset": {
+            "additionalProperties": false,
+            "description": "The asset for which the offer is created",
+            "properties": {
+              "code": {
+                "description": "The asset code (symbol)",
+                "type": "string"
+              },
+              "fractional_digits": {
+                "description": "The number of fractional digits for the asset",
+                "type": "integer"
+              },
+              "id": {
+                "description": "The asset ID",
+                "type": "string"
+              },
+              "name": {
+                "description": "The asset name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "code",
+              "name",
+              "fractional_digits"
+            ],
+            "type": "object"
+          },
+          "banner_url": {
+            "description": "The URL for the offer banner. Null for offer types that don't require one (e.g. ondo::swap).",
+            "format": "uri",
+            "nullable": true,
+            "type": "string"
+          },
+          "category": {
+            "description": "The category of the offer",
+            "type": "string"
+          },
+          "ends_at": {
+            "description": "When the offer ends. Null when the offer has no end date",
+            "example": "2025-01-01T00:00:00.000000Z",
+            "format": "date-time",
+            "nullable": true,
+            "type": "string"
+          },
+          "faqs": {
+            "description": "List of FAQs for the offer",
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "answer": {
+                  "type": "string"
+                },
+                "question": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "question",
+                "answer"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "funding_assets": {
+            "description": "List of assets that can be used to fund the offer",
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "description": "The asset code (symbol)",
+                  "type": "string"
+                },
+                "fractional_digits": {
+                  "description": "The number of fractional digits for the asset",
+                  "type": "integer"
+                },
+                "id": {
+                  "description": "The asset ID",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "The asset name",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "code",
+                "name",
+                "fractional_digits"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "id": {
+            "description": "Unique identifier for the object.",
+            "example": "05edea81-98a7-4582-aa7c-040d57cb1858",
+            "type": "string"
+          },
+          "links": {
+            "description": "List of links related to the offer",
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "label": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "label",
+                "url"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "logo_url": {
+            "description": "The URL for the offer logo",
+            "format": "uri",
+            "type": "string"
+          },
+          "milestones": {
+            "description": "List of milestones for the offer",
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "schedule": {
+                  "type": "string"
+                },
+                "status": {
+                  "enum": [
+                    "completed",
+                    "active",
+                    "upcoming"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "schedule",
+                "status"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "name": {
+            "description": "The name of the offer",
+            "type": "string"
+          },
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "offer"
+            ],
+            "type": "string"
+          },
+          "options": {
+            "description": "List of offer options",
+            "items": {
+              "$ref": "#/components/schemas/OfferOption"
+            },
+            "type": "array"
+          },
+          "slug": {
+            "description": "The slug identifier of the offer",
+            "example": "example-offer",
+            "type": "string"
+          },
+          "starts_at": {
+            "description": "When the offer starts",
+            "example": "2025-01-01T00:00:00.000000Z",
+            "format": "date-time",
+            "nullable": true,
+            "type": "string"
+          },
+          "tagline": {
+            "description": "Tagline text for the offer (English). Null for offer types that don't require one (e.g. ondo::swap).",
+            "nullable": true,
+            "type": "string"
+          },
+          "terms": {
+            "description": "List of offer terms",
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "key": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "key",
+                "value"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "tokens": {
+            "description": "Tokens involved in the offer by role — funding token(s) plus the distribution/swap token — each keyed by chain + address",
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "address": {
+                  "description": "The token contract address",
+                  "type": "string"
+                },
+                "chain": {
+                  "description": "The chain the token is on",
+                  "enum": [
+                    "ethereum_sepolia",
+                    "base_sepolia",
+                    "solana_devnet",
+                    "ethereum_mainnet",
+                    "base_mainnet",
+                    "solana_mainnet"
+                  ],
+                  "type": "string"
+                },
+                "role": {
+                  "description": "The token's role in the offer",
+                  "enum": [
+                    "funding",
+                    "distribution",
+                    "swap"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "role",
+                "chain",
+                "address"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "type": {
+            "description": "Offer type",
+            "enum": [
+              "coinlist::token_sale",
+              "superstate::swap",
+              "ondo::swap"
+            ],
+            "example": "coinlist::token_sale",
+            "type": "string"
+          }
+        },
+        "required": [
+          "object",
+          "id",
+          "slug",
+          "name",
+          "type",
+          "category",
+          "tagline",
+          "about",
+          "starts_at",
+          "ends_at",
+          "logo_url",
+          "banner_url",
+          "options",
+          "terms",
+          "links",
+          "faqs",
+          "milestones",
+          "asset",
+          "funding_assets",
+          "tokens"
+        ],
+        "title": "Offer",
+        "type": "object"
+      },
+      "SwapStatus": {
+        "additionalProperties": false,
+        "description": "Current status flags of a Superstate swap contract.",
+        "properties": {
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "swap_status"
+            ],
+            "type": "string"
+          },
+          "stopped": {
+            "description": "The contract's stopped() bitmask as a uint256 decimal string. Zero means no functionality is stopped.",
+            "example": "0",
+            "type": "string"
+          },
+          "swap_level": {
+            "description": "The contract's SWAP_LEVEL() flag as a uint256 decimal string",
+            "example": "4",
+            "type": "string"
+          }
+        },
+        "required": [
+          "object",
+          "stopped",
+          "swap_level"
+        ],
+        "title": "SwapStatus",
+        "type": "object"
+      },
+      "Pii": {
+        "description": "The user's PII used to pre-fill tax forms. Fields that are unavailable are null.",
+        "properties": {
+          "date_of_birth": {
+            "description": "Date of birth as an ISO 8601 date (YYYY-MM-DD). Null for companies and when unavailable.",
+            "example": "1990-01-15",
+            "format": "date",
+            "nullable": true,
+            "type": "string"
+          },
+          "full_legal_name": {
+            "description": "Full legal name. For persons: first, middle and last name joined. For companies: the company name.",
+            "example": "Aleksander Nowak",
+            "nullable": true,
+            "type": "string"
+          },
+          "jurisdiction": {
+            "description": "Jurisdiction of the entity, sourced from the entity's address country",
+            "nullable": true,
+            "properties": {
+              "iso_2": {
+                "description": "ISO 3166-1 alpha-2 country code",
+                "example": "PL",
+                "type": "string"
+              },
+              "name": {
+                "description": "Country display name",
+                "example": "Poland",
+                "nullable": true,
+                "type": "string"
+              }
+            },
+            "required": [
+              "iso_2",
+              "name"
+            ],
+            "type": "object"
+          },
+          "kind": {
+            "description": "Kind of the entity the PII belongs to",
+            "enum": [
+              "person",
+              "company"
+            ],
+            "example": "person",
+            "type": "string"
+          },
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "user_pii"
+            ],
+            "type": "string"
+          },
+          "permanent_address": {
+            "description": "Permanent address of the entity",
+            "properties": {
+              "city": {
+                "example": "Warsaw",
+                "nullable": true,
+                "type": "string"
+              },
+              "country": {
+                "description": "ISO 3166-1 alpha-2 country code",
+                "example": "PL",
+                "nullable": true,
+                "type": "string"
+              },
+              "postal_code": {
+                "example": "00-001",
+                "nullable": true,
+                "type": "string"
+              },
+              "state": {
+                "description": "State or region code",
+                "nullable": true,
+                "type": "string"
+              },
+              "street": {
+                "example": "ul. Nowy Świat 12",
+                "nullable": true,
+                "type": "string"
+              }
+            },
+            "required": [
+              "street",
+              "city",
+              "state",
+              "postal_code",
+              "country"
+            ],
+            "type": "object"
+          },
+          "tax_id": {
+            "description": "Tax identification number. For persons: SSN or foreign TIN. For companies: EIN.",
+            "nullable": true,
+            "type": "string"
+          }
+        },
+        "required": [
+          "object",
+          "kind",
+          "full_legal_name",
+          "date_of_birth",
+          "jurisdiction",
+          "tax_id",
+          "permanent_address"
+        ],
+        "title": "Pii",
+        "type": "object"
+      },
+      "CreateKycTokenRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "level_name": {
+            "default": "Sorting_KYC_Level",
+            "description": "The Sumsub verification level to start. Determines which screens the Sumsub WebSDK shows.",
+            "enum": [
+              "Sorting_KYC_Level",
+              "BasicKYCLevel",
+              "AccreditationIndividual_FullVerification"
+            ],
+            "example": "Sorting_KYC_Level",
+            "type": "string"
+          },
+          "reset": {
+            "default": false,
+            "description": "Reset the Sumsub applicant before issuing the token, so an already-approved level can be executed again (e.g. to update stale PII). Send the kyc_reset value from the requirement status. Must not be sent when refreshing an expired token mid-flow, or the user's in-progress submission is wiped.",
+            "type": "boolean"
+          }
+        },
+        "title": "CreateKycTokenRequest",
+        "type": "object"
+      },
+      "OptionRequirementJurisdictionFilter": {
+        "properties": {
+          "country_iso_2": {
+            "description": "The ISO 3166-1 alpha-2 country code",
+            "example": "US",
+            "type": "string"
+          },
+          "regions": {
+            "description": "List of region codes for the country",
+            "example": [
+              "CA",
+              "NY"
+            ],
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "country_iso_2"
+        ],
+        "title": "OptionRequirementJurisdictionFilter",
+        "type": "object"
+      },
+      "OfferOption": {
+        "additionalProperties": false,
+        "description": "An option within an offer",
+        "properties": {
+          "bid_increment": {
+            "description": "Decimal string",
+            "nullable": true,
+            "type": "string"
+          },
+          "floor_price_usd": {
+            "description": "Decimal string",
+            "nullable": true,
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier for the object.",
+            "example": "05edea81-98a7-4582-aa7c-040d57cb1858",
+            "type": "string"
+          },
+          "minimum_purchase_usd": {
+            "description": "Decimal string",
+            "nullable": true,
+            "type": "string"
+          },
+          "price_usd": {
+            "description": "Decimal string",
+            "nullable": true,
+            "type": "string"
+          },
+          "sale_agreement_url": {
+            "nullable": true,
+            "type": "string"
+          },
+          "slug": {
+            "description": "The slug identifier of the option",
+            "type": "string"
+          },
+          "total_token_supply": {
+            "description": "Total token supply in whole tokens",
+            "nullable": true,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "slug",
+          "total_token_supply",
+          "price_usd",
+          "minimum_purchase_usd",
+          "floor_price_usd",
+          "bid_increment",
+          "sale_agreement_url"
+        ],
+        "title": "OfferOption",
+        "type": "object"
+      },
+      "CreateOfferOptionAddressRequest": {
+        "additionalProperties": false,
+        "description": "Connects a proven external wallet to an offer option. Requires a previously\ngenerated, unconsumed wallet-ownership challenge for the same wallet and\nchain. The signature is verified and the single-use challenge consumed during\nownership verification, before the bind. A rejected bind does not roll back the\nconsume, so the user re-signs to retry.\n",
+        "properties": {
+          "chain": {
+            "description": "The blockchain network the wallet belongs to.",
+            "enum": [
+              "ethereum_sepolia",
+              "base_sepolia",
+              "solana_devnet",
+              "ethereum_mainnet",
+              "base_mainnet",
+              "solana_mainnet"
+            ],
+            "example": "ethereum_sepolia",
+            "type": "string"
+          },
+          "offer_option_id": {
+            "description": "The ID of the offer option to connect the wallet to.",
+            "type": "string"
+          },
+          "signature": {
+            "description": "The cryptographic signature of the challenge message.",
+            "example": "0xdeadbeef",
+            "type": "string"
+          },
+          "wallet_address": {
+            "description": "The external wallet address. For EVM chains, must be a valid Ethereum address (normalized to lowercase).",
+            "example": "0x742d35cc6634c0532925a3b844bc9e7595f0beb1",
+            "type": "string"
+          }
+        },
+        "required": [
+          "offer_option_id",
+          "wallet_address",
+          "chain",
+          "signature"
+        ],
+        "title": "CreateOfferOptionAddressRequest",
+        "type": "object"
+      },
+      "DocumentSubmission": {
+        "properties": {
+          "form_type": {
+            "description": "The tax form derived from the entity kind",
+            "enum": [
+              "w8_ben",
+              "w8_ben_e"
+            ],
+            "example": "w8_ben",
+            "type": "string"
+          },
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "document_submission"
+            ],
+            "type": "string"
+          },
+          "status": {
+            "description": "The status of the document signing submission",
+            "enum": [
+              "INITIALIZED",
+              "SENT",
+              "VIEWED",
+              "COMPLETED",
+              "DECLINED",
+              "EXPIRED"
+            ],
+            "example": "SENT",
+            "type": "string"
+          }
+        },
+        "required": [
+          "object",
+          "status",
+          "form_type"
+        ],
+        "title": "DocumentSubmission",
+        "type": "object"
+      },
+      "AllowWalletBroadcastTransactionResponse": {
+        "properties": {
+          "action": {
+            "enum": [
+              "broadcast_transaction"
+            ],
+            "type": "string"
+          },
+          "data": {
+            "description": "The encoded transaction to broadcast on-chain to complete wallet allowlisting.",
+            "type": "string"
+          },
+          "to": {
+            "description": "The contract address to submit the transaction to.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "action",
+          "to",
+          "data"
+        ],
+        "title": "AllowWalletBroadcastTransactionResponse",
+        "type": "object"
+      },
+      "AllowWalletAlreadyAllowedResponse": {
+        "properties": {
+          "action": {
+            "enum": [
+              "none"
+            ],
+            "type": "string"
+          },
+          "already_allowed": {
+            "description": "True when the wallet is already allowed and no transaction is needed.",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "action",
+          "already_allowed"
+        ],
+        "title": "AllowWalletAlreadyAllowedResponse",
+        "type": "object"
+      },
+      "OptionRequirementDocumentDetails": {
+        "properties": {
+          "document_type": {
+            "description": "The type of document the user must sign",
+            "enum": [
+              "tax_certification"
+            ],
+            "example": "tax_certification",
+            "type": "string"
+          }
+        },
+        "required": [
+          "document_type"
+        ],
+        "title": "OptionRequirementDocumentDetails",
+        "type": "object"
+      },
+      "CreateWalletOwnershipChallengeRequest": {
+        "additionalProperties": false,
+        "description": "Creates a wallet ownership challenge. Two modes are supported:\n- **plain** (default): produces a random nonce. Only `wallet_address` and `chain` are required. `domain`, `uri`, and `statement` must not be provided.\n- **siwe**: produces an EIP-4361 Sign-In with Ethereum message. Requires `domain`, `uri`, and `statement` in addition to `wallet_address` and `chain`. Only supported for EVM chains.\n",
+        "properties": {
+          "chain": {
+            "description": "The blockchain network the wallet belongs to. EVM chains (e.g. `ethereum_sepolia`) support both plain and SIWE challenges. Non-EVM chains (e.g. `solana_devnet`) support plain challenges only.",
+            "enum": [
+              "ethereum_sepolia",
+              "base_sepolia",
+              "solana_devnet",
+              "ethereum_mainnet",
+              "base_mainnet",
+              "solana_mainnet"
+            ],
+            "example": "ethereum_sepolia",
+            "type": "string"
+          },
+          "challenge_type": {
+            "default": "plain",
+            "description": "The type of challenge to generate. `plain` (default) produces a random nonce. `siwe` produces an EIP-4361 message and requires `domain`, `uri`, and `statement`.",
+            "enum": [
+              "plain",
+              "siwe"
+            ],
+            "example": "plain",
+            "type": "string"
+          },
+          "domain": {
+            "description": "Required when `challenge_type` is `siwe`; must not be provided for plain challenges. The hostname of the requesting service. Must be a valid hostname (e.g. `example.com` or `app.example.com:3000`).",
+            "example": "example.com",
+            "type": "string"
+          },
+          "statement": {
+            "description": "Required when `challenge_type` is `siwe`; must not be provided for plain challenges. A human-readable message the user is agreeing to. Must not contain newlines. Maximum 256 characters.",
+            "example": "Sign in with Ethereum",
+            "maxLength": 256,
+            "type": "string"
+          },
+          "uri": {
+            "description": "Required when `challenge_type` is `siwe`; must not be provided for plain challenges. The URI of the resource being accessed. Must be a valid URI with scheme and host.",
+            "example": "https://example.com/login",
+            "type": "string"
+          },
+          "wallet_address": {
+            "description": "The wallet address to prove ownership of. For EVM chains, must be a valid 40-hex-digit Ethereum address (normalized to lowercase). For non-EVM chains, must not contain whitespace and is limited to 128 characters.",
+            "example": "0x742d35cc6634c0532925a3b844bc9e7595f0beb1",
+            "type": "string"
+          }
+        },
+        "required": [
+          "wallet_address",
+          "chain"
+        ],
+        "title": "CreateWalletOwnershipChallengeRequest",
+        "type": "object"
+      },
+      "TokenAllowance": {
+        "additionalProperties": false,
+        "description": "Current on-chain ERC-20 allowance for a token, owner and spender.",
+        "properties": {
+          "allowance": {
+            "description": "The allowance as a uint256 decimal string in the token's smallest unit",
+            "example": "1000000",
+            "type": "string"
+          },
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "token_allowance"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "object",
+          "allowance"
+        ],
+        "title": "TokenAllowance",
+        "type": "object"
+      },
+      "AllowWalletResponse": {
+        "discriminator": {
+          "mapping": {
+            "broadcast_transaction": "#/components/schemas/AllowWalletBroadcastTransactionResponse",
+            "none": "#/components/schemas/AllowWalletAlreadyAllowedResponse"
+          },
+          "propertyName": "action"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/AllowWalletBroadcastTransactionResponse"
+          },
+          {
+            "$ref": "#/components/schemas/AllowWalletAlreadyAllowedResponse"
+          }
+        ],
+        "title": "AllowWalletResponse"
+      },
+      "WalletAuthorization": {
+        "additionalProperties": false,
+        "description": "Whether a wallet is authorized to swap on a Superstate swap contract.",
+        "properties": {
+          "authorized": {
+            "description": "Whether the wallet is authorized on the swap contract",
+            "example": true,
+            "type": "boolean"
+          },
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "wallet_authorization"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "object",
+          "authorized"
+        ],
+        "title": "WalletAuthorization",
+        "type": "object"
+      },
+      "KycToken": {
+        "additionalProperties": false,
+        "properties": {
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "kyc_token"
+            ],
+            "type": "string"
+          },
+          "token": {
+            "description": "Short-lived Sumsub WebSDK access token scoped to the current user",
+            "type": "string"
+          }
+        },
+        "required": [
+          "object",
+          "token"
+        ],
+        "title": "KycToken",
+        "type": "object"
+      },
+      "OptionRequirementExternalWalletDetails": {
+        "properties": {
+          "protocol": {
+            "description": "The blockchain protocol",
+            "example": "ethereum",
+            "type": "string"
+          }
+        },
+        "required": [
+          "protocol"
+        ],
+        "title": "OptionRequirementExternalWalletDetails",
+        "type": "object"
+      },
+      "WalletOwnershipChallenge": {
+        "additionalProperties": false,
+        "properties": {
+          "expires_at": {
+            "description": "When the challenge expires",
+            "example": "2025-01-01T00:00:00.000000Z",
+            "format": "date-time",
+            "nullable": false,
+            "type": "string"
+          },
+          "message": {
+            "description": "The challenge message to sign",
+            "type": "string"
+          }
+        },
+        "required": [
+          "message",
+          "expires_at"
+        ],
+        "title": "WalletOwnershipChallenge",
+        "type": "object"
+      },
+      "OptionRequirementWhitelistedWalletDetails": {
+        "properties": {
+          "max_wallets": {
+            "description": "Maximum number of whitelisted wallets a user may connect for this option",
+            "example": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "max_wallets"
+        ],
+        "title": "OptionRequirementWhitelistedWalletDetails",
+        "type": "object"
+      },
+      "OauthToken": {
+        "additionalProperties": false,
+        "properties": {
+          "access_token": {
+            "description": "The access token",
+            "type": "string"
+          },
+          "expires_in": {
+            "description": "Token lifetime in seconds",
+            "type": "integer"
+          },
+          "id_token": {
+            "description": "OpenID Connect ID token",
+            "type": "string"
+          },
+          "refresh_token": {
+            "description": "The refresh token",
+            "type": "string"
+          },
+          "token_type": {
+            "description": "Token type, e.g. Bearer",
+            "type": "string"
+          }
+        },
+        "required": [
+          "token_type",
+          "access_token",
+          "expires_in"
+        ],
+        "title": "OauthToken",
+        "type": "object"
+      },
+      "AllowWalletRequest": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/VerifyOwnershipRequest"
+          }
+        ],
+        "description": "Verifies wallet ownership via a previously generated challenge, then checks if the wallet\nis already allowed for the offer. If already allowed, returns 200 with an empty JSON object.\nOtherwise starts the supplier verification process and returns an encoded transaction\nto broadcast.\n",
+        "title": "AllowWalletRequest",
+        "type": "object"
+      },
+      "OndoSwapTransaction": {
+        "additionalProperties": false,
+        "description": "A signed, ready-to-broadcast Ondo swap and the amounts it commits to. Unlike the quote, this spends an attestation and expires, so call it once the user has confirmed and never on a timer.",
+        "properties": {
+          "action": {
+            "enum": [
+              "broadcast_transaction"
+            ],
+            "type": "string"
+          },
+          "data": {
+            "description": "The encoded swap to broadcast on-chain",
+            "example": "0x0c89df8c",
+            "type": "string"
+          },
+          "expires_at": {
+            "description": "When the signed calldata stops being accepted. Broadcast before this or request a new transaction; a late send reverts.",
+            "example": "2025-01-01T00:00:00.000000Z",
+            "format": "date-time",
+            "nullable": false,
+            "type": "string"
+          },
+          "fee": {
+            "description": "CoinList's cut of pay_input_amount, in the same units. Taken at execution, not on top, so the wallet never approves more than pay_input_amount.",
+            "example": "0",
+            "type": "string"
+          },
+          "notional_value": {
+            "description": "The part of pay_input_amount that reaches Ondo, in the same units. This is what the quantity was priced against, and the signature commits to it.",
+            "example": "100000000",
+            "type": "string"
+          },
+          "pay_input_amount": {
+            "description": "Total the purchase costs, fee included, as a uint256 decimal string in the funding token's smallest unit. The approval has to cover this.",
+            "example": "100000000",
+            "type": "string"
+          },
+          "pay_input_decimals": {
+            "description": "Decimals pay_input_amount, fee and notional_value are denominated in, read on-chain from the funding token. The token is resolved from the offer rather than named by the caller, so this is the only place its scale is published.",
+            "example": 6,
+            "type": "integer"
+          },
+          "receive_output_amount": {
+            "description": "Quantity of the asset the wallet receives, as a uint256 decimal string in the asset's smallest unit. Divide by 10^receive_output_decimals to display whole tokens.",
+            "example": "264000000000000000",
+            "type": "string"
+          },
+          "receive_output_decimals": {
+            "description": "Decimals receive_output_amount is denominated in, reported by whatever priced the quantity rather than looked up separately.",
+            "example": 18,
+            "type": "integer"
+          },
+          "to": {
+            "description": "The swap contract to submit the transaction to",
+            "example": "0xff9c5ade32d9b4102469bd5f3817cb0061b25fec",
+            "type": "string"
+          }
+        },
+        "required": [
+          "action",
+          "to",
+          "data",
+          "expires_at",
+          "pay_input_amount",
+          "pay_input_decimals",
+          "fee",
+          "notional_value",
+          "receive_output_amount",
+          "receive_output_decimals"
+        ],
+        "title": "OndoSwapTransaction",
+        "type": "object"
+      },
+      "SwapPreview": {
+        "additionalProperties": false,
+        "description": "Quote for swapping an amount of an input token on a swap contract.",
+        "properties": {
+          "fee": {
+            "description": "Fee charged on the swap, as a uint256 decimal string in the input token's smallest unit",
+            "example": "1000",
+            "type": "string"
+          },
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "swap_preview"
+            ],
+            "type": "string"
+          },
+          "pay_input_amount": {
+            "description": "Amount of the input token to pay, as a uint256 decimal string in the input token's smallest unit",
+            "example": "1000000",
+            "type": "string"
+          },
+          "receive_output_amount": {
+            "description": "Amount of the output token to receive, as a uint256 decimal string in the output token's smallest unit",
+            "example": "999000",
+            "type": "string"
+          }
+        },
+        "required": [
+          "object",
+          "pay_input_amount",
+          "fee",
+          "receive_output_amount"
+        ],
+        "title": "SwapPreview",
+        "type": "object"
+      },
+      "OndoSwapTradingStatus": {
+        "additionalProperties": false,
+        "description": "Whether an Ondo asset is tradable right now, and the gross caps if so. `tradable` and both order caps describe the requested side. `gross_max_active_notional_value` is a session cap Ondo applies across both sides.",
+        "properties": {
+          "gross_max_active_notional_value": {
+            "description": "Cap in USD on the caller's outstanding orders in the session the market is currently in, both sides combined. Null when Ondo restricts the asset or the market is closed.",
+            "example": "200000",
+            "nullable": true,
+            "type": "string"
+          },
+          "gross_max_notional_value": {
+            "description": "Largest order Ondo will accept on the requested side, in USD. Null when Ondo restricts the asset, which is not the same as no limit.",
+            "example": "1234.560000000000000000",
+            "nullable": true,
+            "type": "string"
+          },
+          "gross_max_tokens": {
+            "description": "Largest order Ondo will accept on the requested side, in whole tokens. Null when Ondo restricts the asset, which is not the same as no limit.",
+            "example": "100.000000000000000000",
+            "nullable": true,
+            "type": "string"
+          },
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "ondo_swap_trading_status"
+            ],
+            "type": "string"
+          },
+          "side": {
+            "description": "The side the request asked for, echoed back",
+            "enum": [
+              "buy",
+              "sell"
+            ],
+            "example": "buy",
+            "type": "string"
+          },
+          "tradable": {
+            "description": "Whether the asset can be traded on the requested side right now. False whenever Ondo restricts it, the market is closed, or the current session disallows it.",
+            "example": true,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "object",
+          "side",
+          "tradable",
+          "gross_max_tokens",
+          "gross_max_notional_value",
+          "gross_max_active_notional_value"
+        ],
+        "title": "OndoSwapTradingStatus",
+        "type": "object"
+      },
+      "OauthError": {
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "description": "OAuth error code",
+            "type": "string"
+          },
+          "error_description": {
+            "description": "Human-readable error description",
+            "type": "string"
+          }
+        },
+        "required": [
+          "error",
+          "error_description"
+        ],
+        "title": "OauthError",
+        "type": "object"
+      },
+      "OndoSwapTransactionRequest": {
+        "additionalProperties": false,
+        "description": "The buy to encode: an asset, the wallet buying it, and what it pays.",
+        "properties": {
+          "amount": {
+            "description": "Gross amount to pay, as a uint256 decimal string in the funding token's smallest unit. This is the figure to approve: the CoinList fee comes off it, and Ondo prices the remainder.",
+            "example": "100000000",
+            "type": "string"
+          },
+          "chain": {
+            "description": "The EVM chain to swap on. Only chains CoinList has deployed a swap contract on are accepted, which is narrower than both this enum and the chains the on-chain reads serve.",
+            "enum": [
+              "ethereum_sepolia",
+              "base_sepolia",
+              "ethereum_mainnet",
+              "base_mainnet"
+            ],
+            "example": "ethereum_sepolia",
+            "type": "string"
+          },
+          "symbol": {
+            "description": "Ondo asset symbol to buy",
+            "example": "AAPLon",
+            "type": "string"
+          },
+          "wallet_address": {
+            "description": "Wallet that will broadcast the transaction. The calldata is signed over it, so no other wallet can send it.",
+            "example": "0x2c4c7082a135f6b980cdae4b40c3ebf72cd4a512",
+            "type": "string"
+          }
+        },
+        "required": [
+          "symbol",
+          "chain",
+          "wallet_address",
+          "amount"
+        ],
+        "title": "OndoSwapTransactionRequest",
+        "type": "object"
+      },
+      "OptionRequirementJurisdictionDetails": {
+        "properties": {
+          "filter_type": {
+            "description": "The type of filter",
+            "enum": [
+              "allow",
+              "reject"
+            ],
+            "example": "allow",
+            "type": "string"
+          },
+          "filters": {
+            "description": "List of jurisdiction filters",
+            "items": {
+              "$ref": "#/components/schemas/OptionRequirementJurisdictionFilter"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "filter_type",
+          "filters"
+        ],
+        "title": "OptionRequirementJurisdictionDetails",
+        "type": "object"
+      },
+      "OfferOptionAddress": {
+        "additionalProperties": false,
+        "description": "A user's proven external wallet connected to an offer option.",
+        "properties": {
+          "address": {
+            "description": "The connected external wallet address.",
+            "type": "string"
+          },
+          "created_at": {
+            "description": "When the binding was created.",
+            "example": "2025-01-01T00:00:00.000000Z",
+            "format": "date-time",
+            "nullable": false,
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier for the object.",
+            "example": "05edea81-98a7-4582-aa7c-040d57cb1858",
+            "type": "string"
+          },
+          "offer_option_id": {
+            "description": "The ID of the offer option.",
+            "example": "05edea81-98a7-4582-aa7c-040d57cb1858",
+            "type": "string"
+          },
+          "protocol": {
+            "description": "The protocol the binding is scoped to. An EVM address binds once per option regardless of which EVM chain proved ownership.",
+            "enum": [
+              "ethereum",
+              "solana"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "offer_option_id",
+          "address",
+          "protocol",
+          "created_at"
+        ],
+        "title": "OfferOptionAddress",
+        "type": "object"
+      },
+      "OptionRequirement": {
+        "properties": {
+          "details": {
+            "description": "Requirement-specific details.\nNull for kyc_approved and accreditation types.\nExternalWalletDetails for external_wallet type.\nWhitelistedWalletDetails for whitelisted_wallet type.\nJurisdictionDetails for jurisdiction type.\nDocumentDetails for document type.\n",
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/OptionRequirementExternalWalletDetails"
+              },
+              {
+                "$ref": "#/components/schemas/OptionRequirementWhitelistedWalletDetails"
+              },
+              {
+                "$ref": "#/components/schemas/OptionRequirementJurisdictionDetails"
+              },
+              {
+                "$ref": "#/components/schemas/OptionRequirementDocumentDetails"
+              }
+            ]
+          },
+          "id": {
+            "description": "Unique identifier for the object.",
+            "example": "05edea81-98a7-4582-aa7c-040d57cb1858",
+            "type": "string"
+          },
+          "object": {
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "requirement"
+            ],
+            "type": "string"
+          },
+          "type": {
+            "description": "The requirement type",
+            "enum": [
+              "kyc_approved",
+              "external_wallet",
+              "whitelisted_wallet",
+              "jurisdiction",
+              "accreditation",
+              "document"
+            ],
+            "example": "kyc_approved",
+            "type": "string"
+          }
+        },
+        "required": [
+          "object",
+          "id",
+          "type"
+        ],
+        "title": "OptionRequirement",
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "OAuth2": {
+        "description": "OAuth 2.0 authorization and token endpoints",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "/oauth/authorize",
+            "refreshUrl": "/oauth/token",
+            "scopes": {},
+            "tokenUrl": "/oauth/token"
+          },
+          "clientCredentials": {
+            "refreshUrl": "/oauth/token",
+            "scopes": {},
+            "tokenUrl": "/oauth/token"
+          }
+        },
+        "type": "oauth2"
+      },
+      "TokenAuth": {
+        "description": "Session token for user authentication during OAuth authorization",
+        "scheme": "bearer",
+        "type": "http"
+      }
+    }
+  },
+  "info": {
+    "title": "Frontline API",
+    "version": "0.1.0"
+  },
+  "openapi": "3.0.0",
+  "paths": {
+    "/oauth/introspect": {
+      "post": {
+        "callbacks": {},
+        "description": "Returns metadata about an access token, including whether it is active.",
+        "operationId": "FrontlineAPIWeb.Oauth.IntrospectController.OpenApiSpec.introspect",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "client_id": {
+                    "description": "The client identifier.",
+                    "example": "550e8400-e29b-41d4-a716-446655440000",
+                    "type": "string"
+                  },
+                  "client_secret": {
+                    "description": "The client secret.",
+                    "example": "my-client-secret",
+                    "type": "string"
+                  },
+                  "token": {
+                    "description": "The token to introspect.",
+                    "example": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "token"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "description": "Introspect request params",
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OauthIntrospect"
+                }
+              }
+            },
+            "description": "Token introspection result."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OauthError"
+                }
+              }
+            },
+            "description": "OAuth error response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OauthError"
+                }
+              }
+            },
+            "description": "OAuth error response"
+          }
+        },
+        "security": [],
+        "summary": "Introspect token",
+        "tags": [
+          "OAuth"
+        ]
+      }
+    },
+    "/oauth/revoke": {
+      "post": {
+        "callbacks": {},
+        "description": "Revokes an access or refresh token.",
+        "operationId": "FrontlineAPIWeb.Oauth.RevokeController.OpenApiSpec.revoke",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "client_id": {
+                    "description": "The client identifier.",
+                    "example": "550e8400-e29b-41d4-a716-446655440000",
+                    "type": "string"
+                  },
+                  "client_secret": {
+                    "description": "The client secret.",
+                    "example": "my-client-secret",
+                    "type": "string"
+                  },
+                  "token": {
+                    "description": "The token to revoke.",
+                    "example": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "token"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "description": "Revoke request params",
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {}
+            },
+            "description": "Token revoked successfully."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OauthError"
+                }
+              }
+            },
+            "description": "OAuth error response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OauthError"
+                }
+              }
+            },
+            "description": "OAuth error response"
+          }
+        },
+        "security": [],
+        "summary": "Revoke token",
+        "tags": [
+          "OAuth"
+        ]
+      }
+    },
+    "/oauth/token": {
+      "post": {
+        "callbacks": {},
+        "description": "Issues access tokens for `authorization_code`, `client_credentials`, and `refresh_token` grants using an `application/x-www-form-urlencoded` request body. For the `authorization_code` grant, the partner exchanges the code obtained from `GET /oauth/authorize` along with a PKCE `code_verifier`.",
+        "operationId": "FrontlineAPIWeb.Oauth.TokenController.OpenApiSpec.token",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "properties": {
+                  "client_id": {
+                    "description": "OAuth client identifier. Required for all grant types when client authentication is sent in the request body.",
+                    "type": "string"
+                  },
+                  "client_secret": {
+                    "description": "OAuth client secret. Required for all grant types when client authentication is sent in the request body.",
+                    "type": "string"
+                  },
+                  "code": {
+                    "description": "Authorization code received from the `/oauth/authorize` endpoint. Required when `grant_type` is `authorization_code`.",
+                    "type": "string"
+                  },
+                  "code_verifier": {
+                    "description": "PKCE code verifier corresponding to the `code_challenge` sent to `/oauth/authorize`. Required when `grant_type` is `authorization_code`.",
+                    "type": "string"
+                  },
+                  "grant_type": {
+                    "description": "OAuth grant type. Supported values are `authorization_code`, `client_credentials`, and `refresh_token`.",
+                    "enum": [
+                      "authorization_code",
+                      "client_credentials",
+                      "refresh_token"
+                    ],
+                    "type": "string"
+                  },
+                  "redirect_uri": {
+                    "description": "Must match the `redirect_uri` used in the original `/oauth/authorize` request. Required when `grant_type` is `authorization_code`.",
+                    "format": "uri",
+                    "type": "string"
+                  },
+                  "refresh_token": {
+                    "description": "Required when `grant_type` is `refresh_token`.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "grant_type"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "description": "Token request params",
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OauthToken"
+                }
+              }
+            },
+            "description": "Successful token response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OauthError"
+                }
+              }
+            },
+            "description": "OAuth error response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OauthError"
+                }
+              }
+            },
+            "description": "OAuth error response"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OauthError"
+                }
+              }
+            },
+            "description": "OAuth error response"
+          }
+        },
+        "security": [],
+        "summary": "Issue OAuth access token",
+        "tags": [
+          "OAuth"
+        ]
+      }
+    },
+    "/v1/documents/{document_type}/submission": {
+      "post": {
+        "callbacks": {},
+        "description": "Creates a signing submission for the given document type (e.g. a W-8BEN tax certification) for the current entity. The signing link is emailed to the user. Re-posting acts as a resend/re-sign where the document state allows it. The submitted PII pre-fills the form and is forwarded to Passport, never persisted by Frontline.",
+        "operationId": "createDocumentSubmission",
+        "parameters": [
+          {
+            "description": "The type of document to submit for signing. Valid values: tax_certification",
+            "in": "path",
+            "name": "document_type",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "example": {
+                  "City": "Warsaw",
+                  "Country": "PL",
+                  "Country Of Citizenship": "Poland",
+                  "DOB": "01/15/1985",
+                  "Date": "06/16/2026",
+                  "Foreign Tax Number": "123-45-6789",
+                  "Full Name": "Aleksander Nowak",
+                  "Permanent Address": "ul. Nowy Świat 12",
+                  "Signature": "Aleksander Nowak"
+                },
+                "type": "object"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "example": {
+                  "City": "Warsaw",
+                  "Country": "PL",
+                  "Country Of Citizenship": "Poland",
+                  "DOB": "01/15/1985",
+                  "Date": "06/16/2026",
+                  "Foreign Tax Number": "123-45-6789",
+                  "Full Name": "Aleksander Nowak",
+                  "Permanent Address": "ul. Nowy Świat 12",
+                  "Signature": "Aleksander Nowak"
+                },
+                "type": "object"
+              }
+            }
+          },
+          "description": "Signing-form fields keyed by the document's DocuSeal field names. Forwarded verbatim to Passport to pre-fill the document, never persisted by Frontline.",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentSubmission"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Create a document signing submission for the authenticated partner and user",
+        "tags": [
+          "DocumentSubmissions"
+        ]
+      }
+    },
+    "/v1/kyc-token": {
+      "post": {
+        "callbacks": {},
+        "description": "Generates a short-lived Sumsub WebSDK access token for the current user so an identity verification flow can be started. Requires a user-scoped access token (authorization code grant); partner-only tokens (client credentials grant) are rejected.",
+        "operationId": "createKycToken",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateKycTokenRequest"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateKycTokenRequest"
+              }
+            }
+          },
+          "description": "KYC token params",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KycToken"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Generate a Sumsub KYC access token",
+        "tags": [
+          "KYC"
+        ]
+      }
+    },
+    "/v1/offers": {
+      "get": {
+        "callbacks": {},
+        "operationId": "listPartnerOffers",
+        "parameters": [
+          {
+            "description": "A cursor for use in pagination",
+            "example": "g3QAAAA...",
+            "in": "query",
+            "name": "starting_after",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A cursor for use in pagination",
+            "example": "g3QAAAA...",
+            "in": "query",
+            "name": "starting_before",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "description": "A limit on the number of objects to be returned",
+              "example": 10,
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "$ref": "#/components/schemas/OfferSummary"
+                      },
+                      "type": "array"
+                    },
+                    "object": {
+                      "description": "String representing the object's type. Objects of the same type share the same value.",
+                      "enum": [
+                        "list"
+                      ],
+                      "type": "string"
+                    },
+                    "starting_after": {
+                      "description": "String representing the page cursor to used for querying the next page.",
+                      "example": "g3QAAAA...",
+                      "type": "string"
+                    },
+                    "starting_before": {
+                      "description": "String representing the page cursor to used for querying the previous page.",
+                      "example": "g3QAAAA...",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "object",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "List offers for the authenticated partner",
+        "tags": [
+          "Offers"
+        ]
+      }
+    },
+    "/v1/offers/{id}": {
+      "get": {
+        "callbacks": {},
+        "operationId": "getPartnerOffer",
+        "parameters": [
+          {
+            "description": "Offer ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Offer"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Get an offer for the authenticated partner",
+        "tags": [
+          "Offers"
+        ]
+      }
+    },
+    "/v1/offers/{offer_id}/addresses": {
+      "get": {
+        "callbacks": {},
+        "operationId": "listOfferOptionAddresses",
+        "parameters": [
+          {
+            "description": "The ID of the offer",
+            "in": "path",
+            "name": "offer_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The ID of the offer option",
+            "in": "query",
+            "name": "offer_option_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "$ref": "#/components/schemas/OfferOptionAddress"
+                      },
+                      "type": "array"
+                    },
+                    "object": {
+                      "description": "String representing the object's type. Objects of the same type share the same value.",
+                      "enum": [
+                        "list"
+                      ],
+                      "type": "string"
+                    },
+                    "starting_after": {
+                      "description": "String representing the page cursor to used for querying the next page.",
+                      "example": "g3QAAAA...",
+                      "type": "string"
+                    },
+                    "starting_before": {
+                      "description": "String representing the page cursor to used for querying the previous page.",
+                      "example": "g3QAAAA...",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "object",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "List the user's connected wallets for an offer option",
+        "tags": [
+          "Offers"
+        ]
+      },
+      "post": {
+        "callbacks": {},
+        "description": "For options without a whitelisted-wallet requirement, submitting when a wallet is already connected updates the existing binding in place, keeping its id. Options with a whitelisted-wallet requirement accumulate wallets up to the requirement's max_wallets and then reject with `max_wallets_reached`.",
+        "operationId": "createOfferOptionAddress",
+        "parameters": [
+          {
+            "description": "The ID of the offer",
+            "in": "path",
+            "name": "offer_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOfferOptionAddressRequest"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOfferOptionAddressRequest"
+              }
+            }
+          },
+          "description": "Offer option address params",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OfferOptionAddress"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Connect a proven external wallet to an offer option",
+        "tags": [
+          "Offers"
+        ]
+      }
+    },
+    "/v1/offers/{offer_id}/addresses/{id}": {
+      "delete": {
+        "callbacks": {},
+        "description": "Returns the removed binding. Rejected with `offer_ended` once the offer has ended; bindings on an offer that has not yet started remain deletable.",
+        "operationId": "deleteOfferOptionAddress",
+        "parameters": [
+          {
+            "description": "The ID of the offer",
+            "in": "path",
+            "name": "offer_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "The ID of the offer option address",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OfferOptionAddress"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Remove a connected external wallet from an offer option",
+        "tags": [
+          "Offers"
+        ]
+      }
+    },
+    "/v1/offers/{offer_id}/allow-wallet": {
+      "post": {
+        "callbacks": {},
+        "operationId": "allowWallet",
+        "parameters": [
+          {
+            "description": "The ID of the offer",
+            "in": "path",
+            "name": "offer_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AllowWalletRequest"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/AllowWalletRequest"
+              }
+            }
+          },
+          "description": "Allow wallet params",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllowWalletResponse"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Allow a wallet address for an offer",
+        "tags": [
+          "Offers"
+        ]
+      }
+    },
+    "/v1/offers/{offer_id}/requirements": {
+      "get": {
+        "callbacks": {},
+        "operationId": "listOfferRequirements",
+        "parameters": [
+          {
+            "description": "The offer ID",
+            "in": "path",
+            "name": "offer_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OfferRequirements"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "List requirements for all options of an offer",
+        "tags": [
+          "Requirements"
+        ]
+      }
+    },
+    "/v1/offers/{offer_id}/requirements/statuses": {
+      "get": {
+        "callbacks": {},
+        "operationId": "listOfferRequirementStatuses",
+        "parameters": [
+          {
+            "description": "The offer ID",
+            "in": "path",
+            "name": "offer_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequirementStatuses"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "List requirement statuses for all options of an offer",
+        "tags": [
+          "Requirements"
+        ]
+      }
+    },
+    "/v1/ondo/swap/quote": {
+      "get": {
+        "callbacks": {},
+        "description": "Prices a buy or sell of an Ondo asset and returns the quantity, the per-token USD price and the decimals the quantity is denominated in. Free to poll while the user edits an order; it consumes no attestation. Takes no chain parameter, since Ondo runs no testnet and every environment prices against Ethereum mainnet.",
+        "operationId": "getOndoSwapQuote",
+        "parameters": [
+          {
+            "description": "Ondo asset symbol",
+            "in": "query",
+            "name": "symbol",
+            "required": true,
+            "schema": {
+              "example": "AAPLon",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Whether to price a buy or a sell",
+            "in": "query",
+            "name": "side",
+            "required": true,
+            "schema": {
+              "enum": [
+                "buy",
+                "sell"
+              ],
+              "example": "buy",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Quantity of the asset to price, as a decimal string of whole tokens. This is not the response's token_base_units, which is the same quantity in the asset's smallest unit. Exactly one of token_amount or notional_value is required.",
+            "in": "query",
+            "name": "token_amount",
+            "required": false,
+            "schema": {
+              "example": "5",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Dollar amount to price, as a decimal string. Exactly one of token_amount or notional_value is required. No CoinList fee is deducted: Ondo prices exactly this amount, so if you are sizing against a user's approval, subtract the fee before passing it here or the quote will overstate what they receive.",
+            "in": "query",
+            "name": "notional_value",
+            "required": false,
+            "schema": {
+              "example": "1000",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Requested quote duration. Omit to let Ondo apply its own default.",
+            "in": "query",
+            "name": "duration",
+            "required": false,
+            "schema": {
+              "enum": [
+                "short",
+                "long"
+              ],
+              "example": "short",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OndoSwapQuote"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Quote an Ondo asset",
+        "tags": [
+          "Ondo"
+        ]
+      }
+    },
+    "/v1/ondo/swap/trading-status": {
+      "get": {
+        "callbacks": {},
+        "description": "Reports whether an Ondo asset can be traded right now on the given side, and the gross caps if so. Ondo reports its trading limits per side, so a buy and a sell of the same asset can differ. Free to poll and consumes no attestation.",
+        "operationId": "getOndoSwapTradingStatus",
+        "parameters": [
+          {
+            "description": "Ondo asset symbol",
+            "in": "query",
+            "name": "symbol",
+            "required": true,
+            "schema": {
+              "example": "AAPLon",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Whether to report the buy or the sell limits",
+            "in": "query",
+            "name": "side",
+            "required": true,
+            "schema": {
+              "enum": [
+                "buy",
+                "sell"
+              ],
+              "example": "buy",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OndoSwapTradingStatus"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Get whether an Ondo asset is currently tradable",
+        "tags": [
+          "Ondo"
+        ]
+      }
+    },
+    "/v1/ondo/swap/transaction": {
+      "post": {
+        "callbacks": {},
+        "description": "Encodes the buy the user just confirmed and returns calldata their wallet can sign and broadcast, plus the amounts it commits to. This is the commit step: it consumes an attestation and the calldata expires, so call it once per confirmation and never poll it. Approve the swap contract for the full amount first; an allowance short of it is rejected here rather than reverting on-chain. The addresses are resolved from the offer, so the request names the asset, not the tokens.",
+        "operationId": "createOndoSwapTransaction",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OndoSwapTransactionRequest"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/OndoSwapTransactionRequest"
+              }
+            }
+          },
+          "description": "Ondo swap transaction params",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OndoSwapTransaction"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Encode an Ondo swap for broadcast",
+        "tags": [
+          "Ondo"
+        ]
+      }
+    },
+    "/v1/participations": {
+      "get": {
+        "callbacks": {},
+        "operationId": "listPartnerParticipations",
+        "parameters": [
+          {
+            "description": "A cursor for use in pagination",
+            "example": "g3QAAAA...",
+            "in": "query",
+            "name": "starting_after",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A cursor for use in pagination",
+            "example": "g3QAAAA...",
+            "in": "query",
+            "name": "starting_before",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "description": "A limit on the number of objects to be returned",
+              "example": 10,
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Flop filter parameters (e.g. by offer_id)",
+            "in": "query",
+            "name": "filters",
+            "required": false,
+            "schema": {
+              "items": {
+                "properties": {
+                  "field": {
+                    "type": "string"
+                  },
+                  "op": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "items": {
+                        "$ref": "#/components/schemas/Participation"
+                      },
+                      "type": "array"
+                    },
+                    "object": {
+                      "description": "String representing the object's type. Objects of the same type share the same value.",
+                      "enum": [
+                        "list"
+                      ],
+                      "type": "string"
+                    },
+                    "starting_after": {
+                      "description": "String representing the page cursor to used for querying the next page.",
+                      "example": "g3QAAAA...",
+                      "type": "string"
+                    },
+                    "starting_before": {
+                      "description": "String representing the page cursor to used for querying the previous page.",
+                      "example": "g3QAAAA...",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "object",
+                    "data"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "List participations for the authenticated partner and user",
+        "tags": [
+          "Participations"
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "bash",
+            "label": "Filter by offer_id",
+            "source": "curl --request GET \\\n  --url 'https://api.coinlist.co/v1/participations?filters[0][field]=offer_id&filters[0][op]=%3D%3D&filters[0][value]={offer_id}' \\\n  --header 'Authorization: Bearer <token>'"
+          },
+          {
+            "lang": "bash",
+            "label": "Filter by status",
+            "source": "curl --request GET \\\n  --url 'https://api.coinlist.co/v1/participations?filters[0][field]=status&filters[0][op]=%3D%3D&filters[0][value]=completed' \\\n  --header 'Authorization: Bearer <token>'"
+          },
+          {
+            "lang": "bash",
+            "label": "Filter by user_email",
+            "source": "curl --request GET \\\n  --url 'https://api.coinlist.co/v1/participations?filters[0][field]=user_email&filters[0][op]=%3D%3D&filters[0][value]={user_email}' \\\n  --header 'Authorization: Bearer <token>'"
+          },
+          {
+            "lang": "bash",
+            "label": "Filter by offer_id AND status",
+            "source": "curl --request GET \\\n  --url 'https://api.coinlist.co/v1/participations?filters[0][field]=offer_id&filters[0][op]=%3D%3D&filters[0][value]={offer_id}&filters[1][field]=status&filters[1][op]=%3D%3D&filters[1][value]=completed' \\\n  --header 'Authorization: Bearer <token>'"
+          }
+        ],
+        "x-mint": {
+          "content": "## Filtering\n\n`filters` takes Flop filter parameters serialized as `filters[0][field]`, `filters[0][op]`, and `filters[0][value]`, with one index per filter. The playground cannot build that shape, so use the code samples.\n\nFilterable fields: `offer_id`, `offer_option_id`, `user_id`, `status`, `user_email`."
+        }
+      },
+      "post": {
+        "callbacks": {},
+        "operationId": "createPartnerParticipation",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateParticipation"
+              }
+            }
+          },
+          "description": "Participation creation params",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Participation"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Create a participation for the authenticated partner and user",
+        "tags": [
+          "Participations"
+        ]
+      }
+    },
+    "/v1/participations/{id}": {
+      "get": {
+        "callbacks": {},
+        "operationId": "getPartnerParticipation",
+        "parameters": [
+          {
+            "description": "Participation ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Participation"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Get a participation for the authenticated partner and user",
+        "tags": [
+          "Participations"
+        ]
+      }
+    },
+    "/v1/pii": {
+      "get": {
+        "callbacks": {},
+        "description": "Returns the user's PII (full legal name, country of citizenship, tax ID, permanent address) to pre-fill tax forms such as the W-8BEN. Fields that are unavailable are null.",
+        "operationId": "getPii",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pii"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Get PII for the authenticated partner and user",
+        "tags": [
+          "Pii"
+        ]
+      }
+    },
+    "/v1/swap/output-token": {
+      "get": {
+        "callbacks": {},
+        "description": "Resolves outputToken() on the Superstate swap contract and returns the ERC-20 name, symbol and decimals of that token.",
+        "operationId": "getSwapOutputToken",
+        "parameters": [
+          {
+            "description": "The swap contract address",
+            "in": "query",
+            "name": "contract_address",
+            "required": true,
+            "schema": {
+              "example": "0x742d35cc6634c0532925a3b844bc9e7595f0beb1",
+              "type": "string"
+            }
+          },
+          {
+            "description": "The EVM chain to read from, e.g. ethereum_mainnet, ethereum_sepolia, base_mainnet or base_sepolia",
+            "in": "query",
+            "name": "chain",
+            "required": true,
+            "schema": {
+              "example": "ethereum_sepolia",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwapOutputToken"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Get the swap contract's output token metadata",
+        "tags": [
+          "Swap"
+        ]
+      }
+    },
+    "/v1/swap/preview": {
+      "get": {
+        "callbacks": {},
+        "description": "Reads preview(inputToken, amount) on the Superstate swap contract and returns the quote: the input amount to pay, the fee charged on it and the output amount to receive.",
+        "operationId": "getSwapPreview",
+        "parameters": [
+          {
+            "description": "The swap contract address",
+            "in": "query",
+            "name": "contract_address",
+            "required": true,
+            "schema": {
+              "example": "0x742d35cc6634c0532925a3b844bc9e7595f0beb1",
+              "type": "string"
+            }
+          },
+          {
+            "description": "The EVM chain to read from, e.g. ethereum_mainnet, ethereum_sepolia, base_mainnet or base_sepolia",
+            "in": "query",
+            "name": "chain",
+            "required": true,
+            "schema": {
+              "example": "ethereum_sepolia",
+              "type": "string"
+            }
+          },
+          {
+            "description": "The input token contract address",
+            "in": "query",
+            "name": "input_token",
+            "required": true,
+            "schema": {
+              "example": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Amount of the input token to swap, as a uint256 decimal string in the input token's smallest unit",
+            "in": "query",
+            "name": "amount",
+            "required": true,
+            "schema": {
+              "example": "1000000",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwapPreview"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Preview a swap",
+        "tags": [
+          "Swap"
+        ]
+      }
+    },
+    "/v1/swap/status": {
+      "get": {
+        "callbacks": {},
+        "description": "Reads stopped() and SWAP_LEVEL() on the Superstate swap contract so clients can determine whether swaps are currently allowed.",
+        "operationId": "getSwapStatus",
+        "parameters": [
+          {
+            "description": "The swap contract address",
+            "in": "query",
+            "name": "contract_address",
+            "required": true,
+            "schema": {
+              "example": "0x742d35cc6634c0532925a3b844bc9e7595f0beb1",
+              "type": "string"
+            }
+          },
+          {
+            "description": "The EVM chain to read from, e.g. ethereum_mainnet, ethereum_sepolia, base_mainnet or base_sepolia",
+            "in": "query",
+            "name": "chain",
+            "required": true,
+            "schema": {
+              "example": "ethereum_sepolia",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwapStatus"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Get the swap contract's status",
+        "tags": [
+          "Swap"
+        ]
+      }
+    },
+    "/v1/token/allowance": {
+      "get": {
+        "callbacks": {},
+        "description": "Reads allowance(owner, spender) on the ERC-20 token contract. Can be used to determine whether an approval transaction is needed before a swap or token sale.",
+        "operationId": "getTokenAllowance",
+        "parameters": [
+          {
+            "description": "The ERC-20 token contract address",
+            "in": "query",
+            "name": "token_address",
+            "required": true,
+            "schema": {
+              "example": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+              "type": "string"
+            }
+          },
+          {
+            "description": "The address owning the tokens",
+            "in": "query",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "example": "0x8ba1f109551bd432803012645ac136ddd64dba72",
+              "type": "string"
+            }
+          },
+          {
+            "description": "The address allowed to spend the tokens",
+            "in": "query",
+            "name": "spender",
+            "required": true,
+            "schema": {
+              "example": "0x742d35cc6634c0532925a3b844bc9e7595f0beb1",
+              "type": "string"
+            }
+          },
+          {
+            "description": "The EVM chain to read from, e.g. ethereum_mainnet, ethereum_sepolia, base_mainnet or base_sepolia",
+            "in": "query",
+            "name": "chain",
+            "required": true,
+            "schema": {
+              "example": "ethereum_sepolia",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenAllowance"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Get the on-chain ERC-20 allowance for a token, owner and spender",
+        "tags": [
+          "Token"
+        ]
+      }
+    },
+    "/v1/token/balance": {
+      "get": {
+        "callbacks": {},
+        "description": "Reads balanceOf(owner) on the ERC-20 token contract. Used to display the balance of the connected wallet the user will pay with.",
+        "operationId": "getTokenBalance",
+        "parameters": [
+          {
+            "description": "The ERC-20 token contract address",
+            "in": "query",
+            "name": "token_address",
+            "required": true,
+            "schema": {
+              "example": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+              "type": "string"
+            }
+          },
+          {
+            "description": "The address owning the tokens",
+            "in": "query",
+            "name": "owner",
+            "required": true,
+            "schema": {
+              "example": "0x8ba1f109551bd432803012645ac136ddd64dba72",
+              "type": "string"
+            }
+          },
+          {
+            "description": "The EVM chain to read from, e.g. ethereum_mainnet, ethereum_sepolia, base_mainnet or base_sepolia",
+            "in": "query",
+            "name": "chain",
+            "required": true,
+            "schema": {
+              "example": "ethereum_sepolia",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenBalance"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Get the on-chain ERC-20 balance of an address",
+        "tags": [
+          "Token"
+        ]
+      }
+    },
+    "/v1/wallet-ownership": {
+      "post": {
+        "callbacks": {},
+        "operationId": "createWalletOwnershipChallenge",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateWalletOwnershipChallengeRequest"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateWalletOwnershipChallengeRequest"
+              }
+            }
+          },
+          "description": "Wallet ownership challenge params",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WalletOwnershipChallenge"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Request a wallet ownership challenge",
+        "tags": [
+          "Wallet Ownership"
+        ]
+      }
+    },
+    "/v1/wallet/authorized": {
+      "get": {
+        "callbacks": {},
+        "description": "Reads authorized(address) on the Superstate swap contract to determine whether the given wallet is allowed to swap.",
+        "operationId": "getWalletAuthorized",
+        "parameters": [
+          {
+            "description": "The swap contract address",
+            "in": "query",
+            "name": "contract_address",
+            "required": true,
+            "schema": {
+              "example": "0x742d35cc6634c0532925a3b844bc9e7595f0beb1",
+              "type": "string"
+            }
+          },
+          {
+            "description": "The wallet address to check",
+            "in": "query",
+            "name": "wallet_address",
+            "required": true,
+            "schema": {
+              "example": "0x8ba1f109551bd432803012645ac136ddd64dba72",
+              "type": "string"
+            }
+          },
+          {
+            "description": "The EVM chain to read from, e.g. ethereum_mainnet, ethereum_sepolia, base_mainnet or base_sepolia",
+            "in": "query",
+            "name": "chain",
+            "required": true,
+            "schema": {
+              "example": "ethereum_sepolia",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WalletAuthorization"
+                }
+              }
+            },
+            "description": "Successful response."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ],
+        "summary": "Check whether a wallet is authorized on a swap contract",
+        "tags": [
+          "Wallet"
+        ]
+      }
+    }
+  },
+  "security": [],
+  "servers": [
+    {
+      "url": "https://api.coinlist.co",
+      "variables": {}
+    }
+  ],
+  "tags": [
+    {
+      "name": "DocumentSubmissions"
+    },
+    {
+      "name": "KYC"
+    },
+    {
+      "name": "OAuth"
+    },
+    {
+      "name": "Offers"
+    },
+    {
+      "name": "Ondo"
+    },
+    {
+      "name": "Participations"
+    },
+    {
+      "name": "Pii"
+    },
+    {
+      "name": "Requirements"
+    },
+    {
+      "name": "Swap"
+    },
+    {
+      "name": "Token"
+    },
+    {
+      "name": "Wallet"
+    },
+    {
+      "name": "Wallet Ownership"
+    }
+  ]
+}

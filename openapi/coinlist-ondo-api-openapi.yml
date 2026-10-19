@@ -1,0 +1,393 @@
+openapi: 3.2.0
+info:
+  title: Frontline Ondo API
+  version: 0.1.0
+servers:
+- url: https://api.coinlist.co
+  variables: {}
+security: []
+tags:
+- name: Ondo
+paths:
+  /v1/ondo/swap/quote:
+    get:
+      callbacks: {}
+      description: Prices a buy or sell of an Ondo asset and returns the quantity, the per-token USD price and the decimals the quantity is denominated in. Free to poll while the user edits an order; it consumes no attestation. Takes no chain parameter, since Ondo runs no testnet and every environment prices against Ethereum mainnet.
+      operationId: getOndoSwapQuote
+      parameters:
+      - description: Ondo asset symbol
+        in: query
+        name: symbol
+        required: true
+        schema:
+          example: AAPLon
+          type: string
+      - description: Whether to price a buy or a sell
+        in: query
+        name: side
+        required: true
+        schema:
+          enum:
+          - buy
+          - sell
+          example: buy
+          type: string
+      - description: Quantity of the asset to price, as a decimal string of whole tokens. This is not the response's token_base_units, which is the same quantity in the asset's smallest unit. Exactly one of token_amount or notional_value is required.
+        in: query
+        name: token_amount
+        required: false
+        schema:
+          example: '5'
+          type: string
+      - description: 'Dollar amount to price, as a decimal string. Exactly one of token_amount or notional_value is required. No CoinList fee is deducted: Ondo prices exactly this amount, so if you are sizing against a user''s approval, subtract the fee before passing it here or the quote will overstate what they receive.'
+        in: query
+        name: notional_value
+        required: false
+        schema:
+          example: '1000'
+          type: string
+      - description: Requested quote duration. Omit to let Ondo apply its own default.
+        in: query
+        name: duration
+        required: false
+        schema:
+          enum:
+          - short
+          - long
+          example: short
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OndoSwapQuote'
+          description: Successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error response.
+      security:
+      - OAuth2: []
+      summary: Quote an Ondo asset
+      tags:
+      - Ondo
+  /v1/ondo/swap/trading-status:
+    get:
+      callbacks: {}
+      description: Reports whether an Ondo asset can be traded right now on the given side, and the gross caps if so. Ondo reports its trading limits per side, so a buy and a sell of the same asset can differ. Free to poll and consumes no attestation.
+      operationId: getOndoSwapTradingStatus
+      parameters:
+      - description: Ondo asset symbol
+        in: query
+        name: symbol
+        required: true
+        schema:
+          example: AAPLon
+          type: string
+      - description: Whether to report the buy or the sell limits
+        in: query
+        name: side
+        required: true
+        schema:
+          enum:
+          - buy
+          - sell
+          example: buy
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OndoSwapTradingStatus'
+          description: Successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error response.
+      security:
+      - OAuth2: []
+      summary: Get whether an Ondo asset is currently tradable
+      tags:
+      - Ondo
+  /v1/ondo/swap/transaction:
+    post:
+      callbacks: {}
+      description: 'Encodes the buy the user just confirmed and returns calldata their wallet can sign and broadcast, plus the amounts it commits to. This is the commit step: it consumes an attestation and the calldata expires, so call it once per confirmation and never poll it. Approve the swap contract for the full amount first; an allowance short of it is rejected here rather than reverting on-chain. The addresses are resolved from the offer, so the request names the asset, not the tokens.'
+      operationId: createOndoSwapTransaction
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OndoSwapTransactionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OndoSwapTransactionRequest'
+        description: Ondo swap transaction params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OndoSwapTransaction'
+          description: Successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error response.
+      security:
+      - OAuth2: []
+      summary: Encode an Ondo swap for broadcast
+      tags:
+      - Ondo
+components:
+  schemas:
+    OndoSwapQuote:
+      additionalProperties: false
+      description: Indicative, size- and side-aware price for an Ondo asset. Free to poll and does not consume an attestation.
+      properties:
+        asset_address:
+          description: ERC-20 contract address of the quoted asset
+          example: '0x14c3abf95cb9c93a8b82c1cdcb76d72cb87b2d4c'
+          type: string
+        asset_decimals:
+          description: Decimals of the asset_address contract. token_base_units is denominated in these, so divide by 10^asset_decimals to display whole tokens.
+          example: 18
+          type: integer
+        chain_id:
+          description: 'EIP-155 chain id the quote is priced on. Always "1": Ondo runs no testnet, so every environment prices against Ethereum mainnet.'
+          example: '1'
+          type: string
+        object:
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - ondo_swap_quote
+          type: string
+        price:
+          description: Price per whole token in USD, already scaled and so needing none of the handling token_base_units does. Ondo denominates it in USDon, which is 18 decimals on Ethereum, the only chain quoted here.
+          example: '225.273151158540753535'
+          type: string
+        side:
+          description: Side the quote was priced for
+          enum:
+          - buy
+          - sell
+          example: buy
+          type: string
+        symbol:
+          description: Ondo asset symbol
+          example: AAPLon
+          type: string
+        ticker:
+          description: Ticker of the underlying security
+          example: AAPL
+          type: string
+        token_base_units:
+          description: Quantity of the asset in its smallest unit, as a decimal string. Use it as-is to build calldata, or scale it by asset_decimals to display it. Note this is not the token_amount request parameter, which is in whole tokens.
+          example: '5000000000000000000'
+          type: string
+      required:
+      - object
+      - chain_id
+      - symbol
+      - ticker
+      - asset_address
+      - asset_decimals
+      - side
+      - token_base_units
+      - price
+      title: OndoSwapQuote
+      type: object
+    OndoSwapTransactionRequest:
+      additionalProperties: false
+      description: 'The buy to encode: an asset, the wallet buying it, and what it pays.'
+      properties:
+        amount:
+          description: 'Gross amount to pay, as a uint256 decimal string in the funding token''s smallest unit. This is the figure to approve: the CoinList fee comes off it, and Ondo prices the remainder.'
+          example: '100000000'
+          type: string
+        chain:
+          description: The EVM chain to swap on. Only chains CoinList has deployed a swap contract on are accepted, which is narrower than both this enum and the chains the on-chain reads serve.
+          enum:
+          - ethereum_sepolia
+          - base_sepolia
+          - ethereum_mainnet
+          - base_mainnet
+          example: ethereum_sepolia
+          type: string
+        symbol:
+          description: Ondo asset symbol to buy
+          example: AAPLon
+          type: string
+        wallet_address:
+          description: Wallet that will broadcast the transaction. The calldata is signed over it, so no other wallet can send it.
+          example: '0x2c4c7082a135f6b980cdae4b40c3ebf72cd4a512'
+          type: string
+      required:
+      - symbol
+      - chain
+      - wallet_address
+      - amount
+      title: OndoSwapTransactionRequest
+      type: object
+    OndoSwapTransaction:
+      additionalProperties: false
+      description: A signed, ready-to-broadcast Ondo swap and the amounts it commits to. Unlike the quote, this spends an attestation and expires, so call it once the user has confirmed and never on a timer.
+      properties:
+        action:
+          enum:
+          - broadcast_transaction
+          type: string
+        data:
+          description: The encoded swap to broadcast on-chain
+          example: '0x0c89df8c'
+          type: string
+        expires_at:
+          description: When the signed calldata stops being accepted. Broadcast before this or request a new transaction; a late send reverts.
+          example: '2025-01-01T00:00:00.000000Z'
+          format: date-time
+          type: string
+        fee:
+          description: CoinList's cut of pay_input_amount, in the same units. Taken at execution, not on top, so the wallet never approves more than pay_input_amount.
+          example: '0'
+          type: string
+        notional_value:
+          description: The part of pay_input_amount that reaches Ondo, in the same units. This is what the quantity was priced against, and the signature commits to it.
+          example: '100000000'
+          type: string
+        pay_input_amount:
+          description: Total the purchase costs, fee included, as a uint256 decimal string in the funding token's smallest unit. The approval has to cover this.
+          example: '100000000'
+          type: string
+        pay_input_decimals:
+          description: Decimals pay_input_amount, fee and notional_value are denominated in, read on-chain from the funding token. The token is resolved from the offer rather than named by the caller, so this is the only place its scale is published.
+          example: 6
+          type: integer
+        receive_output_amount:
+          description: Quantity of the asset the wallet receives, as a uint256 decimal string in the asset's smallest unit. Divide by 10^receive_output_decimals to display whole tokens.
+          example: '264000000000000000'
+          type: string
+        receive_output_decimals:
+          description: Decimals receive_output_amount is denominated in, reported by whatever priced the quantity rather than looked up separately.
+          example: 18
+          type: integer
+        to:
+          description: The swap contract to submit the transaction to
+          example: '0xff9c5ade32d9b4102469bd5f3817cb0061b25fec'
+          type: string
+      required:
+      - action
+      - to
+      - data
+      - expires_at
+      - pay_input_amount
+      - pay_input_decimals
+      - fee
+      - notional_value
+      - receive_output_amount
+      - receive_output_decimals
+      title: OndoSwapTransaction
+      type: object
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: A human-readable message providing more details about the error.
+          type: string
+        errors:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+        event_id:
+          description: The unique identifier for the error event. This is useful for tracking and debugging.
+          type: string
+        message:
+          description: For some errors that could be handled programmatically, a short string indicating the error code reported.
+          type: string
+        type:
+          description: The type of error returned. One of `api_error`, `invalid_request_error`
+          enum:
+          - api_error
+          - invalid_request_error
+          type: string
+      required:
+      - type
+      - message
+      title: Error
+      type: object
+    OndoSwapTradingStatus:
+      additionalProperties: false
+      description: Whether an Ondo asset is tradable right now, and the gross caps if so. `tradable` and both order caps describe the requested side. `gross_max_active_notional_value` is a session cap Ondo applies across both sides.
+      properties:
+        gross_max_active_notional_value:
+          description: Cap in USD on the caller's outstanding orders in the session the market is currently in, both sides combined. Null when Ondo restricts the asset or the market is closed.
+          example: '200000'
+          type:
+          - string
+          - 'null'
+        gross_max_notional_value:
+          description: Largest order Ondo will accept on the requested side, in USD. Null when Ondo restricts the asset, which is not the same as no limit.
+          example: '1234.560000000000000000'
+          type:
+          - string
+          - 'null'
+        gross_max_tokens:
+          description: Largest order Ondo will accept on the requested side, in whole tokens. Null when Ondo restricts the asset, which is not the same as no limit.
+          example: '100.000000000000000000'
+          type:
+          - string
+          - 'null'
+        object:
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - ondo_swap_trading_status
+          type: string
+        side:
+          description: The side the request asked for, echoed back
+          enum:
+          - buy
+          - sell
+          example: buy
+          type: string
+        tradable:
+          description: Whether the asset can be traded on the requested side right now. False whenever Ondo restricts it, the market is closed, or the current session disallows it.
+          example: true
+          type: boolean
+      required:
+      - object
+      - side
+      - tradable
+      - gross_max_tokens
+      - gross_max_notional_value
+      - gross_max_active_notional_value
+      title: OndoSwapTradingStatus
+      type: object
+  securitySchemes:
+    OAuth2:
+      description: OAuth 2.0 authorization and token endpoints
+      flows:
+        authorizationCode:
+          authorizationUrl: /oauth/authorize
+          refreshUrl: /oauth/token
+          scopes: {}
+          tokenUrl: /oauth/token
+        clientCredentials:
+          refreshUrl: /oauth/token
+          scopes: {}
+          tokenUrl: /oauth/token
+      type: oauth2
+    TokenAuth:
+      description: Session token for user authentication during OAuth authorization
+      scheme: bearer
+      type: http

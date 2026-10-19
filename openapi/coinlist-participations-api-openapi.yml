@@ -21,8 +21,6 @@ paths:
         required: false
         schema:
           type: string
-          x-struct: null
-          x-validate: null
       - description: A cursor for use in pagination
         example: g3QAAAA...
         in: query
@@ -30,8 +28,6 @@ paths:
         required: false
         schema:
           type: string
-          x-struct: null
-          x-validate: null
       - description: ''
         in: query
         name: limit
@@ -43,32 +39,6 @@ paths:
           maximum: 100
           minimum: 1
           type: integer
-          x-struct: null
-          x-validate: null
-      - description: Cursor for the next page
-        in: query
-        name: starting_after
-        required: false
-        schema:
-          type: string
-          x-struct: null
-          x-validate: null
-      - description: Cursor for the previous page
-        in: query
-        name: starting_before
-        required: false
-        schema:
-          type: string
-          x-struct: null
-          x-validate: null
-      - description: Number of items to return
-        in: query
-        name: limit
-        required: false
-        schema:
-          type: integer
-          x-struct: null
-          x-validate: null
       - description: Flop filter parameters (e.g. by offer_id)
         in: query
         name: filters
@@ -78,22 +48,12 @@ paths:
             properties:
               field:
                 type: string
-                x-struct: null
-                x-validate: null
               op:
                 type: string
-                x-struct: null
-                x-validate: null
               value:
                 type: string
-                x-struct: null
-                x-validate: null
             type: object
-            x-struct: null
-            x-validate: null
           type: array
-          x-struct: null
-          x-validate: null
       responses:
         '200':
           content:
@@ -105,33 +65,23 @@ paths:
                     items:
                       $ref: '#/components/schemas/Participation'
                     type: array
-                    x-struct: null
-                    x-validate: null
                   object:
                     description: String representing the object's type. Objects of the same type share the same value.
                     enum:
                     - list
                     type: string
-                    x-struct: null
-                    x-validate: null
                   starting_after:
                     description: String representing the page cursor to used for querying the next page.
                     example: g3QAAAA...
                     type: string
-                    x-struct: null
-                    x-validate: null
                   starting_before:
                     description: String representing the page cursor to used for querying the previous page.
                     example: g3QAAAA...
                     type: string
-                    x-struct: null
-                    x-validate: null
                 required:
                 - object
                 - data
                 type: object
-                x-struct: null
-                x-validate: null
           description: Successful response.
         default:
           content:
@@ -144,6 +94,27 @@ paths:
       summary: List participations for the authenticated partner and user
       tags:
       - Participations
+      x-codeSamples:
+      - lang: bash
+        label: Filter by offer_id
+        source: "curl --request GET \\\n  --url 'https://api.coinlist.co/v1/participations?filters[0][field]=offer_id&filters[0][op]=%3D%3D&filters[0][value]={offer_id}' \\\n  --header 'Authorization: Bearer <token>'"
+      - lang: bash
+        label: Filter by status
+        source: "curl --request GET \\\n  --url 'https://api.coinlist.co/v1/participations?filters[0][field]=status&filters[0][op]=%3D%3D&filters[0][value]=completed' \\\n  --header 'Authorization: Bearer <token>'"
+      - lang: bash
+        label: Filter by user_email
+        source: "curl --request GET \\\n  --url 'https://api.coinlist.co/v1/participations?filters[0][field]=user_email&filters[0][op]=%3D%3D&filters[0][value]={user_email}' \\\n  --header 'Authorization: Bearer <token>'"
+      - lang: bash
+        label: Filter by offer_id AND status
+        source: "curl --request GET \\\n  --url 'https://api.coinlist.co/v1/participations?filters[0][field]=offer_id&filters[0][op]=%3D%3D&filters[0][value]={offer_id}&filters[1][field]=status&filters[1][op]=%3D%3D&filters[1][value]=completed' \\\n  --header 'Authorization: Bearer <token>'"
+      x-mint:
+        content: '## Filtering
+
+
+          `filters` takes Flop filter parameters serialized as `filters[0][field]`, `filters[0][op]`, and `filters[0][value]`, with one index per filter. The playground cannot build that shape, so use the code samples.
+
+
+          Filterable fields: `offer_id`, `offer_option_id`, `user_id`, `status`, `user_email`.'
     post:
       callbacks: {}
       operationId: createPartnerParticipation
@@ -184,8 +155,6 @@ paths:
         required: true
         schema:
           type: string
-          x-struct: null
-          x-validate: null
       responses:
         '200':
           content:
@@ -206,6 +175,35 @@ paths:
       - Participations
 components:
   schemas:
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: A human-readable message providing more details about the error.
+          type: string
+        errors:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+        event_id:
+          description: The unique identifier for the error event. This is useful for tracking and debugging.
+          type: string
+        message:
+          description: For some errors that could be handled programmatically, a short string indicating the error code reported.
+          type: string
+        type:
+          description: The type of error returned. One of `api_error`, `invalid_request_error`
+          enum:
+          - api_error
+          - invalid_request_error
+          type: string
+      required:
+      - type
+      - message
+      title: Error
+      type: object
     Participation:
       additionalProperties: false
       description: An offer participation
@@ -213,44 +211,30 @@ components:
         amount:
           description: The participation amount
           type: string
-          x-struct: null
-          x-validate: null
         amount_string:
           description: The participation amount formatted as a human-readable string
           type: string
-          x-struct: null
-          x-validate: null
         asset:
           description: The asset details for the participation
           properties:
             code:
               description: The asset code (symbol)
               type: string
-              x-struct: null
-              x-validate: null
             fractional_digits:
               description: The number of fractional digits for the asset
               type: integer
-              x-struct: null
-              x-validate: null
             id:
               description: The asset ID
               type: string
-              x-struct: null
-              x-validate: null
             name:
               description: The asset name
               type: string
-              x-struct: null
-              x-validate: null
           required:
           - id
           - code
           - name
           - fractional_digits
           type: object
-          x-struct: null
-          x-validate: null
         chain:
           description: The chain for the participation contract
           enum:
@@ -261,38 +245,26 @@ components:
           - base_mainnet
           - solana_mainnet
           type: string
-          x-struct: null
-          x-validate: null
         id:
           description: Unique identifier for the object.
           example: 05edea81-98a7-4582-aa7c-040d57cb1858
           type: string
-          x-struct: null
-          x-validate: null
         inserted_at:
           description: When the participation was created
           example: '2025-01-01T00:00:00.000000Z'
           format: date-time
           type: string
-          x-struct: null
-          x-validate: null
         object:
           description: String representing the object's type. Objects of the same type share the same value.
           enum:
           - participation
           type: string
-          x-struct: null
-          x-validate: null
         offer_id:
           description: The ID of the offer
           type: string
-          x-struct: null
-          x-validate: null
         offer_option_id:
           description: The ID of the offer option
           type: string
-          x-struct: null
-          x-validate: null
         status:
           description: The participation status
           enum:
@@ -305,22 +277,16 @@ components:
           - remitted
           - remit_failed
           type: string
-          x-struct: null
-          x-validate: null
         updated_at:
           description: When the participation was last updated
           example: '2025-01-01T00:00:00.000000Z'
           format: date-time
           type: string
-          x-struct: null
-          x-validate: null
         wallet_address:
           description: The wallet address for the participation
           type:
           - string
           - 'null'
-          x-struct: null
-          x-validate: null
       required:
       - object
       - id
@@ -333,71 +299,18 @@ components:
       - chain
       title: Participation
       type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.Participation
-      x-validate: null
-    Error:
-      additionalProperties: false
-      properties:
-        code:
-          description: A human-readable message providing more details about the error.
-          type: string
-          x-struct: null
-          x-validate: null
-        errors:
-          additionalProperties:
-            items:
-              type: string
-              x-struct: null
-              x-validate: null
-            type: array
-            x-struct: null
-            x-validate: null
-          type: object
-          x-struct: null
-          x-validate: null
-        event_id:
-          description: The unique identifier for the error event. This is useful for tracking and debugging.
-          type: string
-          x-struct: null
-          x-validate: null
-        message:
-          description: For some errors that could be handled programmatically, a short string indicating the error code reported.
-          type: string
-          x-struct: null
-          x-validate: null
-        type:
-          description: The type of error returned. One of `api_error`, `invalid_request_error`
-          enum:
-          - api_error
-          - invalid_request_error
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - type
-      - message
-      title: Error
-      type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.ApiError
-      x-validate: null
     CreateParticipation:
       description: Parameters for creating an offer participation
       properties:
         amount:
           description: The participation amount
           type: string
-          x-struct: null
-          x-validate: null
         approval_transaction_hash:
           description: The approval transaction hash
           type: string
-          x-struct: null
-          x-validate: null
         asset_id:
           description: The ID of the asset
           type: string
-          x-struct: null
-          x-validate: null
         chain:
           description: The blockchain chain for the funding contract
           enum:
@@ -408,23 +321,15 @@ components:
           - base_mainnet
           - solana_mainnet
           type: string
-          x-struct: null
-          x-validate: null
         offer_id:
           description: The ID of the offer
           type: string
-          x-struct: null
-          x-validate: null
         offer_option_id:
           description: The ID of the offer option
           type: string
-          x-struct: null
-          x-validate: null
         wallet_address:
           description: The wallet address
           type: string
-          x-struct: null
-          x-validate: null
       required:
       - offer_id
       - offer_option_id
@@ -435,8 +340,6 @@ components:
       - approval_transaction_hash
       title: CreateParticipation
       type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.CreateParticipation
-      x-validate: null
   securitySchemes:
     OAuth2:
       description: OAuth 2.0 authorization and token endpoints

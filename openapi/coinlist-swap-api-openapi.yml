@@ -22,8 +22,6 @@ paths:
         schema:
           example: '0x742d35cc6634c0532925a3b844bc9e7595f0beb1'
           type: string
-          x-struct: null
-          x-validate: null
       - description: The EVM chain to read from, e.g. ethereum_mainnet, ethereum_sepolia, base_mainnet or base_sepolia
         in: query
         name: chain
@@ -31,8 +29,6 @@ paths:
         schema:
           example: ethereum_sepolia
           type: string
-          x-struct: null
-          x-validate: null
       responses:
         '200':
           content:
@@ -64,8 +60,6 @@ paths:
         schema:
           example: '0x742d35cc6634c0532925a3b844bc9e7595f0beb1'
           type: string
-          x-struct: null
-          x-validate: null
       - description: The EVM chain to read from, e.g. ethereum_mainnet, ethereum_sepolia, base_mainnet or base_sepolia
         in: query
         name: chain
@@ -73,8 +67,6 @@ paths:
         schema:
           example: ethereum_sepolia
           type: string
-          x-struct: null
-          x-validate: null
       - description: The input token contract address
         in: query
         name: input_token
@@ -82,8 +74,6 @@ paths:
         schema:
           example: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
           type: string
-          x-struct: null
-          x-validate: null
       - description: Amount of the input token to swap, as a uint256 decimal string in the input token's smallest unit
         in: query
         name: amount
@@ -91,8 +81,6 @@ paths:
         schema:
           example: '1000000'
           type: string
-          x-struct: null
-          x-validate: null
       responses:
         '200':
           content:
@@ -124,8 +112,6 @@ paths:
         schema:
           example: '0x742d35cc6634c0532925a3b844bc9e7595f0beb1'
           type: string
-          x-struct: null
-          x-validate: null
       - description: The EVM chain to read from, e.g. ethereum_mainnet, ethereum_sepolia, base_mainnet or base_sepolia
         in: query
         name: chain
@@ -133,8 +119,6 @@ paths:
         schema:
           example: ethereum_sepolia
           type: string
-          x-struct: null
-          x-validate: null
       responses:
         '200':
           content:
@@ -155,127 +139,6 @@ paths:
       - Swap
 components:
   schemas:
-    SwapOutputToken:
-      additionalProperties: false
-      description: ERC-20 metadata of a swap contract's output token.
-      properties:
-        decimals:
-          description: ERC-20 token decimals
-          example: 6
-          type: integer
-          x-struct: null
-          x-validate: null
-        name:
-          description: ERC-20 token name
-          example: USD Coin
-          type: string
-          x-struct: null
-          x-validate: null
-        object:
-          description: String representing the object's type. Objects of the same type share the same value.
-          enum:
-          - swap_output_token
-          type: string
-          x-struct: null
-          x-validate: null
-        symbol:
-          description: ERC-20 token symbol
-          example: USDC
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - object
-      - name
-      - symbol
-      - decimals
-      title: SwapOutputToken
-      type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.SwapOutputToken
-      x-validate: null
-    Error:
-      additionalProperties: false
-      properties:
-        code:
-          description: A human-readable message providing more details about the error.
-          type: string
-          x-struct: null
-          x-validate: null
-        errors:
-          additionalProperties:
-            items:
-              type: string
-              x-struct: null
-              x-validate: null
-            type: array
-            x-struct: null
-            x-validate: null
-          type: object
-          x-struct: null
-          x-validate: null
-        event_id:
-          description: The unique identifier for the error event. This is useful for tracking and debugging.
-          type: string
-          x-struct: null
-          x-validate: null
-        message:
-          description: For some errors that could be handled programmatically, a short string indicating the error code reported.
-          type: string
-          x-struct: null
-          x-validate: null
-        type:
-          description: The type of error returned. One of `api_error`, `invalid_request_error`
-          enum:
-          - api_error
-          - invalid_request_error
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - type
-      - message
-      title: Error
-      type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.ApiError
-      x-validate: null
-    SwapPreview:
-      additionalProperties: false
-      description: Quote for swapping an amount of an input token on a swap contract.
-      properties:
-        fee:
-          description: Fee charged on the swap, as a uint256 decimal string in the input token's smallest unit
-          example: '1000'
-          type: string
-          x-struct: null
-          x-validate: null
-        object:
-          description: String representing the object's type. Objects of the same type share the same value.
-          enum:
-          - swap_preview
-          type: string
-          x-struct: null
-          x-validate: null
-        pay_input_amount:
-          description: Amount of the input token to pay, as a uint256 decimal string in the input token's smallest unit
-          example: '1000000'
-          type: string
-          x-struct: null
-          x-validate: null
-        receive_output_amount:
-          description: Amount of the output token to receive, as a uint256 decimal string in the output token's smallest unit
-          example: '999000'
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - object
-      - pay_input_amount
-      - fee
-      - receive_output_amount
-      title: SwapPreview
-      type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.SwapPreview
-      x-validate: null
     SwapStatus:
       additionalProperties: false
       description: Current status flags of a Superstate swap contract.
@@ -285,28 +148,105 @@ components:
           enum:
           - swap_status
           type: string
-          x-struct: null
-          x-validate: null
         stopped:
           description: The contract's stopped() bitmask as a uint256 decimal string. Zero means no functionality is stopped.
           example: '0'
           type: string
-          x-struct: null
-          x-validate: null
         swap_level:
           description: The contract's SWAP_LEVEL() flag as a uint256 decimal string
           example: '4'
           type: string
-          x-struct: null
-          x-validate: null
       required:
       - object
       - stopped
       - swap_level
       title: SwapStatus
       type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.SwapStatus
-      x-validate: null
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: A human-readable message providing more details about the error.
+          type: string
+        errors:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+        event_id:
+          description: The unique identifier for the error event. This is useful for tracking and debugging.
+          type: string
+        message:
+          description: For some errors that could be handled programmatically, a short string indicating the error code reported.
+          type: string
+        type:
+          description: The type of error returned. One of `api_error`, `invalid_request_error`
+          enum:
+          - api_error
+          - invalid_request_error
+          type: string
+      required:
+      - type
+      - message
+      title: Error
+      type: object
+    SwapOutputToken:
+      additionalProperties: false
+      description: ERC-20 metadata of a swap contract's output token.
+      properties:
+        decimals:
+          description: ERC-20 token decimals
+          example: 6
+          type: integer
+        name:
+          description: ERC-20 token name
+          example: USD Coin
+          type: string
+        object:
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - swap_output_token
+          type: string
+        symbol:
+          description: ERC-20 token symbol
+          example: USDC
+          type: string
+      required:
+      - object
+      - name
+      - symbol
+      - decimals
+      title: SwapOutputToken
+      type: object
+    SwapPreview:
+      additionalProperties: false
+      description: Quote for swapping an amount of an input token on a swap contract.
+      properties:
+        fee:
+          description: Fee charged on the swap, as a uint256 decimal string in the input token's smallest unit
+          example: '1000'
+          type: string
+        object:
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - swap_preview
+          type: string
+        pay_input_amount:
+          description: Amount of the input token to pay, as a uint256 decimal string in the input token's smallest unit
+          example: '1000000'
+          type: string
+        receive_output_amount:
+          description: Amount of the output token to receive, as a uint256 decimal string in the output token's smallest unit
+          example: '999000'
+          type: string
+      required:
+      - object
+      - pay_input_amount
+      - fee
+      - receive_output_amount
+      title: SwapPreview
+      type: object
   securitySchemes:
     OAuth2:
       description: OAuth 2.0 authorization and token endpoints

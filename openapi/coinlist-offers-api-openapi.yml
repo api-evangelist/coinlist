@@ -21,8 +21,6 @@ paths:
         required: false
         schema:
           type: string
-          x-struct: null
-          x-validate: null
       - description: A cursor for use in pagination
         example: g3QAAAA...
         in: query
@@ -30,8 +28,6 @@ paths:
         required: false
         schema:
           type: string
-          x-struct: null
-          x-validate: null
       - description: ''
         in: query
         name: limit
@@ -43,32 +39,6 @@ paths:
           maximum: 100
           minimum: 1
           type: integer
-          x-struct: null
-          x-validate: null
-      - description: Cursor for the next page
-        in: query
-        name: starting_after
-        required: false
-        schema:
-          type: string
-          x-struct: null
-          x-validate: null
-      - description: Cursor for the previous page
-        in: query
-        name: starting_before
-        required: false
-        schema:
-          type: string
-          x-struct: null
-          x-validate: null
-      - description: Number of items to return
-        in: query
-        name: limit
-        required: false
-        schema:
-          type: integer
-          x-struct: null
-          x-validate: null
       responses:
         '200':
           content:
@@ -78,35 +48,25 @@ paths:
                 properties:
                   data:
                     items:
-                      $ref: '#/components/schemas/Offer'
+                      $ref: '#/components/schemas/OfferSummary'
                     type: array
-                    x-struct: null
-                    x-validate: null
                   object:
                     description: String representing the object's type. Objects of the same type share the same value.
                     enum:
                     - list
                     type: string
-                    x-struct: null
-                    x-validate: null
                   starting_after:
                     description: String representing the page cursor to used for querying the next page.
                     example: g3QAAAA...
                     type: string
-                    x-struct: null
-                    x-validate: null
                   starting_before:
                     description: String representing the page cursor to used for querying the previous page.
                     example: g3QAAAA...
                     type: string
-                    x-struct: null
-                    x-validate: null
                 required:
                 - object
                 - data
                 type: object
-                x-struct: null
-                x-validate: null
           description: Successful response.
         default:
           content:
@@ -130,14 +90,12 @@ paths:
         required: true
         schema:
           type: string
-          x-struct: null
-          x-validate: null
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OfferDetails'
+                $ref: '#/components/schemas/Offer'
           description: Successful response.
         default:
           content:
@@ -150,10 +108,10 @@ paths:
       summary: Get an offer for the authenticated partner
       tags:
       - Offers
-  /v1/offers/{offer_id}/allow-wallet:
-    post:
+  /v1/offers/{offer_id}/addresses:
+    get:
       callbacks: {}
-      operationId: allowWallet
+      operationId: listOfferOptionAddresses
       parameters:
       - description: The ID of the offer
         in: path
@@ -161,24 +119,40 @@ paths:
         required: true
         schema:
           type: string
-          x-struct: null
-          x-validate: null
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AllowWalletRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/AllowWalletRequest'
-        description: Allow wallet params
+      - description: The ID of the offer option
+        in: query
+        name: offer_option_id
         required: true
+        schema:
+          type: string
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AllowWalletResponse'
+                additionalProperties: false
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/OfferOptionAddress'
+                    type: array
+                  object:
+                    description: String representing the object's type. Objects of the same type share the same value.
+                    enum:
+                    - list
+                    type: string
+                  starting_after:
+                    description: String representing the page cursor to used for querying the next page.
+                    example: g3QAAAA...
+                    type: string
+                  starting_before:
+                    description: String representing the page cursor to used for querying the previous page.
+                    example: g3QAAAA...
+                    type: string
+                required:
+                - object
+                - data
+                type: object
           description: Successful response.
         default:
           content:
@@ -188,12 +162,12 @@ paths:
           description: Error response.
       security:
       - OAuth2: []
-      summary: Allow a wallet address for an offer
+      summary: List the user's connected wallets for an offer option
       tags:
       - Offers
-  /v1/offers/{offer_id}/submit-addresses:
     post:
       callbacks: {}
+      description: For options without a whitelisted-wallet requirement, submitting when a wallet is already connected updates the existing binding in place, keeping its id. Options with a whitelisted-wallet requirement accumulate wallets up to the requirement's max_wallets and then reject with `max_wallets_reached`.
       operationId: createOfferOptionAddress
       parameters:
       - description: The ID of the offer
@@ -202,8 +176,6 @@ paths:
         required: true
         schema:
           type: string
-          x-struct: null
-          x-validate: null
       requestBody:
         content:
           application/json:
@@ -232,53 +204,131 @@ paths:
       summary: Connect a proven external wallet to an offer option
       tags:
       - Offers
+  /v1/offers/{offer_id}/addresses/{id}:
+    delete:
+      callbacks: {}
+      description: Returns the removed binding. Rejected with `offer_ended` once the offer has ended; bindings on an offer that has not yet started remain deletable.
+      operationId: deleteOfferOptionAddress
+      parameters:
+      - description: The ID of the offer
+        in: path
+        name: offer_id
+        required: true
+        schema:
+          type: string
+      - description: The ID of the offer option address
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OfferOptionAddress'
+          description: Successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error response.
+      security:
+      - OAuth2: []
+      summary: Remove a connected external wallet from an offer option
+      tags:
+      - Offers
+  /v1/offers/{offer_id}/allow-wallet:
+    post:
+      callbacks: {}
+      operationId: allowWallet
+      parameters:
+      - description: The ID of the offer
+        in: path
+        name: offer_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AllowWalletRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AllowWalletRequest'
+        description: Allow wallet params
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllowWalletResponse'
+          description: Successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error response.
+      security:
+      - OAuth2: []
+      summary: Allow a wallet address for an offer
+      tags:
+      - Offers
 components:
   schemas:
-    Error:
-      additionalProperties: false
+    AllowWalletAlreadyAllowedResponse:
       properties:
-        code:
-          description: A human-readable message providing more details about the error.
-          type: string
-          x-struct: null
-          x-validate: null
-        errors:
-          additionalProperties:
-            items:
-              type: string
-              x-struct: null
-              x-validate: null
-            type: array
-            x-struct: null
-            x-validate: null
-          type: object
-          x-struct: null
-          x-validate: null
-        event_id:
-          description: The unique identifier for the error event. This is useful for tracking and debugging.
-          type: string
-          x-struct: null
-          x-validate: null
-        message:
-          description: For some errors that could be handled programmatically, a short string indicating the error code reported.
-          type: string
-          x-struct: null
-          x-validate: null
-        type:
-          description: The type of error returned. One of `api_error`, `invalid_request_error`
+        action:
           enum:
-          - api_error
-          - invalid_request_error
+          - none
           type: string
-          x-struct: null
-          x-validate: null
+        already_allowed:
+          description: True when the wallet is already allowed and no transaction is needed.
+          type: boolean
       required:
-      - type
-      - message
-      title: Error
+      - action
+      - already_allowed
+      title: AllowWalletAlreadyAllowedResponse
       type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.ApiError
-      x-validate: null
+    OfferOptionAddress:
+      additionalProperties: false
+      description: A user's proven external wallet connected to an offer option.
+      properties:
+        address:
+          description: The connected external wallet address.
+          type: string
+        created_at:
+          description: When the binding was created.
+          example: '2025-01-01T00:00:00.000000Z'
+          format: date-time
+          type: string
+        id:
+          description: Unique identifier for the object.
+          example: 05edea81-98a7-4582-aa7c-040d57cb1858
+          type: string
+        offer_option_id:
+          description: The ID of the offer option.
+          example: 05edea81-98a7-4582-aa7c-040d57cb1858
+          type: string
+        protocol:
+          description: The protocol the binding is scoped to. An EVM address binds once per option regardless of which EVM chain proved ownership.
+          enum:
+          - ethereum
+          - solana
+          type: string
+      required:
+      - id
+      - offer_option_id
+      - address
+      - protocol
+      - created_at
+      title: OfferOptionAddress
+      type: object
     OfferOption:
       additionalProperties: false
       description: An option within an offer
@@ -288,127 +338,48 @@ components:
           type:
           - string
           - 'null'
-          x-struct: null
-          x-validate: null
         floor_price_usd:
           description: Decimal string
           type:
           - string
           - 'null'
-          x-struct: null
-          x-validate: null
         id:
           description: Unique identifier for the object.
           example: 05edea81-98a7-4582-aa7c-040d57cb1858
           type: string
-          x-struct: null
-          x-validate: null
         minimum_purchase_usd:
           description: Decimal string
           type:
           - string
           - 'null'
-          x-struct: null
-          x-validate: null
         price_usd:
           description: Decimal string
           type:
           - string
           - 'null'
-          x-struct: null
-          x-validate: null
         sale_agreement_url:
           type:
           - string
           - 'null'
-          x-struct: null
-          x-validate: null
         slug:
+          description: The slug identifier of the option
           type: string
-          x-struct: null
-          x-validate: null
         total_token_supply:
-          description: Decimal string
+          description: Total token supply in whole tokens
           type:
-          - string
+          - integer
           - 'null'
-          x-struct: null
-          x-validate: null
-      title: OfferOption
-      type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.OfferOption
-      x-validate: null
-    AllowWalletRequest:
-      allOf:
-      - $ref: '#/components/schemas/VerifyOwnershipRequest'
-      description: 'Verifies wallet ownership via a previously generated challenge, then checks if the wallet
-
-        is already allowed for the offer. If already allowed, returns 200 with an empty JSON object.
-
-        Otherwise starts the supplier verification process and returns an encoded transaction
-
-        to broadcast.
-
-        '
-      title: AllowWalletRequest
-      type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.AllowWalletRequest
-      x-validate: null
-    AllowWalletResponse:
-      discriminator:
-        mapping:
-          broadcast_transaction: '#/components/schemas/AllowWalletBroadcastTransactionResponse'
-          none: '#/components/schemas/AllowWalletAlreadyAllowedResponse'
-        propertyName: action
-      oneOf:
-      - $ref: '#/components/schemas/AllowWalletBroadcastTransactionResponse'
-      - $ref: '#/components/schemas/AllowWalletAlreadyAllowedResponse'
-      title: AllowWalletResponse
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.AllowWalletResponse
-      x-validate: null
-    OfferOptionAddress:
-      additionalProperties: false
-      description: A user's proven external wallet connected to an offer option.
-      properties:
-        address:
-          description: The connected external wallet address.
-          type: string
-          x-struct: null
-          x-validate: null
-        created_at:
-          description: When the binding was created.
-          example: '2025-01-01T00:00:00.000000Z'
-          format: date-time
-          type: string
-          x-struct: null
-          x-validate: null
-        id:
-          description: Unique identifier for the object.
-          example: 05edea81-98a7-4582-aa7c-040d57cb1858
-          type: string
-          x-struct: null
-          x-validate: null
-        offer_option_id:
-          description: The ID of the offer option.
-          example: 05edea81-98a7-4582-aa7c-040d57cb1858
-          type: string
-          x-struct: null
-          x-validate: null
-        protocol:
-          description: The protocol the binding is scoped to. An EVM address binds once per option regardless of which EVM chain proved ownership.
-          type: string
-          x-struct: null
-          x-validate: null
       required:
       - id
-      - offer_option_id
-      - address
-      - protocol
-      - created_at
-      title: OfferOptionAddress
+      - slug
+      - total_token_supply
+      - price_usd
+      - minimum_purchase_usd
+      - floor_price_usd
+      - bid_increment
+      - sale_agreement_url
+      title: OfferOption
       type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.OfferOptionAddress
-      x-validate: null
     CreateOfferOptionAddressRequest:
       additionalProperties: false
       description: 'Connects a proven external wallet to an offer option. Requires a previously
@@ -434,25 +405,17 @@ components:
           - solana_mainnet
           example: ethereum_sepolia
           type: string
-          x-struct: null
-          x-validate: null
         offer_option_id:
           description: The ID of the offer option to connect the wallet to.
           type: string
-          x-struct: null
-          x-validate: null
         signature:
           description: The cryptographic signature of the challenge message.
           example: '0xdeadbeef'
           type: string
-          x-struct: null
-          x-validate: null
         wallet_address:
           description: The external wallet address. For EVM chains, must be a valid Ethereum address (normalized to lowercase).
           example: '0x742d35cc6634c0532925a3b844bc9e7595f0beb1'
           type: string
-          x-struct: null
-          x-validate: null
       required:
       - offer_option_id
       - wallet_address
@@ -460,121 +423,59 @@ components:
       - signature
       title: CreateOfferOptionAddressRequest
       type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.CreateOfferOptionAddressRequest
-      x-validate: null
-    AllowWalletBroadcastTransactionResponse:
-      properties:
-        action:
-          enum:
-          - broadcast_transaction
-          type: string
-          x-struct: null
-          x-validate: null
-        data:
-          description: The encoded transaction to broadcast on-chain to complete wallet allowlisting.
-          type: string
-          x-struct: null
-          x-validate: null
-        to:
-          description: The contract address to submit the transaction to.
-          type: string
-          x-struct: null
-          x-validate: null
-      required:
-      - action
-      - to
-      - data
-      title: AllowWalletBroadcastTransactionResponse
-      type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.AllowWalletBroadcastTransactionResponse
-      x-validate: null
-    Offer:
+    AllowWalletResponse:
+      discriminator:
+        mapping:
+          broadcast_transaction: '#/components/schemas/AllowWalletBroadcastTransactionResponse'
+          none: '#/components/schemas/AllowWalletAlreadyAllowedResponse'
+        propertyName: action
+      oneOf:
+      - $ref: '#/components/schemas/AllowWalletBroadcastTransactionResponse'
+      - $ref: '#/components/schemas/AllowWalletAlreadyAllowedResponse'
+      title: AllowWalletResponse
+    Error:
       additionalProperties: false
-      description: Offer summary
       properties:
-        banner_url:
-          description: The URL for the offer banner
-          format: uri
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        ends_at:
-          description: When the offer ends
-          example: '2025-01-01T00:00:00.000000Z'
-          format: date-time
+        code:
+          description: A human-readable message providing more details about the error.
           type: string
-          x-struct: null
-          x-validate: null
-        id:
-          description: Unique identifier for the object.
-          example: 05edea81-98a7-4582-aa7c-040d57cb1858
+        errors:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+        event_id:
+          description: The unique identifier for the error event. This is useful for tracking and debugging.
           type: string
-          x-struct: null
-          x-validate: null
-        logo_url:
-          description: The URL for the offer logo
-          format: uri
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
-        object:
-          description: String representing the object's type. Objects of the same type share the same value.
-          enum:
-          - offer
+        message:
+          description: For some errors that could be handled programmatically, a short string indicating the error code reported.
           type: string
-          x-struct: null
-          x-validate: null
-        options:
-          description: List of offer options
-          items:
-            $ref: '#/components/schemas/OfferOption'
-          type: array
-          x-struct: null
-          x-validate: null
-        slug:
-          description: The slug identifier of the offer
-          example: example-offer
-          type: string
-          x-struct: null
-          x-validate: null
-        starts_at:
-          description: When the offer starts
-          example: '2025-01-01T00:00:00.000000Z'
-          format: date-time
-          type: string
-          x-struct: null
-          x-validate: null
-        tagline:
-          description: Tagline text for the offer (English)
-          example: Example Offer Tagline
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
         type:
-          description: The type of the offer
+          description: The type of error returned. One of `api_error`, `invalid_request_error`
           enum:
-          - sale
-          - swap
-          example: sale
+          - api_error
+          - invalid_request_error
           type: string
-          x-struct: null
-          x-validate: null
       required:
-      - object
-      - id
-      - slug
       - type
-      - options
-      title: Offer
+      - message
+      title: Error
       type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.Offer
-      x-validate: null
+    AllowWalletRequest:
+      allOf:
+      - $ref: '#/components/schemas/VerifyOwnershipRequest'
+      description: 'Verifies wallet ownership via a previously generated challenge, then checks if the wallet
+
+        is already allowed for the offer. If already allowed, returns 200 with an empty JSON object.
+
+        Otherwise starts the supplier verification process and returns an encoded transaction
+
+        to broadcast.
+
+        '
+      title: AllowWalletRequest
+      type: object
     VerifyOwnershipRequest:
       description: Parameters consumed by VerifyOwnershipPlug to verify wallet ownership.
       properties:
@@ -589,49 +490,39 @@ components:
           - solana_mainnet
           example: ethereum_sepolia
           type: string
-          x-struct: null
-          x-validate: null
         signature:
           description: The cryptographic signature of the challenge message.
           example: '0xdeadbeef'
           type: string
-          x-struct: null
-          x-validate: null
         wallet_address:
           description: The wallet address to verify. For EVM chains, must be a valid Ethereum address (normalized to lowercase).
           example: '0x742d35cc6634c0532925a3b844bc9e7595f0beb1'
           type: string
-          x-struct: null
-          x-validate: null
       required:
       - wallet_address
       - chain
       - signature
       title: VerifyOwnershipRequest
       type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.VerifyOwnershipRequest
-      x-validate: null
-    AllowWalletAlreadyAllowedResponse:
+    AllowWalletBroadcastTransactionResponse:
       properties:
         action:
           enum:
-          - none
+          - broadcast_transaction
           type: string
-          x-struct: null
-          x-validate: null
-        already_allowed:
-          description: True when the wallet is already allowed and no transaction is needed.
-          type: boolean
-          x-struct: null
-          x-validate: null
+        data:
+          description: The encoded transaction to broadcast on-chain to complete wallet allowlisting.
+          type: string
+        to:
+          description: The contract address to submit the transaction to.
+          type: string
       required:
       - action
-      - already_allowed
-      title: AllowWalletAlreadyAllowedResponse
+      - to
+      - data
+      title: AllowWalletBroadcastTransactionResponse
       type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.AllowWalletAlreadyAllowedResponse
-      x-validate: null
-    OfferDetails:
+    Offer:
       additionalProperties: false
       description: Full offer details
       properties:
@@ -640,8 +531,6 @@ components:
           type:
           - string
           - 'null'
-          x-struct: null
-          x-validate: null
         asset:
           additionalProperties: false
           description: The asset for which the offer is created
@@ -649,76 +538,51 @@ components:
             code:
               description: The asset code (symbol)
               type: string
-              x-struct: null
-              x-validate: null
             fractional_digits:
               description: The number of fractional digits for the asset
               type: integer
-              x-struct: null
-              x-validate: null
             id:
               description: The asset ID
               type: string
-              x-struct: null
-              x-validate: null
             name:
               description: The asset name
               type: string
-              x-struct: null
-              x-validate: null
           required:
           - id
           - code
           - name
           - fractional_digits
           type: object
-          x-struct: null
-          x-validate: null
         banner_url:
-          description: The URL for the offer banner
+          description: The URL for the offer banner. Null for offer types that don't require one (e.g. ondo::swap).
           format: uri
           type:
           - string
           - 'null'
-          x-struct: null
-          x-validate: null
         category:
           description: The category of the offer
+          type: string
+        ends_at:
+          description: When the offer ends. Null when the offer has no end date
+          example: '2025-01-01T00:00:00.000000Z'
+          format: date-time
           type:
           - string
           - 'null'
-          x-struct: null
-          x-validate: null
-        ends_at:
-          description: When the offer ends
-          example: '2025-01-01T00:00:00.000000Z'
-          format: date-time
-          type: string
-          x-struct: null
-          x-validate: null
         faqs:
           description: List of FAQs for the offer
           items:
             additionalProperties: false
             properties:
               answer:
-                type:
-                - string
-                - 'null'
-                x-struct: null
-                x-validate: null
+                type: string
               question:
-                type:
-                - string
-                - 'null'
-                x-struct: null
-                x-validate: null
+                type: string
+            required:
+            - question
+            - answer
             type: object
-            x-struct: null
-            x-validate: null
           type: array
-          x-struct: null
-          x-validate: null
         funding_assets:
           description: List of assets that can be used to fund the offer
           items:
@@ -727,179 +591,160 @@ components:
               code:
                 description: The asset code (symbol)
                 type: string
-                x-struct: null
-                x-validate: null
               fractional_digits:
                 description: The number of fractional digits for the asset
                 type: integer
-                x-struct: null
-                x-validate: null
               id:
                 description: The asset ID
                 type: string
-                x-struct: null
-                x-validate: null
               name:
                 description: The asset name
                 type: string
-                x-struct: null
-                x-validate: null
             required:
             - id
             - code
             - name
             - fractional_digits
             type: object
-            x-struct: null
-            x-validate: null
           type: array
-          x-struct: null
-          x-validate: null
         id:
           description: Unique identifier for the object.
           example: 05edea81-98a7-4582-aa7c-040d57cb1858
           type: string
-          x-struct: null
-          x-validate: null
         links:
           description: List of links related to the offer
           items:
             additionalProperties: false
             properties:
               label:
-                type:
-                - string
-                - 'null'
-                x-struct: null
-                x-validate: null
+                type: string
               url:
-                type:
-                - string
-                - 'null'
-                x-struct: null
-                x-validate: null
+                type: string
+            required:
+            - label
+            - url
             type: object
-            x-struct: null
-            x-validate: null
           type: array
-          x-struct: null
-          x-validate: null
         logo_url:
           description: The URL for the offer logo
           format: uri
-          type:
-          - string
-          - 'null'
-          x-struct: null
-          x-validate: null
+          type: string
         milestones:
           description: List of milestones for the offer
           items:
             additionalProperties: false
             properties:
               name:
-                type:
-                - string
-                - 'null'
-                x-struct: null
-                x-validate: null
+                type: string
               schedule:
-                type:
-                - string
-                - 'null'
-                x-struct: null
-                x-validate: null
+                type: string
               status:
                 enum:
                 - completed
                 - active
                 - upcoming
                 type: string
-                x-struct: null
-                x-validate: null
+            required:
+            - name
+            - schedule
+            - status
             type: object
-            x-struct: null
-            x-validate: null
           type: array
-          x-struct: null
-          x-validate: null
         name:
           description: The name of the offer
           type: string
-          x-struct: null
-          x-validate: null
         object:
           description: String representing the object's type. Objects of the same type share the same value.
           enum:
-          - offer_details
+          - offer
           type: string
-          x-struct: null
-          x-validate: null
         options:
           description: List of offer options
           items:
             $ref: '#/components/schemas/OfferOption'
           type: array
-          x-struct: null
-          x-validate: null
         slug:
           description: The slug identifier of the offer
           example: example-offer
           type: string
-          x-struct: null
-          x-validate: null
         starts_at:
           description: When the offer starts
           example: '2025-01-01T00:00:00.000000Z'
           format: date-time
-          type: string
-          x-struct: null
-          x-validate: null
-        tagline:
-          description: Tagline text for the offer (English)
           type:
           - string
           - 'null'
-          x-struct: null
-          x-validate: null
+        tagline:
+          description: Tagline text for the offer (English). Null for offer types that don't require one (e.g. ondo::swap).
+          type:
+          - string
+          - 'null'
         terms:
           description: List of offer terms
           items:
             additionalProperties: false
             properties:
               key:
-                type:
-                - string
-                - 'null'
-                x-struct: null
-                x-validate: null
+                type: string
               value:
-                type:
-                - string
-                - 'null'
-                x-struct: null
-                x-validate: null
+                type: string
+            required:
+            - key
+            - value
             type: object
-            x-struct: null
-            x-validate: null
           type: array
-          x-struct: null
-          x-validate: null
+        tokens:
+          description: Tokens involved in the offer by role — funding token(s) plus the distribution/swap token — each keyed by chain + address
+          items:
+            additionalProperties: false
+            properties:
+              address:
+                description: The token contract address
+                type: string
+              chain:
+                description: The chain the token is on
+                enum:
+                - ethereum_sepolia
+                - base_sepolia
+                - solana_devnet
+                - ethereum_mainnet
+                - base_mainnet
+                - solana_mainnet
+                type: string
+              role:
+                description: The token's role in the offer
+                enum:
+                - funding
+                - distribution
+                - swap
+                type: string
+            required:
+            - role
+            - chain
+            - address
+            type: object
+          type: array
         type:
-          description: The type of the offer
+          description: Offer type
           enum:
-          - sale
-          - swap
-          example: sale
+          - coinlist::token_sale
+          - superstate::swap
+          - ondo::swap
+          example: coinlist::token_sale
           type: string
-          x-struct: null
-          x-validate: null
       required:
       - object
       - id
       - slug
       - name
       - type
+      - category
+      - tagline
+      - about
+      - starts_at
+      - ends_at
+      - logo_url
+      - banner_url
       - options
       - terms
       - links
@@ -907,10 +752,82 @@ components:
       - milestones
       - asset
       - funding_assets
-      title: OfferDetails
+      - tokens
+      title: Offer
       type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.OfferDetails
-      x-validate: null
+    OfferSummary:
+      additionalProperties: false
+      description: Offer summary
+      properties:
+        banner_url:
+          description: The URL for the offer banner. Null for offer types that don't require one (e.g. ondo::swap).
+          format: uri
+          type:
+          - string
+          - 'null'
+        ends_at:
+          description: When the offer ends. Null when the offer has no end date
+          example: '2025-01-01T00:00:00.000000Z'
+          format: date-time
+          type:
+          - string
+          - 'null'
+        id:
+          description: Unique identifier for the object.
+          example: 05edea81-98a7-4582-aa7c-040d57cb1858
+          type: string
+        logo_url:
+          description: The URL for the offer logo
+          format: uri
+          type: string
+        object:
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - offer
+          type: string
+        options:
+          description: List of offer options
+          items:
+            $ref: '#/components/schemas/OfferOption'
+          type: array
+        slug:
+          description: The slug identifier of the offer
+          example: example-offer
+          type: string
+        starts_at:
+          description: When the offer starts
+          example: '2025-01-01T00:00:00.000000Z'
+          format: date-time
+          type:
+          - string
+          - 'null'
+        tagline:
+          description: Tagline text for the offer (English). Null for offer types that don't require one (e.g. ondo::swap).
+          example: Example Offer Tagline
+          type:
+          - string
+          - 'null'
+        type:
+          description: Offer type
+          enum:
+          - coinlist::token_sale
+          - superstate::swap
+          - ondo::swap
+          example: coinlist::token_sale
+          type: string
+      required:
+      - object
+      - id
+      - slug
+      - type
+      - tagline
+      - starts_at
+      - ends_at
+      - logo_url
+      - banner_url
+      - options
+      title: OfferSummary
+      type: object
   securitySchemes:
     OAuth2:
       description: OAuth 2.0 authorization and token endpoints

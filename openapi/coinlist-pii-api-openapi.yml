@@ -41,45 +41,29 @@ components:
         code:
           description: A human-readable message providing more details about the error.
           type: string
-          x-struct: null
-          x-validate: null
         errors:
           additionalProperties:
             items:
               type: string
-              x-struct: null
-              x-validate: null
             type: array
-            x-struct: null
-            x-validate: null
           type: object
-          x-struct: null
-          x-validate: null
         event_id:
           description: The unique identifier for the error event. This is useful for tracking and debugging.
           type: string
-          x-struct: null
-          x-validate: null
         message:
           description: For some errors that could be handled programmatically, a short string indicating the error code reported.
           type: string
-          x-struct: null
-          x-validate: null
         type:
           description: The type of error returned. One of `api_error`, `invalid_request_error`
           enum:
           - api_error
           - invalid_request_error
           type: string
-          x-struct: null
-          x-validate: null
       required:
       - type
       - message
       title: Error
       type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.ApiError
-      x-validate: null
     Pii:
       description: The user's PII used to pre-fill tax forms. Fields that are unavailable are null.
       properties:
@@ -90,16 +74,12 @@ components:
           type:
           - string
           - 'null'
-          x-struct: null
-          x-validate: null
         full_legal_name:
           description: 'Full legal name. For persons: first, middle and last name joined. For companies: the company name.'
           example: Aleksander Nowak
           type:
           - string
           - 'null'
-          x-struct: null
-          x-validate: null
         jurisdiction:
           description: Jurisdiction of the entity, sourced from the entity's address country
           properties:
@@ -107,24 +87,18 @@ components:
               description: ISO 3166-1 alpha-2 country code
               example: PL
               type: string
-              x-struct: null
-              x-validate: null
             name:
               description: Country display name
               example: Poland
               type:
               - string
               - 'null'
-              x-struct: null
-              x-validate: null
           required:
           - iso_2
           - name
           type:
           - object
           - 'null'
-          x-struct: null
-          x-validate: null
         kind:
           description: Kind of the entity the PII belongs to
           enum:
@@ -132,15 +106,11 @@ components:
           - company
           example: person
           type: string
-          x-struct: null
-          x-validate: null
         object:
           description: String representing the object's type. Objects of the same type share the same value.
           enum:
           - user_pii
           type: string
-          x-struct: null
-          x-validate: null
         permanent_address:
           description: Permanent address of the entity
           properties:
@@ -149,37 +119,27 @@ components:
               type:
               - string
               - 'null'
-              x-struct: null
-              x-validate: null
             country:
               description: ISO 3166-1 alpha-2 country code
               example: PL
               type:
               - string
               - 'null'
-              x-struct: null
-              x-validate: null
             postal_code:
               example: 00-001
               type:
               - string
               - 'null'
-              x-struct: null
-              x-validate: null
             state:
               description: State or region code
               type:
               - string
               - 'null'
-              x-struct: null
-              x-validate: null
             street:
               example: ul. Nowy Świat 12
               type:
               - string
               - 'null'
-              x-struct: null
-              x-validate: null
           required:
           - street
           - city
@@ -187,15 +147,11 @@ components:
           - postal_code
           - country
           type: object
-          x-struct: null
-          x-validate: null
         tax_id:
           description: 'Tax identification number. For persons: SSN or foreign TIN. For companies: EIN.'
           type:
           - string
           - 'null'
-          x-struct: null
-          x-validate: null
       required:
       - object
       - kind
@@ -206,8 +162,6 @@ components:
       - permanent_address
       title: Pii
       type: object
-      x-struct: Elixir.FrontlineAPIWeb.OpenApi.Schemas.Pii
-      x-validate: null
   securitySchemes:
     OAuth2:
       description: OAuth 2.0 authorization and token endpoints

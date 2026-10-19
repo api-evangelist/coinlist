@@ -1,0 +1,12 @@
+{
+ "url": "https://docs.passage.coinlist.co/api-reference/openapi.json",
+ "final": "https://docs.passage.coinlist.co/api-reference/openapi.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 124592,
+ "sha256": "8dd9bac661b76c6993e6abeef40590eace89a10c88567f21981af62ff7b8aad4",
+ "fetched_at": "2026-10-19",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "re-archived: the provider's current document replaced a stale archive (roadmap#793); the old files are in openapi/_superseded/2026-10-19-stale"
+}

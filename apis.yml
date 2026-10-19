@@ -223,14 +223,26 @@ apis:
     url: https://docs.passage.coinlist.co/
   - type: APIReference
     url: https://docs.passage.coinlist.co/api-reference
+- aid: coinlist:coinlist-ondo-api
+  name: CoinList Ondo API
+  description: The Ondo API from CoinList — 3 operation(s) for ondo.
+  humanURL: https://docs.passage.coinlist.co/
+  baseURL: https://api.coinlist.co
+  tags:
+  - Ondo
+  properties:
+  - type: OpenAPI
+    url: openapi/coinlist-ondo-api-openapi.yml
+  - type: Documentation
+    url: https://docs.passage.coinlist.co/
+  - type: APIReference
+    url: https://docs.passage.coinlist.co/api-reference
 - aid: coinlist:coinlist-document-submissions-api
   name: CoinList document submissions API
   description: The document submissions API from CoinList — 1 operation(s) for document submissions.
   humanURL: https://docs.passage.coinlist.co/
   baseURL: https://api.coinlist.co
   tags:
-  - Document Submissions
-  tags_raw:
   - document submissions
   properties:
   - type: OpenAPI
